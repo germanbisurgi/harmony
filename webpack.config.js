@@ -10,7 +10,7 @@ module.exports = {
     libraryTarget: 'umd'
   },
   mode: 'production',
-  // devtool: 'inline-source-map',
+  devtool: 'inline-source-map',
   module: {
     rules: [
       {
@@ -35,6 +35,6 @@ module.exports = {
     ]
   },
   optimization: {
-    minimize: true
+    minimize: false
   }
 }
