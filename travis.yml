@@ -1,0 +1,22 @@
+sudo: required
+
+language: generic
+
+addons:
+  artifacts: true
+
+env:
+  - SELENIUM_BROWSER=chrome
+  - SELENIUM_BROWSER=firefox
+
+services:
+  - docker
+
+before_script:
+  - cd tests
+  - docker-compose run --rm node yarn
+  - docker-compose up -d $SELENIUM_BROWSER
+  - docker-compose ps
+
+script:
+  - docker-compose run --rm codeceptjs codeceptjs run-multiple basic:$SELENIUM_BROWSER --steps
