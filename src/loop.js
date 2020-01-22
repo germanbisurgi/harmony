@@ -5,32 +5,30 @@ const Loop = function () {
   this.lastStep = 0
   this.fps = 60
   this.frame = 0
-  this.paused = true
+  this.paused = false
   this.timestep = 1000 / this.fps
 }
 
-Loop.prototype.start = function () {
+Loop.prototype.continue = function () {
   this.paused = false
-  window.requestAnimationFrame(this.run.bind(this))
 }
 
-Loop.prototype.stop = function () {
+Loop.prototype.pause = function () {
   this.paused = true
 }
 
 Loop.prototype.run = function (timestamp) {
+  timestamp = timestamp || 0
   this.timestep = 1000 / this.fps
   this.accumulator += timestamp - this.lastTime
   this.lastTime = timestamp
-  while (this.accumulator >= this.timestep) {
+  while (!this.paused && this.accumulator >= this.timestep) {
     this.step()
     this.delta = timestamp - this.lastStep
     this.lastStep = timestamp
     this.accumulator -= this.timestep
   }
-  if (!this.paused) {
-    window.requestAnimationFrame(this.run.bind(this))
-  }
+  window.requestAnimationFrame(this.run.bind(this))
 }
 
 Loop.prototype.step = function () {

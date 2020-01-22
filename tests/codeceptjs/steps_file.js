@@ -1,5 +1,5 @@
-'use strict';
+/* global actor */
 
-module.exports = function () {
-  return actor({});
-};
+module.exports = () => {
+  return actor({})
+}

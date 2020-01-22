@@ -2,6 +2,6 @@
 
 Feature('Invent')
 
-Scenario('should work correctly', async function (I) {
+Scenario('should work correctly', async (I) => {
   I.amOnPage('invent.html')
 })
