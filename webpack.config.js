@@ -1,12 +1,12 @@
 const path = require('path')
 
 module.exports = {
-  entry: './src/index.js',
+  entry: './src/engine.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'invent.js',
+    filename: 'engine.js',
     libraryExport: 'default',
-    library: 'Invent',
+    library: 'Engine',
     libraryTarget: 'umd'
   },
   mode: 'production',

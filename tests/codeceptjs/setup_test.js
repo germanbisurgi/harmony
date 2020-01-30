@@ -1,7 +1,7 @@
 /* global Feature Scenario */
 
-Feature('Invent')
+Feature('Setup')
 
 Scenario('should work correctly', async (I) => {
-  I.amOnPage('invent.html')
+  I.amOnPage('engine.html')
 })

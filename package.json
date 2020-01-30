@@ -1,14 +1,13 @@
 {
-  "name": "@germanbisurgi/invent",
+  "name": "@germanbisurgi/engine",
   "version": "0.1.0",
   "description": "A 2d game engine",
-  "main": "dist/invent.js",
+  "main": "dist/engine.js",
   "scripts": {
     "build": "webpack",
     "lint": "eslint ./src",
     "lint:fix": "eslint ./src --fix",
-    "test:unit": "jest",
-    "test:e2e": "cd tests && docker-compose run --rm node yarn build && docker-compose up -d && docker-compose ps && docker-compose run --rm codeceptjs codeceptjs run-multiple basic:chrome --steps",
+    "test": "cd tests && docker-compose run --rm node yarn build && docker-compose up -d && docker-compose ps && docker-compose run --rm codeceptjs codeceptjs run-multiple basic:chrome --steps",
     "serve": "live-server --port=9001",
     "watch": "webpack --watch"
   },
@@ -41,7 +40,6 @@
     "eslint-plugin-node": "^11.0.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
-    "jest": "^24.9.0",
     "live-server": "^1.2.1",
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10"

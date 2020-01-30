@@ -1,4 +1,4 @@
-const Loop = function () {
+const LoopSystem = function () {
   this.accumulator = 0
   this.delta = 0
   this.lastTime = 0
@@ -9,15 +9,15 @@ const Loop = function () {
   this.timestep = 1000 / this.fps
 }
 
-Loop.prototype.continue = function () {
+LoopSystem.prototype.continue = function () {
   this.paused = false
 }
 
-Loop.prototype.pause = function () {
+LoopSystem.prototype.pause = function () {
   this.paused = true
 }
 
-Loop.prototype.run = function (timestamp) {
+LoopSystem.prototype.run = function (timestamp) {
   timestamp = timestamp || 0
   this.timestep = 1000 / this.fps
   this.accumulator += timestamp - this.lastTime
@@ -31,11 +31,11 @@ Loop.prototype.run = function (timestamp) {
   window.requestAnimationFrame(this.run.bind(this))
 }
 
-Loop.prototype.step = function () {
+LoopSystem.prototype.step = function () {
   this.frame++
   this.onStep()
 }
 
-Loop.prototype.onStep = function () {}
+LoopSystem.prototype.onStep = function () {}
 
-export default Loop
+export default LoopSystem
