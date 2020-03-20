@@ -2,9 +2,9 @@ import Camera from './camera'
 import Canvas from './canvas'
 import Renderable from './renderable'
 
-const RenderSystem = function () {
+const RenderSystem = function (config) {
   this.camera = new Camera()
-  this.canvas = new Canvas('#engine-container')
+  this.canvas = new Canvas(config.container)
   this.renderables = []
 }
 

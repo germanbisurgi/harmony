@@ -1,9 +1,9 @@
-const Canvas = function (containerSelector) {
+const Canvas = function (container) {
   this.element = document.createElement('canvas')
   this.context = this.element.getContext('2d')
 
-  if (containerSelector) {
-    this.container = document.querySelector(containerSelector)
+  if (container) {
+    this.container = document.querySelector(container)
     this.container.appendChild(this.element)
   }
 
@@ -12,8 +12,8 @@ const Canvas = function (containerSelector) {
 }
 
 Canvas.prototype.resize = function () {
-  this.element.width = this.container.offsetWidth
-  this.element.height = this.container.offsetHeight
+  this.element.width = window.innerWidth
+  this.element.height = window.innerHeight
 }
 
 Canvas.prototype.circle = function (x, y, radius) {
@@ -53,8 +53,8 @@ Canvas.prototype.grid = function (x, y, width, height, cols, rows) {
   this.context.strokeStyle = 'white'
   this.context.textAlign = 'center'
   this.context.textBaseline = 'middle'
-  for (let ry = 0; ry < rows; ry++) {
-    for (let rx = 0; rx < cols; rx++) {
+  for (var ry = 0; ry < rows; ry++) {
+    for (var rx = 0; rx < cols; rx++) {
       this.rect(rx * width, ry * height, width, height)
       this.text(rx * width + width / 2, ry * height + height / 2, rx + ',' + ry)
     }

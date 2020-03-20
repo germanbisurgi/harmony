@@ -2,16 +2,16 @@ import AssetsSystem from './assets-system/'
 import KeySystem from './key-system'
 import LoopSystem from './loop-system/'
 import PointerSystem from './pointer-system'
-import RenderSystem from './render-system'
 import StateSystem from './state-system/'
+import RenderSystem from './render-system/'
 
-const Engine = function () {
+const Engine = function (config) {
   this.assets = new AssetsSystem()
   this.keys = new KeySystem()
   this.loop = new LoopSystem()
   this.pointers = new PointerSystem()
-  this.render = new RenderSystem()
   this.state = new StateSystem()
+  this.render = new RenderSystem(config.render)
 
   this.loop.onStep = () => {
     this.state.update()
@@ -28,6 +28,7 @@ const Engine = function () {
       this.keys.update(this.loop.delta, this.loop.frame)
       this.pointers.update(this.loop.delta, this.loop.frame)
       this.state.current.update(this)
+      this.render.draw()
     }
   }
   this.loop.run()
