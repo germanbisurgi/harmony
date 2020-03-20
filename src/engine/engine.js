@@ -1,17 +1,12 @@
-import AssetsSystem from './assets-system/'
-import KeySystem from './key-system'
-import LoopSystem from './loop-system/'
-import PointerSystem from './pointer-system'
-import StateSystem from './state-system/'
-import RenderSystem from './render-system/'
+/* global Harmony */
 
 const Engine = function (config) {
-  this.assets = new AssetsSystem()
-  this.keys = new KeySystem()
-  this.loop = new LoopSystem()
-  this.pointers = new PointerSystem()
-  this.state = new StateSystem()
-  this.render = new RenderSystem(config.render)
+  this.assets = new Harmony.AssetsSystem()
+  this.keys = new Harmony.KeySystem()
+  this.loop = new Harmony.LoopSystem()
+  this.pointers = new Harmony.PointerSystem()
+  this.state = new Harmony.StateSystem()
+  this.render = new Harmony.RenderSystem(config.render)
 
   this.loop.onStep = () => {
     this.state.update()

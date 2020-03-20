@@ -1,12 +1,12 @@
 const path = require('path')
 
 module.exports = {
-  entry: './src/engine.js',
+  entry: './src/harmony.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'engine.js',
+    filename: 'harmony.js',
     libraryExport: 'default',
-    library: 'Engine',
+    library: 'Harmony',
     libraryTarget: 'umd'
   },
   mode: 'production',

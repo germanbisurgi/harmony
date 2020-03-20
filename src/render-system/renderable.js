@@ -1,5 +1,6 @@
 const Renderable = function (_config) {
   const config = Object.assign({
+    name: 'renderable',
     image: null,
     x: 0,
     y: 0,
@@ -11,6 +12,7 @@ const Renderable = function (_config) {
     anchorY: 0
   }, _config)
 
+  this.name = config.name
   this.image = config.image
   this.x = config.x
   this.y = config.y

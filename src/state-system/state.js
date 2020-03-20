@@ -1,4 +1,4 @@
-const State = function (name, config) {
+const State = function (name, _config) {
   this.name = name
   this.preloaded = false
   this.created = false
@@ -6,7 +6,7 @@ const State = function (name, config) {
     preload: (engine) => {},
     create: (engine) => {},
     update: (engine) => {}
-  }, config)
+  }, _config)
 }
 
 State.prototype.preload = function (engine) {

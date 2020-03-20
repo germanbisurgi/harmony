@@ -1,14 +1,12 @@
-import Key from './key'
-
 const KeySystem = function () {
   this.cache = {}
   document.addEventListener('keydown', this.handleKeyDown.bind(this), false)
   document.addEventListener('keyup', this.handleKeyUp.bind(this), false)
 }
 
-KeySystem.prototype.add = function (key, preventDefault) {
-  this.cache[key] = new Key(key, preventDefault)
-  return this.cache[key]
+KeySystem.prototype.add = function (_key) {
+  this.cache[_key.key] = _key
+  return _key
 }
 
 KeySystem.prototype.handleKeyDown = function (event) {

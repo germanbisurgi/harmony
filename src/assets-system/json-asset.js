@@ -1,6 +1,5 @@
-const JSONAsset = function (name, type, url) {
+const JSONAsset = function (name, url) {
   this.name = name
-  this.type = type
   this.url = url
   this.content = null
 }

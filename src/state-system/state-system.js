@@ -1,14 +1,12 @@
-import State from './state'
-
 const StateSystem = function () {
   this.current = null
   this.cache = []
   this.requested = null
 }
 
-StateSystem.prototype.add = function (name, config) {
-  const state = new State(name, config)
-  this.cache.push(state)
+StateSystem.prototype.add = function (_state) {
+  this.cache.push(_state)
+  return _state
 }
 
 StateSystem.prototype.getByName = function (stateName) {
