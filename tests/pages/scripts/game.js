@@ -19,7 +19,17 @@ const setupState = {
     engine.pointer1 = engine.pointers.add()
     engine.pointer2 = engine.pointers.add()
 
-    engine.render.addRenderable(engine.image, 150, 150)
+    engine.render.addRenderable({
+      image: engine.image,
+      x: 50,
+      y: 50,
+      angle: 4,
+      scale: 1,
+      width: 50,
+      height: 50,
+      anchorX: 0,
+      anchorY: 0
+    })
   },
   update: (engine) => {
     console.log('update')
@@ -40,6 +50,7 @@ const setupState = {
 
 const engine = new Engine({
   render: {
+    canvas: '#engine-canvas',
     container: '#engine-container'
   }
 })

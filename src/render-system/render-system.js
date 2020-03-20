@@ -1,64 +1,68 @@
-import Camera from './camera'
-import Canvas from './canvas'
 import Renderable from './renderable'
 
-const RenderSystem = function (config) {
-  this.camera = new Camera()
-  this.canvas = new Canvas(config.container)
+const RenderSystem = function (_config) {
+  this.canvas = document.querySelector(_config.canvas)
+  this.context = this.canvas.getContext('2d')
   this.renderables = []
 }
 
-RenderSystem.prototype.draw = function () {
-  this.canvas.clear()
-  this.canvas.context.save()
-
-  // translate to camera center
-  this.canvas.context.translate(
-    (this.camera.width / 2),
-    (this.camera.height / 2)
-  )
-
-  // rotate
-  this.canvas.context.rotate(this.camera.angle)
-
-  // scale
-  this.canvas.context.scale(this.camera.zoom, this.camera.zoom)
-
-  this.canvas.context.strokeStyle = 'red'
-  this.canvas.circle(0, 0, 10)
-
-  this.canvas.context.translate(
-    -(this.camera.width / 2),
-    -(this.camera.height / 2)
-  )
-
-  // translate
-  this.canvas.context.translate(
-    -this.camera.position.x,
-    -this.camera.position.y
-  )
-
-  this.renderables.forEach(function (renderable) {
-    this.canvas.context.save()
-    this.canvas.context.translate(renderable.x, renderable.y)
-    this.canvas.context.rotate(renderable.angle)
-    this.canvas.context.drawImage(
-      renderable.image,
-      renderable.width / -2,
-      renderable.height / -2,
-      renderable.width,
-      renderable.height
-    )
-    this.canvas.context.restore()
-  }.bind(this))
-  // this.game.physics.world.DrawDebugData();
-  this.canvas.context.restore()
+RenderSystem.prototype.clear = function () {
+  this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
 }
 
-RenderSystem.prototype.addRenderable = function (image, x, y, width, height, angle) {
-  const renderable = new Renderable(image, x, y, width, height, angle)
+RenderSystem.prototype.draw = function () {
+  this.clear()
+  this.context.save()
+
+  // translate to camera center
+  // this.context.translate(
+  //   (this.camera.width / 2),
+  //   (this.camera.height / 2)
+  // )
+
+  // rotate
+  // this.context.rotate(this.camera.angle)
+
+  // scale
+  // this.context.scale(this.camera.zoom, this.camera.zoom)
+
+  // this.context.strokeStyle = 'red'
+  // this.canvas.circle(0, 0, 10)
+
+  // this.context.translate(
+  //   -(this.camera.width / 2),
+  //   -(this.camera.height / 2)
+  // )
+
+  // translate
+  // this.context.translate(
+  //   -this.camera.position.x,
+  //   -this.camera.position.y
+  // )
+
+  this.renderables.forEach(function (renderable) {
+    this.context.save()
+    this.context.translate(
+      renderable.x + renderable.width * 0.5 * renderable.scale - renderable.width * renderable.anchorX * renderable.scale,
+      renderable.y + renderable.height * 0.5 * renderable.scale - renderable.height * renderable.anchorY * renderable.scale
+    )
+    this.context.rotate(renderable.angle)
+    this.context.scale(renderable.scale, renderable.scale)
+    this.context.drawImage(
+      renderable.image,
+      renderable.width * -0.5, // do not touch this
+      renderable.height * -0.5, // do not touch this
+      renderable.width, // do not touch this
+      renderable.height // do not touch this
+    )
+    this.context.restore()
+  }.bind(this))
+  this.context.restore()
+}
+
+RenderSystem.prototype.addRenderable = function (_config) {
+  const renderable = new Renderable(_config)
   this.renderables.push(renderable)
-  return renderable
 }
 
 export default RenderSystem
