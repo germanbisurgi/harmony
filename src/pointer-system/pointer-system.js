@@ -1,22 +1,24 @@
 import Pointer from './pointer'
 
-const PointerSystem = function () {
+const PointerSystem = function (canvas) {
   this.pointers = []
+  this.canvas = canvas
+  this.enablePointers()
 }
 
 PointerSystem.prototype.add = function () {
-  const pointer = new Pointer(this.pointers.length + 1)
+  const pointer = new Pointer()
   this.pointers.unshift(pointer)
   return pointer
 }
 
-PointerSystem.prototype.enablePointers = function (canvas) {
-  canvas.style.touchAction = 'none'
-  canvas.addEventListener('pointerdown', this.handlePointerDown.bind(this), false)
-  canvas.addEventListener('pointermove', this.handlePointerMove.bind(this), false)
-  canvas.addEventListener('pointerup', this.handlePointerUpAndCancel.bind(this), false)
-  canvas.addEventListener('pointercancel', this.handlePointerUpAndCancel.bind(this), false)
-  canvas.addEventListener('pointerleave', this.handlePointerUpAndCancel.bind(this), false)
+PointerSystem.prototype.enablePointers = function () {
+  this.canvas.style.touchAction = 'none'
+  this.canvas.addEventListener('pointerdown', this.handlePointerDown.bind(this), false)
+  this.canvas.addEventListener('pointermove', this.handlePointerMove.bind(this), false)
+  this.canvas.addEventListener('pointerup', this.handlePointerUpAndCancel.bind(this), false)
+  this.canvas.addEventListener('pointercancel', this.handlePointerUpAndCancel.bind(this), false)
+  this.canvas.addEventListener('pointerleave', this.handlePointerUpAndCancel.bind(this), false)
 }
 
 PointerSystem.prototype.getPointerByID = function (id) {

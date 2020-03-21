@@ -8,7 +8,6 @@ const AssetsSystem = function () {
 
 AssetsSystem.prototype.add = function (_asset) {
   this.queue.push(_asset)
-  return _asset.content
 }
 
 AssetsSystem.prototype.get = function (name) {

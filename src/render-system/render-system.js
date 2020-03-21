@@ -1,16 +1,13 @@
-import Renderable from './renderable'
-
-const RenderSystem = function (_config) {
-  this.canvas = document.querySelector(_config.canvas)
+const RenderSystem = function (canvas) {
+  this.canvas = canvas
   this.context = this.canvas.getContext('2d')
-  this.renderables = []
 }
 
 RenderSystem.prototype.clear = function () {
   this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
 }
 
-RenderSystem.prototype.draw = function () {
+RenderSystem.prototype.draw = function (entities) {
   this.clear()
   this.context.save()
 
@@ -40,29 +37,26 @@ RenderSystem.prototype.draw = function () {
   //   -this.camera.position.y
   // )
 
-  this.renderables.forEach(function (renderable) {
-    this.context.save()
-    this.context.translate(
-      renderable.x + renderable.width * 0.5 * renderable.scale - renderable.width * renderable.anchorX * renderable.scale,
-      renderable.y + renderable.height * 0.5 * renderable.scale - renderable.height * renderable.anchorY * renderable.scale
-    )
-    this.context.rotate(renderable.angle)
-    this.context.scale(renderable.scale, renderable.scale)
-    this.context.drawImage(
-      renderable.image,
-      renderable.width * -0.5, // do not touch this
-      renderable.height * -0.5, // do not touch this
-      renderable.width, // do not touch this
-      renderable.height // do not touch this
-    )
-    this.context.restore()
-  }.bind(this))
+  entities.forEach((entity) => {
+    if (entity.hasComponent('transform') && entity.hasComponent('renderable')) {
+      this.context.save()
+      this.context.translate(
+        entity.transform.x + entity.renderable.width * 0.5 * entity.transform.scale - entity.renderable.width * entity.renderable.anchorX * entity.transform.scale,
+        entity.transform.y + entity.renderable.height * 0.5 * entity.transform.scale - entity.renderable.height * entity.renderable.anchorY * entity.transform.scale
+      )
+      this.context.rotate(entity.transform.angle)
+      this.context.scale(entity.transform.scale, entity.transform.scale)
+      this.context.drawImage(
+        entity.renderable.image,
+        entity.renderable.width * -0.5, // do not touch this
+        entity.renderable.height * -0.5, // do not touch this
+        entity.renderable.width, // do not touch this
+        entity.renderable.height // do not touch this
+      )
+      this.context.restore()
+    }
+  })
   this.context.restore()
-}
-
-RenderSystem.prototype.addRenderable = function (_config) {
-  const renderable = new Renderable(_config)
-  this.renderables.push(renderable)
 }
 
 export default RenderSystem

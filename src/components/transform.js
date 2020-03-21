@@ -7,6 +7,7 @@ const Transform = function (_config) {
     scale: 1
   }, _config)
 
+  this.owner = null
   this.name = config.name
   this.x = config.x
   this.y = config.y
