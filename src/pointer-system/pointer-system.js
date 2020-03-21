@@ -1,19 +1,19 @@
 import Pointer from './pointer'
 
 const PointerSystem = function (canvas) {
-  this.pointers = []
+  this.cache = []
   this.canvas = canvas
   this.enablePointers()
 }
 
 PointerSystem.prototype.add = function () {
   const pointer = new Pointer()
-  this.pointers.unshift(pointer)
+  this.cache.unshift(pointer)
   return pointer
 }
 
 PointerSystem.prototype.enablePointers = function () {
-  this.canvas.style.touchAction = 'none'
+  this.canvas.style.touchAction = 'none' // needed for mobile
   this.canvas.addEventListener('pointerdown', this.handlePointerDown.bind(this), false)
   this.canvas.addEventListener('pointermove', this.handlePointerMove.bind(this), false)
   this.canvas.addEventListener('pointerup', this.handlePointerUpAndCancel.bind(this), false)
@@ -23,7 +23,7 @@ PointerSystem.prototype.enablePointers = function () {
 
 PointerSystem.prototype.getPointerByID = function (id) {
   let output = false
-  this.pointers.forEach(function (pointer) {
+  this.cache.forEach(function (pointer) {
     if (pointer.id === id) {
       output = pointer
     }
@@ -33,7 +33,7 @@ PointerSystem.prototype.getPointerByID = function (id) {
 
 PointerSystem.prototype.getInactivePointer = function () {
   let output = false
-  this.pointers.forEach(function (pointer) {
+  this.cache.forEach(function (pointer) {
     if (pointer.active === false) {
       output = pointer
     }
@@ -44,35 +44,39 @@ PointerSystem.prototype.getInactivePointer = function () {
 PointerSystem.prototype.handlePointerDown = function (event) {
   event.preventDefault()
   const pointer = this.getPointerByID(event.pointerId) || this.getInactivePointer()
-  pointer.active = true
-  pointer.id = event.pointerId
-  pointer.hold = true
-  pointer.startX = event.clientX - event.target.offsetLeft
-  pointer.startY = event.clientY - event.target.offsetTop
-  pointer.x = event.clientX - event.target.offsetLeft
-  pointer.y = event.clientY - event.target.offsetTop
+  if (pointer) {
+    pointer.active = true
+    pointer.id = event.pointerId
+    pointer.hold = true
+    pointer.startX = event.clientX - event.target.offsetLeft
+    pointer.startY = event.clientY - event.target.offsetTop
+    pointer.x = event.clientX - event.target.offsetLeft
+    pointer.y = event.clientY - event.target.offsetTop
+  }
 }
 
 PointerSystem.prototype.handlePointerMove = function (event) {
   event.preventDefault()
   const pointer = this.getPointerByID(event.pointerId) || this.getInactivePointer()
-  pointer.active = true
-  pointer.id = event.pointerId
-  pointer.x = event.clientX - event.target.offsetLeft
-  pointer.y = event.clientY - event.target.offsetTop
+  if (pointer) {
+    pointer.active = true
+    pointer.id = event.pointerId
+    pointer.x = event.clientX - event.target.offsetLeft
+    pointer.y = event.clientY - event.target.offsetTop
+  }
 }
 
 PointerSystem.prototype.handlePointerUpAndCancel = function (event) {
   event.preventDefault()
   const pointer = this.getPointerByID(event.pointerId)
-  pointer.active = false
-  pointer.hold = false
-  pointer.startX = 0
-  pointer.startY = 0
+  if (pointer) {
+    pointer.active = false
+    pointer.hold = false
+  }
 }
 
 PointerSystem.prototype.update = function (delta, frame) {
-  this.pointers.forEach(function (pointer) {
+  this.cache.forEach(function (pointer) {
     if (pointer.hold) {
       pointer.holdTime += delta
       pointer.endFrame = 0

@@ -8,6 +8,7 @@ const Engine = function (canvas) {
   this.state = new Harmony.StateSystem()
   this.render = new Harmony.RenderSystem(canvas)
   this.entities = new Harmony.EntitySystem()
+  this.physycs = new Harmony.PhysycsSystem()
 
   this.loop.onStep = () => {
     this.state.update()
@@ -25,6 +26,7 @@ const Engine = function (canvas) {
       this.pointers.update(this.loop.delta, this.loop.frame)
       this.state.current.update(this)
       this.render.draw(this.entities.cache)
+      this.state.current.draw(this)
     }
   }
   this.loop.run()

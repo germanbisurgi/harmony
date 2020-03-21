@@ -4,9 +4,10 @@ const KeySystem = function () {
   document.addEventListener('keyup', this.handleKeyUp.bind(this), false)
 }
 
-KeySystem.prototype.add = function (_key) {
-  this.cache[_key.key] = _key
-  return _key
+KeySystem.prototype.add = function (config) {
+  const key = new Harmony.Key(config)
+  this.cache[key.key] = key
+  return key
 }
 
 KeySystem.prototype.handleKeyDown = function (event) {

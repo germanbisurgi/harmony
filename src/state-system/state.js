@@ -5,7 +5,8 @@ const State = function (name, _config) {
   this.methods = Object.assign({
     preload: (engine) => {},
     create: (engine) => {},
-    update: (engine) => {}
+    update: (engine) => {},
+    draw: (engine) => {}
   }, _config)
 }
 
@@ -19,6 +20,10 @@ State.prototype.create = function (engine) {
 
 State.prototype.update = function (engine) {
   return this.methods.update(engine)
+}
+
+State.prototype.draw = function (engine) {
+  return this.methods.draw(engine)
 }
 
 export default State

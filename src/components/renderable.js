@@ -4,8 +4,8 @@ const Renderable = function (_config) {
     image: null,
     width: 50,
     height: 50,
-    anchorX: 0,
-    anchorY: 0
+    anchorX: 0.5,
+    anchorY: 0.5
   }, _config)
 
   this.owner = null

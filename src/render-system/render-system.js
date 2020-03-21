@@ -1,6 +1,8 @@
 const RenderSystem = function (canvas) {
   this.canvas = canvas
   this.context = this.canvas.getContext('2d')
+  this.canvas.height = window.innerHeight
+  this.canvas.width = window.innerWidth
 }
 
 RenderSystem.prototype.clear = function () {

@@ -16,6 +16,9 @@ import JSONAsset from './assets-system/json-asset'
 import State from './state-system/state'
 import Transform from './components/transform'
 import EntitySystem from './entity-system/entity-system'
+import Track from './audio-system/track'
+import PhysycsSystem from './physycs-system/physycs-system'
+import Physycs from './components/physycs'
 
 const Harmony = {
   ImageAsset: ImageAsset,
@@ -29,13 +32,16 @@ const Harmony = {
   Key: Key,
   KeySystem: KeySystem,
   LoopSystem: LoopSystem,
+  Physycs: Physycs,
+  PhysycsSystem: PhysycsSystem,
   Pointer: Pointer,
   PointerSystem: PointerSystem,
   Renderable: Renderable,
   RenderSystem: RenderSystem,
   State: State,
   StateSystem: StateSystem,
-  Transform: Transform
+  Transform: Transform,
+  Track: Track
 }
 
 export default Harmony
