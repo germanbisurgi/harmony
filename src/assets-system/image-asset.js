@@ -1,8 +1,8 @@
 /* global Image */
 
-const ImageAsset = function (name, url) {
-  this.name = name
-  this.url = url
+const ImageAsset = function (config) {
+  this.name = config.name
+  this.url = config.url
   this.content = null
 }
 

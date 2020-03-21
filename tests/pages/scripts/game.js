@@ -3,20 +3,19 @@
 
 const setupState = new Harmony.State('setup', {
   preload: (engine) => {
-    engine.assets.add(new Harmony.ImageAsset('image-angry-face', './assets/images/angry-face.png'))
-    engine.assets.add(new Harmony.AudioAsset('audio-coin', './assets/audio/coin.wav'))
-    engine.assets.add(new Harmony.AudioBufferAsset('audio-buffer-tic', './assets/audio/tic.mp3'))
-    engine.assets.add(new Harmony.AudioBufferAsset('audio-buffer-coin', './assets/audio/coin.wav'))
-    engine.assets.add(new Harmony.JSONAsset('json-test', './assets/json/test.json'))
+    engine.assets.addImage({name: 'image-angry-face', url: './assets/images/angry-face.png'})
+    engine.assets.addAudio({name: 'audio-coin', url: './assets/audio/coin.wav'})
+    engine.assets.addAudioBuffer({name: 'audio-buffer-tic', url: './assets/audio/tic.mp3'})
+    engine.assets.addJSON({name: 'json-test', url: './assets/json/test.json'})
   },
   create: (engine) => {
     // ------------------------------------------------------------------ assets
 
-    engine.imageAngryFace = engine.assets.get('image-angry-face')
-    engine.audioCoin = engine.assets.get('audio-coin')
+    engine.imageAngryFace = engine.assets.getImage('image-angry-face')
+    engine.audioCoin = engine.assets.getAudio('audio-coin')
+    engine.trackTic = new Harmony.Track(engine.assets.getAudioBuffer('audio-buffer-tic'))
 
-    engine.trackCoin = new Harmony.Track(engine.assets.get('audio-buffer-coin'))
-    engine.trackTic = new Harmony.Track(engine.assets.get('audio-buffer-tic'))
+    console.log(engine.imageAngryFace)
 
     // -------------------------------------------------------------------- keys
 

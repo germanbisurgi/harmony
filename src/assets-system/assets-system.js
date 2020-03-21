@@ -1,3 +1,4 @@
+/* global Harmony */
 const AssetsSystem = function () {
   this.loaded = false
   this.errors = 0
@@ -6,17 +7,49 @@ const AssetsSystem = function () {
   this.cache = []
 }
 
-AssetsSystem.prototype.add = function (_asset) {
-  this.queue.push(_asset)
+AssetsSystem.prototype.addAudio = function (config) {
+  const asset = new Harmony.AudioAsset(config)
+  this.queue.push(asset)
+}
+
+AssetsSystem.prototype.addAudioBuffer = function (config) {
+  const asset = new Harmony.AudioBufferAsset(config)
+  this.queue.push(asset)
+}
+
+AssetsSystem.prototype.addImage = function (config) {
+  const asset = new Harmony.ImageAsset(config)
+  this.queue.push(asset)
+}
+
+AssetsSystem.prototype.addJSON = function (config) {
+  const asset = new Harmony.JSONAsset(config)
+  this.queue.push(asset)
 }
 
 AssetsSystem.prototype.get = function (name) {
   for (let i = 0, len = this.cache.length; i < len; i++) {
     if (this.cache[i].name === name) {
-      return this.cache[i].content
+      return this.cache[i]
     }
   }
   return false
+}
+
+AssetsSystem.prototype.getAudio = function (name) {
+  return this.get(name).content
+}
+
+AssetsSystem.prototype.getAudioBuffer = function (name) {
+  return this.get(name).content
+}
+
+AssetsSystem.prototype.getImage = function (name) {
+  return this.get(name).content
+}
+
+AssetsSystem.prototype.getJSON = function (name) {
+  return this.get(name).content
 }
 
 AssetsSystem.prototype.hasCompleted = function () {

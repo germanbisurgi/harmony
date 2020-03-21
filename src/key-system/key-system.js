@@ -1,3 +1,5 @@
+/* global Harmony */
+
 const KeySystem = function () {
   this.cache = {}
   document.addEventListener('keydown', this.handleKeyDown.bind(this), false)

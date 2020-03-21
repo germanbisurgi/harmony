@@ -1,6 +1,6 @@
 const Key = function (_config) {
   const config = Object.assign({
-    key: key,
+    key: null,
     preventDefault: false
   }, _config)
 

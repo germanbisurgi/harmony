@@ -1,6 +1,6 @@
-const AudioBufferAsset = function (name, url) {
-  this.name = name
-  this.url = url
+const AudioBufferAsset = function (config) {
+  this.name = config.name
+  this.url = config.url
   this.content = null
 }
 
