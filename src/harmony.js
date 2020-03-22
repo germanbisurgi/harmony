@@ -6,15 +6,15 @@ import KeySystem from './key-system/key-system'
 import LoopSystem from './loop-system/loop-system'
 import Pointer from './pointer-system/pointer'
 import PointerSystem from './pointer-system/pointer-system'
-import Renderable from './render-system/renderable'
+import SpriteComponent from './render-system/sprite-component'
 import RenderSystem from './render-system/render-system'
 import SceneSystem from './scene-system/scene-system'
 import Scene from './scene-system/scene'
-import Transform from './entity-system/transform'
+import TransformComponent from './entity-system/transform-component'
 import EntitySystem from './entity-system/entity-system'
 import Track from './audio-system/track'
 import PhysicsSystem from './physics-system/physics-system'
-import Physics from './physics-system/physics'
+import PhysicsComponent from './physics-system/physics-component'
 import AudioSystem from './audio-system/audio-system'
 
 const Harmony = {
@@ -26,15 +26,15 @@ const Harmony = {
   Key: Key,
   KeySystem: KeySystem,
   LoopSystem: LoopSystem,
-  Physics: Physics,
+  PhysicsComponent: PhysicsComponent,
   PhysicsSystem: PhysicsSystem,
   Pointer: Pointer,
   PointerSystem: PointerSystem,
-  Renderable: Renderable,
+  SpriteComponent: SpriteComponent,
   RenderSystem: RenderSystem,
   Scene: Scene,
   SceneSystem: SceneSystem,
-  Transform: Transform,
+  TransformComponent: TransformComponent,
   Track: Track
 }
 

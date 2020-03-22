@@ -1,4 +1,4 @@
-const Transform = function (params) {
+const TransformComponent = function (params) {
   const config = Object.assign({
     name: 'transform',
     x: 0,
@@ -15,4 +15,4 @@ const Transform = function (params) {
   this.scale = config.scale
 }
 
-export default Transform
+export default TransformComponent

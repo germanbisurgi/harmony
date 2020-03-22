@@ -1,4 +1,4 @@
-const Renderable = function (params) {
+const SpriteComponent = function (params) {
   const config = Object.assign({
     name: 'renderable',
     image: null,
@@ -17,4 +17,4 @@ const Renderable = function (params) {
   this.anchorY = config.anchorY
 }
 
-export default Renderable
+export default SpriteComponent

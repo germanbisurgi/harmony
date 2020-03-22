@@ -1,6 +1,6 @@
 /* global Box2D */
 
-const Physics = function (params, system) {
+const PhysicsComponent = function (params, system) {
   const defaults = {
     name: 'physics',
     x: 50,
@@ -60,7 +60,7 @@ const Physics = function (params, system) {
   this.body = this.system.world.CreateBody(bodyDef)
 }
 
-Physics.prototype.setLinearVelocity = function (config) {
+PhysicsComponent.prototype.setLinearVelocity = function (config) {
   this.body.SetAwake(true)
   this.body.SetLinearVelocity({
     x: config.x / this.system.scale,
@@ -68,7 +68,7 @@ Physics.prototype.setLinearVelocity = function (config) {
   })
 }
 
-Physics.prototype.getPosition = function () {
+PhysicsComponent.prototype.getPosition = function () {
   const position = this.body.GetPosition()
   return {
     x: position.x * this.system.scale,
@@ -76,7 +76,7 @@ Physics.prototype.getPosition = function () {
   }
 }
 
-Physics.prototype.setPosition = function (config) {
+PhysicsComponent.prototype.setPosition = function (config) {
   const worldPosition = {
     x: config.x / this.system.scale,
     y: config.y / this.system.scale
@@ -84,11 +84,11 @@ Physics.prototype.setPosition = function (config) {
   this.body.SetPosition(worldPosition)
 }
 
-Physics.prototype.applyForce = function (config) {
+PhysicsComponent.prototype.applyForce = function (config) {
   this.body.ApplyForce(config, this.body.GetWorldCenter())
 }
 
-Physics.prototype.getFixtureDef = function (params) {
+PhysicsComponent.prototype.getFixtureDef = function (params) {
   const defaults = {
     density: 1,
     friction: 0.5,
@@ -105,7 +105,7 @@ Physics.prototype.getFixtureDef = function (params) {
   return fixDef
 }
 
-Physics.prototype.addCircle = function (params) {
+PhysicsComponent.prototype.addCircle = function (params) {
   const defaults = {
     offsetX: 0,
     offsetY: 0,
@@ -122,4 +122,4 @@ Physics.prototype.addCircle = function (params) {
   }
   return this.body.CreateFixture(fixtureDef)
 }
-export default Physics
+export default PhysicsComponent

@@ -62,10 +62,10 @@ RenderSystem.prototype.draw = function (entities) {
   this.context.restore()
 }
 
-RenderSystem.prototype.addRenderComponent = function (config) {
-  const renderComponent = new Harmony.Renderable(config)
-  this.components.push(renderComponent)
-  return renderComponent
+RenderSystem.prototype.addSpriteComponent = function (config) {
+  const spriteComponent = new Harmony.SpriteComponent(config)
+  this.components.push(spriteComponent)
+  return spriteComponent
 }
 
 RenderSystem.prototype.text = function (config) {

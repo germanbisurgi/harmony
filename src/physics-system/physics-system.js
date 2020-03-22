@@ -33,7 +33,7 @@ PhysicsSystem.prototype.drawDebugData = function () {
 }
 
 PhysicsSystem.prototype.addPhysicsComponent = function (config) {
-  const physicsComponent = new Harmony.Physics(config, this)
+  const physicsComponent = new Harmony.PhysicsComponent(config, this)
   this.components.push(physicsComponent)
   return physicsComponent
 }

@@ -42,7 +42,7 @@ const setupState = new Harmony.Scene('setup', {
       scale: 2
     })
 
-    my.entityNormal.addComponent(engine.render.addRenderComponent({
+    my.entityNormal.addComponent(engine.render.addSpriteComponent({
       image: my.imageAngryFace,
       width: 50,
       height: 50,
@@ -57,7 +57,7 @@ const setupState = new Harmony.Scene('setup', {
       scale: 1
     })
 
-    my.entityPhysics.addComponent(engine.render.addRenderComponent({
+    my.entityPhysics.addComponent(engine.render.addSpriteComponent({
       image: my.imageAngryFace,
       width: 50,
       height: 50,
