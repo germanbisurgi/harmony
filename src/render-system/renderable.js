@@ -1,4 +1,4 @@
-const Renderable = function (_config) {
+const Renderable = function (params) {
   const config = Object.assign({
     name: 'renderable',
     image: null,
@@ -6,7 +6,7 @@ const Renderable = function (_config) {
     height: 50,
     anchorX: 0.5,
     anchorY: 0.5
-  }, _config)
+  }, params)
 
   this.owner = null
   this.name = config.name

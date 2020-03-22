@@ -1,11 +1,11 @@
-const Transform = function (_config) {
+const Transform = function (params) {
   const config = Object.assign({
     name: 'transform',
     x: 0,
     y: 0,
     angle: 0,
     scale: 1
-  }, _config)
+  }, params)
 
   this.owner = null
   this.name = config.name

@@ -1,8 +1,8 @@
-const Key = function (_config) {
+const Key = function (params) {
   const config = Object.assign({
     key: null,
     preventDefault: false
-  }, _config)
+  }, params)
 
   this.key = config.key
   this.preventDefault = config.preventDefault
