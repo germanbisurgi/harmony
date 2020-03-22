@@ -1,6 +1,6 @@
 /* global Box2D */
 
-const Physycs = function (params, world, scale) {
+const Physycs = function (params, system) {
   const defaults = {
     name: 'physycs',
     x: 50,
@@ -23,7 +23,7 @@ const Physycs = function (params, world, scale) {
 
   this.owner = null
   this.name = config.name
-  this.scale = scale
+  this.system = system
   this.body = null
   this.type = config.type
 
@@ -31,8 +31,8 @@ const Physycs = function (params, world, scale) {
   const B2Body = Box2D.Dynamics.b2Body
 
   const bodyDef = new B2BodyDef()
-  bodyDef.position.x = config.x / this.scale
-  bodyDef.position.y = config.y / this.scale
+  bodyDef.position.x = config.x / this.system.scale
+  bodyDef.position.y = config.y / this.system.scale
   bodyDef.active = config.active
   bodyDef.allowSleep = config.allowSleep
   bodyDef.awake = config.awake
@@ -57,43 +57,68 @@ const Physycs = function (params, world, scale) {
     bodyDef.type = B2Body.b2_kinematicBody
   }
 
-  this.body = world.CreateBody(bodyDef)
+  this.body = this.system.world.CreateBody(bodyDef)
 }
 
 Physycs.prototype.setLinearVelocity = function (config) {
   this.body.SetAwake(true)
   this.body.SetLinearVelocity({
-    x: config.x / this.scale,
-    y: config.y / this.scale
+    x: config.x / this.system.scale,
+    y: config.y / this.system.scale
   })
 }
 
+Physycs.prototype.getPosition = function () {
+  const position = this.body.GetPosition()
+  return {
+    x: position.x * this.system.scale,
+    y: position.y * this.system.scale
+  }
+}
+
 Physycs.prototype.setPosition = function (config) {
-  this.body.SetPosition(config)
+  const worldPosition = {
+    x: config.x / this.system.scale,
+    y: config.y / this.system.scale
+  }
+  this.body.SetPosition(worldPosition)
 }
 
 Physycs.prototype.applyForce = function (config) {
   this.body.ApplyForce(config, this.body.GetWorldCenter())
 }
 
-Physycs.prototype.getFixtureDef = function (fixtureDefinition) {
+Physycs.prototype.getFixtureDef = function (params) {
+  const defaults = {
+    density: 1,
+    friction: 0.5,
+    restitution: 0.3,
+    isSensor: false
+  }
+  const config = Object.assign(defaults, params)
   const B2FixtureDef = Box2D.Dynamics.b2FixtureDef
-  fixtureDefinition = fixtureDefinition || {}
   const fixDef = new B2FixtureDef()
-  fixDef.density = fixtureDefinition.density || fixtureDefinition.density === 0 ? fixtureDefinition.density : 1
-  fixDef.friction = fixtureDefinition.friction || fixtureDefinition.friction === 0 ? fixtureDefinition.friction : 0.5
-  fixDef.restitution = fixtureDefinition.restitution || fixtureDefinition.restitution === 0 ? fixtureDefinition.restitution : 0.3
-  fixDef.isSensor = fixtureDefinition.isSensor ? fixtureDefinition.isSensor : false
+  fixDef.density = config.density
+  fixDef.friction = config.friction
+  fixDef.restitution = config.restitution
+  fixDef.isSensor = config.isSensor
   return fixDef
 }
 
-Physycs.prototype.addCircle = function (offsetX, offsetY, radius, fixtureDefinition) {
+Physycs.prototype.addCircle = function (params) {
+  const defaults = {
+    offsetX: 0,
+    offsetY: 0,
+    radius: 25,
+    fixtureDefinition: this.getFixtureDef()
+  }
+  const config = Object.assign(defaults, params)
   const B2CircleShape = Box2D.Collision.Shapes.b2CircleShape
-  const fixtureDef = this.getFixtureDef(fixtureDefinition)
-  fixtureDef.shape = new B2CircleShape(radius / this.scale)
+  const fixtureDef = config.fixtureDefinition
+  fixtureDef.shape = new B2CircleShape(config.radius / this.system.scale)
   fixtureDef.shape.mp = {
-    x: offsetX / this.scale || 0,
-    y: offsetY / this.scale || 0
+    x: config.offsetX / this.system.scale || 0,
+    y: config.offsetY / this.system.scale || 0
   }
   return this.body.CreateFixture(fixtureDef)
 }

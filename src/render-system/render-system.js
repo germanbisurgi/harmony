@@ -14,7 +14,7 @@ RenderSystem.prototype.clear = function () {
 
 RenderSystem.prototype.draw = function (entities) {
   this.clear()
-  this.context.save()
+  // this.context.save()
 
   // translate to camera center
   // this.context.translate(
@@ -66,6 +66,28 @@ RenderSystem.prototype.addRenderComponent = function (config) {
   const renderComponent = new Harmony.Renderable(config)
   this.components.push(renderComponent)
   return renderComponent
+}
+
+RenderSystem.prototype.text = function (config) {
+  this.context.fillText(config.text, config.x, config.y)
+}
+
+RenderSystem.prototype.circle = function (config) {
+  this.context.beginPath()
+  this.context.arc(config.x, config.y, config.radius, 0, 2 * Math.PI)
+  this.context.stroke()
+}
+
+RenderSystem.prototype.line = function (config) {
+  this.context.beginPath()
+  this.context.moveTo(config.ax, config.ay)
+  this.context.lineTo(config.bx, config.by)
+  this.context.stroke()
+}
+
+RenderSystem.prototype.rect = function (config) {
+  this.context.rect(config.x, config.y, config.width, config.height)
+  this.context.stroke()
 }
 
 export default RenderSystem

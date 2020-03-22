@@ -1,12 +1,12 @@
 /* global Harmony */
 
-const Entity = function (_config) {
-  this.addComponent(new Harmony.Transform(_config))
+const Entity = function (config) {
+  this.addComponent(new Harmony.Transform(config))
 }
 
-Entity.prototype.addComponent = function (_component) {
-  _component.owner = this
-  this[_component.name] = _component
+Entity.prototype.addComponent = function (component) {
+  component.owner = this
+  this[component.name] = component
 }
 
 Entity.prototype.hasComponent = function (componentName) {

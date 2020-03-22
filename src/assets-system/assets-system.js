@@ -80,4 +80,12 @@ AssetsSystem.prototype.load = function () {
   }
 }
 
+AssetsSystem.prototype.progress = function () {
+  let progress = Math.floor((this.success + this.errors) / this.queue.length * 100)
+  if (isNaN(progress)) {
+    progress = 100
+  }
+  return progress
+}
+
 export default AssetsSystem

@@ -9,8 +9,9 @@ const PhysycsSystem = function (canvas) {
   this.fps = 60
   this.components = []
   this.scale = 100
+  this.context = canvas.getContext('2d')
 
-  const debugDraw = new B2DebugDraw()
+  const debugDraw = new B2DebugDraw(this.context)
   debugDraw.SetSprite(canvas.getContext('2d'))
   debugDraw.SetDrawScale(this.scale)
   debugDraw.SetFillAlpha(0.5)
@@ -23,12 +24,16 @@ const PhysycsSystem = function (canvas) {
   }
 }
 
+PhysycsSystem.prototype.setGravity = function (config) {
+  this.world.SetGravity(config)
+}
+
 PhysycsSystem.prototype.drawDebugData = function () {
   this.world.DrawDebugData()
 }
 
 PhysycsSystem.prototype.addPhysycsComponent = function (config) {
-  const physycsComponent = new Harmony.Physycs(config, this.world, this.scale)
+  const physycsComponent = new Harmony.Physycs(config, this)
   this.components.push(physycsComponent)
   return physycsComponent
 }
@@ -36,6 +41,11 @@ PhysycsSystem.prototype.addPhysycsComponent = function (config) {
 PhysycsSystem.prototype.update = function () {
   this.world.Step(1 / this.fps, 8, 3)
   this.world.ClearForces()
+  this.components.forEach((component) => {
+    const position = component.getPosition()
+    component.owner.transform.x = position.x
+    component.owner.transform.y = position.y
+  })
 }
 
 export default PhysycsSystem
