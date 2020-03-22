@@ -1,8 +1,11 @@
+/* global Harmony */
+
 const RenderSystem = function (canvas) {
   this.canvas = canvas
   this.context = this.canvas.getContext('2d')
   this.canvas.height = window.innerHeight
   this.canvas.width = window.innerWidth
+  this.components = []
 }
 
 RenderSystem.prototype.clear = function () {
@@ -39,26 +42,30 @@ RenderSystem.prototype.draw = function (entities) {
   //   -this.camera.position.y
   // )
 
-  entities.forEach((entity) => {
-    if (entity.hasComponent('transform') && entity.hasComponent('renderable')) {
-      this.context.save()
-      this.context.translate(
-        entity.transform.x + entity.renderable.width * 0.5 * entity.transform.scale - entity.renderable.width * entity.renderable.anchorX * entity.transform.scale,
-        entity.transform.y + entity.renderable.height * 0.5 * entity.transform.scale - entity.renderable.height * entity.renderable.anchorY * entity.transform.scale
-      )
-      this.context.rotate(entity.transform.angle)
-      this.context.scale(entity.transform.scale, entity.transform.scale)
-      this.context.drawImage(
-        entity.renderable.image,
-        entity.renderable.width * -0.5, // do not touch this
-        entity.renderable.height * -0.5, // do not touch this
-        entity.renderable.width, // do not touch this
-        entity.renderable.height // do not touch this
-      )
-      this.context.restore()
-    }
+  this.components.forEach((component) => {
+    this.context.save()
+    this.context.translate(
+      component.owner.transform.x + component.width * 0.5 * component.owner.transform.scale - component.width * component.anchorX * component.owner.transform.scale,
+      component.owner.transform.y + component.height * 0.5 * component.owner.transform.scale - component.height * component.anchorY * component.owner.transform.scale
+    )
+    this.context.rotate(component.owner.transform.angle)
+    this.context.scale(component.owner.transform.scale, component.owner.transform.scale)
+    this.context.drawImage(
+      component.image,
+      component.width * -0.5, // do not touch this
+      component.height * -0.5, // do not touch this
+      component.width, // do not touch this
+      component.height // do not touch this
+    )
+    this.context.restore()
   })
   this.context.restore()
+}
+
+RenderSystem.prototype.addRenderComponent = function (config) {
+  const renderComponent = new Harmony.Renderable(config)
+  this.components.push(renderComponent)
+  return renderComponent
 }
 
 export default RenderSystem

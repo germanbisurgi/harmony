@@ -1,5 +1,5 @@
-const Track = function (buffer) {
-  this.buffer = buffer
+const Track = function (config) {
+  this.buffer = config.buffer
 }
 
 Track.prototype.play = function () {

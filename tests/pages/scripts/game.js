@@ -3,10 +3,10 @@
 
 const setupState = new Harmony.State('setup', {
   preload: (engine) => {
-    engine.assets.addImage({name: 'image-angry-face', url: './assets/images/angry-face.png'})
-    engine.assets.addAudio({name: 'audio-coin', url: './assets/audio/coin.wav'})
-    engine.assets.addAudioBuffer({name: 'audio-buffer-tic', url: './assets/audio/tic.mp3'})
-    engine.assets.addJSON({name: 'json-test', url: './assets/json/test.json'})
+    engine.assets.addImage({ name: 'image-angry-face', url: './assets/images/angry-face.png' })
+    engine.assets.addAudio({ name: 'audio-coin', url: './assets/audio/coin.wav' })
+    engine.assets.addAudioBuffer({ name: 'audio-buffer-tic', url: './assets/audio/tic.mp3' })
+    engine.assets.addJSON({ name: 'json-test', url: './assets/json/test.json' })
   },
   create: (engine) => {
     // ------------------------------------------------------------------ assets
@@ -15,19 +15,19 @@ const setupState = new Harmony.State('setup', {
     engine.audioCoin = engine.assets.getAudio('audio-coin')
     engine.trackTic = new Harmony.Track(engine.assets.getAudioBuffer('audio-buffer-tic'))
 
-    console.log(engine.imageAngryFace)
+    engine.trackTic = engine.audio.add({ buffer: engine.assets.getAudioBuffer('audio-buffer-tic') })
 
     // -------------------------------------------------------------------- keys
 
-    engine.c = engine.keys.add({key: 'c'})
-    engine.w = engine.keys.add({key: 'w'})
-    engine.a = engine.keys.add({key: 'a'})
-    engine.s = engine.keys.add({key: 's'})
-    engine.d = engine.keys.add({key: 'd'})
-    engine.q = engine.keys.add({key: 'q'})
-    engine.e = engine.keys.add({key: 'e'})
-    engine.y = engine.keys.add({key: 'y'})
-    engine.x = engine.keys.add({key: 'x'})
+    engine.c = engine.keys.add({ key: 'c' })
+    engine.w = engine.keys.add({ key: 'w' })
+    engine.a = engine.keys.add({ key: 'a' })
+    engine.s = engine.keys.add({ key: 's' })
+    engine.d = engine.keys.add({ key: 'd' })
+    engine.q = engine.keys.add({ key: 'q' })
+    engine.e = engine.keys.add({ key: 'e' })
+    engine.y = engine.keys.add({ key: 'y' })
+    engine.x = engine.keys.add({ key: 'x' })
 
     // ---------------------------------------------------------------- pointers
 
@@ -36,14 +36,14 @@ const setupState = new Harmony.State('setup', {
 
     // ---------------------------------------------------------------- entities
 
-    engine.entity = new Harmony.Entity({
+    engine.entity = engine.entities.add({
       x: 50,
       y: 50,
       angle: 4,
       scale: 1
     })
 
-    engine.entity.addComponent(new Harmony.Renderable({
+    engine.entity.addComponent(engine.render.addRenderComponent({
       image: engine.imageAngryFace,
       width: 50,
       height: 50,
@@ -51,15 +51,19 @@ const setupState = new Harmony.State('setup', {
       anchorY: 0.5
     }))
 
-    engine.entity.addComponent(new Harmony.Physycs({
-      world: engine.physycs.world
-    }))
+    engine.entity.addComponent(engine.physycs.addPhysycsComponent())
+    engine.entity.physycs.addCircle(0, 0, 50)
 
     engine.entities.add(engine.entity)
 
     console.table(engine.entity)
   },
   update: (engine) => {
+    engine.entity.physycs.applyForce({ x: 2, y: 0 })
+    // engine.entity.physycs.setPosition({ x: 2, y: 0 })
+    // engine.entity.physycs.setLinearVelocity({ x: 2, y: 0 })
+    // console.log(engine.entity.physycs.body.GetPosition())
+    console.log(engine.entity.physycs.body)
     // -------------------------------------------------------------------- keys
 
     if (engine.w.hold) {
