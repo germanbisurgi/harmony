@@ -1,131 +1,128 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 
+const my = {}
+
 const setupState = new Harmony.State('setup', {
   preload: async (engine) => {
-    console.log('preload')
-    engine.jsonTest = await engine.assets.addJSON({ url: './assets/json/test.json' })
-    engine.audioCoin = await engine.assets.addAudio({ url: './assets/audio/coin.wav' })
-    engine.imageAngryFace = await engine.assets.addImage({ url: './assets/images/angry-face.png' })
-    engine.audioBufferTic = await engine.assets.addAudioBuffer({ url: './assets/audio/tic.mp3' })
+    my.jsonTest = await engine.assets.addJSON({ url: './assets/json/test.json' })
+    my.audioCoin = await engine.assets.addAudio({ url: './assets/audio/coin.wav' })
+    my.imageAngryFace = await engine.assets.addImage({ url: './assets/images/angry-face.png' })
+    my.audioBufferTic = await engine.assets.addAudioBuffer({ url: './assets/audio/tic.mp3' })
   },
   create: (engine) => {
-    console.log('create')
-
     // ------------------------------------------------------------------ assets
 
-    engine.trackTic = engine.audio.add({ buffer: engine.audioBufferTic })
+    my.trackTic = engine.audio.add({ buffer: my.audioBufferTic })
 
     // -------------------------------------------------------------------- keys
 
-    engine.c = engine.keys.add({ key: 'c' })
-    engine.w = engine.keys.add({ key: 'w' })
-    engine.a = engine.keys.add({ key: 'a' })
-    engine.s = engine.keys.add({ key: 's' })
-    engine.d = engine.keys.add({ key: 'd' })
-    engine.q = engine.keys.add({ key: 'q' })
-    engine.e = engine.keys.add({ key: 'e' })
-    engine.y = engine.keys.add({ key: 'y' })
-    engine.x = engine.keys.add({ key: 'x' })
-    engine.z = engine.keys.add({ key: 'z' })
-    engine.g = engine.keys.add({ key: 'g' })
-    engine.h = engine.keys.add({ key: 'h' })
-    engine.j = engine.keys.add({ key: 'j' })
+    my.keyC = engine.keys.add({ key: 'c' })
+    my.keyW = engine.keys.add({ key: 'w' })
+    my.keyA = engine.keys.add({ key: 'a' })
+    my.keyS = engine.keys.add({ key: 's' })
+    my.keyD = engine.keys.add({ key: 'd' })
+    my.keyQ = engine.keys.add({ key: 'q' })
+    my.keyE = engine.keys.add({ key: 'e' })
+    my.keyY = engine.keys.add({ key: 'y' })
+    my.keyX = engine.keys.add({ key: 'x' })
 
     // ---------------------------------------------------------------- pointers
 
-    engine.pointer1 = engine.pointers.add()
-    engine.pointer2 = engine.pointers.add()
+    my.pointer1 = engine.pointers.add()
 
-    // ----------------------------------------------------------------- physycs
+    // ----------------------------------------------------------------- physics
 
-    engine.physycs.setGravity({ x: 0, y: 0 })
+    engine.physics.setGravity({ x: 0, y: 0 })
 
     // ---------------------------------------------------------------- entities
 
-    engine.entity = engine.entities.add({
-      x: 50,
-      y: 50,
+    my.entityNormal = engine.entities.add({
+      x: 200,
+      y: 200,
       angle: 4,
-      scale: 1
+      scale: 2
     })
 
-    engine.entity.addComponent(engine.render.addRenderComponent({
-      image: engine.imageAngryFace,
+    my.entityNormal.addComponent(engine.render.addRenderComponent({
+      image: my.imageAngryFace,
       width: 50,
       height: 50,
       anchorX: 0.5,
       anchorY: 0.5
     }))
 
-    engine.entity.addComponent(engine.physycs.addPhysycsComponent())
-    engine.entity.physycs.addCircle({ offsetX: 0, offsetY: 0, radius: 50 })
+    my.entityPhysics = engine.entities.add({
+      x: 50,
+      y: 50,
+      angle: 4,
+      scale: 1
+    })
 
-    engine.entities.add(engine.entity)
+    my.entityPhysics.addComponent(engine.render.addRenderComponent({
+      image: my.imageAngryFace,
+      width: 50,
+      height: 50,
+      anchorX: 0.5,
+      anchorY: 0.5
+    }))
 
-    console.table(engine.entity)
+    my.entityPhysics.addComponent(engine.physics.addPhysicsComponent())
+
+    my.entityPhysics.physics.addCircle({
+      offsetX: 0,
+      offsetY: 0,
+      radius: 50
+    })
+
+    console.table(my)
   },
   update: (engine) => {
     // -------------------------------------------------------------------- keys
 
-    if (engine.z.hold) {
-      engine.entity.physycs.applyForce({ x: 0, y: -2 })
+    if (my.keyW.hold) {
+      my.entityNormal.transform.y += -5
     }
-    if (engine.g.hold) {
-      engine.entity.physycs.applyForce({ x: -2, y: 0 })
+    if (my.keyA.hold) {
+      my.entityNormal.transform.x -= 5
     }
-    if (engine.h.hold) {
-      engine.entity.physycs.applyForce({ x: 0, y: 2 })
+    if (my.keyS.hold) {
+      my.entityNormal.transform.y += 5
     }
-    if (engine.j.hold) {
-      engine.entity.physycs.applyForce({ x: 2, y: 0 })
+    if (my.keyD.hold) {
+      my.entityNormal.transform.x += 5
     }
-
-    if (engine.w.hold) {
-      engine.entity.transform.y += -5
+    if (my.keyQ.hold) {
+      my.entityNormal.transform.angle -= 0.1
     }
-    if (engine.a.hold) {
-      engine.entity.transform.x -= 5
+    if (my.keyE.hold) {
+      my.entityNormal.transform.angle += 0.1
     }
-    if (engine.s.hold) {
-      engine.entity.transform.y += 5
+    if (my.keyY.hold) {
+      my.entityNormal.transform.scale -= 0.1
     }
-    if (engine.d.hold) {
-      engine.entity.transform.x += 5
-    }
-    if (engine.q.hold) {
-      engine.entity.transform.angle -= 0.1
-    }
-    if (engine.e.hold) {
-      engine.entity.transform.angle += 0.1
-    }
-    if (engine.y.hold) {
-      engine.entity.transform.scale -= 0.1
-    }
-    if (engine.x.hold) {
-      engine.entity.transform.scale += 0.1
+    if (my.keyX.hold) {
+      my.entityNormal.transform.scale += 0.1
     }
 
-    if (engine.c.start) {
-      engine.audioCoin.currentTime = 0.1
-      engine.audioCoin.play()
+    if (my.keyC.start) {
+      my.audioCoin.currentTime = 0.1
+      my.audioCoin.play()
     }
 
     // ---------------------------------------------------------------- pointers
 
-    if (engine.pointer1.start || engine.pointer2.start) {
-      engine.entity.physycs.setPosition({ x: engine.pointer1.x, y: engine.pointer1.y })
-
-      console.log('audioCtx.state', audioCtx.state)
-      if (audioCtx.state === 'suspended') {
-        audioCtx.resume()
-      }
-      engine.trackTic.play()
+    if (my.pointer1.start) {
+      my.entityNormal.transform.x = my.pointer1.x
+      my.entityNormal.transform.y = my.pointer1.y
+      my.trackTic.play()
     }
 
-    if (engine.pointer1.hold) {
-      engine.entity.transform.x = engine.pointer1.x
-      engine.entity.transform.y = engine.pointer1.y
+    if (my.pointer1.hold) {
+      my.entityPhysics.physics.applyForce({
+        x: (my.pointer1.x - my.pointer1.startX) * 0.1,
+        y: (my.pointer1.y - my.pointer1.startY) * 0.1
+      })
     }
   },
   draw: (engine) => {
@@ -199,11 +196,6 @@ const canvas = document.querySelector('#engine-canvas')
 const engine = new Harmony.Engine(canvas)
 engine.state.add(setupState)
 engine.state.switch('setup')
-
-const AudioContext = window.AudioContext || window.webkitAudioContext
-window.audioCtx = new AudioContext({
-  latencyHint: 'interactive'
-})
 
 window.onerror = function (msg, url, linenumber) {
   alert('Error message: ' + msg + '\nURL: ' + url + '\nLine Number: ' + linenumber)

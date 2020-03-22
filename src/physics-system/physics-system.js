@@ -1,6 +1,6 @@
 /* global Box2D Harmony */
 
-const PhysycsSystem = function (canvas) {
+const PhysicsSystem = function (canvas) {
   const B2World = Box2D.Dynamics.b2World
   const B2Vec2 = Box2D.Common.Math.b2Vec2
   const B2DebugDraw = Box2D.Dynamics.b2DebugDraw
@@ -24,21 +24,21 @@ const PhysycsSystem = function (canvas) {
   }
 }
 
-PhysycsSystem.prototype.setGravity = function (config) {
+PhysicsSystem.prototype.setGravity = function (config) {
   this.world.SetGravity(config)
 }
 
-PhysycsSystem.prototype.drawDebugData = function () {
+PhysicsSystem.prototype.drawDebugData = function () {
   this.world.DrawDebugData()
 }
 
-PhysycsSystem.prototype.addPhysycsComponent = function (config) {
-  const physycsComponent = new Harmony.Physycs(config, this)
-  this.components.push(physycsComponent)
-  return physycsComponent
+PhysicsSystem.prototype.addPhysicsComponent = function (config) {
+  const physicsComponent = new Harmony.Physics(config, this)
+  this.components.push(physicsComponent)
+  return physicsComponent
 }
 
-PhysycsSystem.prototype.update = function () {
+PhysicsSystem.prototype.update = function () {
   this.world.Step(1 / this.fps, 8, 3)
   this.world.ClearForces()
   this.components.forEach((component) => {
@@ -48,4 +48,4 @@ PhysycsSystem.prototype.update = function () {
   })
 }
 
-export default PhysycsSystem
+export default PhysicsSystem

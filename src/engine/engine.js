@@ -8,7 +8,7 @@ const Engine = function (canvas) {
   this.state = new Harmony.StateSystem()
   this.render = new Harmony.RenderSystem(canvas)
   this.entities = new Harmony.EntitySystem()
-  this.physycs = new Harmony.PhysycsSystem(canvas)
+  this.physics = new Harmony.PhysicsSystem(canvas)
   this.audio = new Harmony.AudioSystem()
 
   this.loop.onStep = async () => {
@@ -26,10 +26,11 @@ const Engine = function (canvas) {
     if (this.state.current.created) {
       this.keys.update(this.loop.delta, this.loop.frame)
       this.pointers.update(this.loop.delta, this.loop.frame)
-      this.physycs.update()
+      this.audio.update()
+      this.physics.update()
       this.state.current.update(this)
       this.render.draw()
-      this.physycs.drawDebugData()
+      this.physics.drawDebugData()
       this.state.current.draw(this)
     }
   }

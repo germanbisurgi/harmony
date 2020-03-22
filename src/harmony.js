@@ -13,8 +13,8 @@ import State from './state-system/state'
 import Transform from './entity-system/transform'
 import EntitySystem from './entity-system/entity-system'
 import Track from './audio-system/track'
-import PhysycsSystem from './physycs-system/physycs-system'
-import Physycs from './physycs-system/physycs'
+import PhysicsSystem from './physics-system/physics-system'
+import Physics from './physics-system/physics'
 import AudioSystem from './audio-system/audio-system'
 
 const Harmony = {
@@ -26,8 +26,8 @@ const Harmony = {
   Key: Key,
   KeySystem: KeySystem,
   LoopSystem: LoopSystem,
-  Physycs: Physycs,
-  PhysycsSystem: PhysycsSystem,
+  Physics: Physics,
+  PhysicsSystem: PhysicsSystem,
   Pointer: Pointer,
   PointerSystem: PointerSystem,
   Renderable: Renderable,
