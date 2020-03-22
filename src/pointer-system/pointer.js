@@ -13,11 +13,4 @@ const Pointer = function () {
   this.y = 0
 }
 
-Pointer.prototype.getPosition = function () {
-  return {
-    x: this.x,
-    y: this.y
-  }
-}
-
 export default Pointer

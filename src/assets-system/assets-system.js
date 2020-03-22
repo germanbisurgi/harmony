@@ -1,4 +1,5 @@
 /* global Image Audio */
+
 const AssetsSystem = function () {}
 
 AssetsSystem.prototype.addImage = function (config) {

@@ -9,8 +9,4 @@ Entity.prototype.addComponent = function (component) {
   this[component.name] = component
 }
 
-Entity.prototype.hasComponent = function (componentName) {
-  return Object.hasOwnProperty.call(this, componentName)
-}
-
 export default Entity

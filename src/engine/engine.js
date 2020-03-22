@@ -1,15 +1,15 @@
 /* global Harmony */
 
 const Engine = function (canvas) {
+  this.audio = new Harmony.AudioSystem()
   this.assets = new Harmony.AssetsSystem()
+  this.entities = new Harmony.EntitySystem()
   this.keys = new Harmony.KeySystem()
   this.loop = new Harmony.LoopSystem()
-  this.pointers = new Harmony.PointerSystem(canvas)
-  this.scene = new Harmony.SceneSystem()
-  this.render = new Harmony.RenderSystem(canvas)
-  this.entities = new Harmony.EntitySystem()
   this.physics = new Harmony.PhysicsSystem(canvas)
-  this.audio = new Harmony.AudioSystem()
+  this.pointers = new Harmony.PointerSystem(canvas)
+  this.render = new Harmony.RenderSystem(canvas)
+  this.scene = new Harmony.SceneSystem()
 
   this.loop.onStep = async () => {
     this.scene.update()

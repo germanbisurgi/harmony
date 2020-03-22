@@ -1,5 +1,4 @@
-const Scene = function (name, params) {
-  this.name = name
+const Scene = function (params) {
   this.created = false
   this.methods = Object.assign({
     create: (engine) => {},

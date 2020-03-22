@@ -2,7 +2,7 @@
 
 const my = {}
 
-const setupState = new Harmony.Scene('setup', {
+const setupState = new Harmony.Scene({
   create: async (engine) => {
     // ------------------------------------------------------------------ assets
 
