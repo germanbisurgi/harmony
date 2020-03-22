@@ -120,13 +120,7 @@ const setupState = new Harmony.State('setup', {
       if (audioCtx.state === 'suspended') {
         audioCtx.resume()
       }
-
-      // audio buffer WAA
       engine.trackTic.play()
-
-      // Audio
-      // engine.audioCoin.currentTime = 0.0
-      // engine.audioCoin.play()
     }
 
     if (engine.pointer1.hold) {
@@ -211,7 +205,7 @@ window.audioCtx = new AudioContext({
   latencyHint: 'interactive'
 })
 
-// window.onerror = function (msg, url, linenumber) {
-//   alert('Error message: ' + msg + '\nURL: ' + url + '\nLine Number: ' + linenumber)
-//   return true
-// }
+window.onerror = function (msg, url, linenumber) {
+  alert('Error message: ' + msg + '\nURL: ' + url + '\nLine Number: ' + linenumber)
+  return true
+}
