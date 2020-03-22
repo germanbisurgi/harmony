@@ -11,14 +11,15 @@ const Engine = function (canvas) {
   this.physycs = new Harmony.PhysycsSystem(canvas)
   this.audio = new Harmony.AudioSystem()
 
-  this.loop.onStep = () => {
+  this.loop.onStep = async () => {
     this.state.update()
     if (!this.state.current.preloaded) {
+      this.loop.pause()
       this.state.current.preloaded = true
-      this.state.current.preload(this)
-      this.assets.load()
+      await this.state.current.preload(this)
+      this.loop.continue()
     }
-    if (!this.state.current.created && !this.assets.loading) {
+    if (!this.state.current.created) {
       this.state.current.created = true
       this.state.current.create(this)
     }

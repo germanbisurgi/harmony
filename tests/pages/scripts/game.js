@@ -2,20 +2,19 @@
 /* eslint-disable no-unused-vars */
 
 const setupState = new Harmony.State('setup', {
-  preload: (engine) => {
-    engine.myAsset = engine.assets.addImage({ name: 'image-angry-face', url: './assets/images/angry-face.png' })
-    engine.assets.addAudio({ name: 'audio-coin', url: './assets/audio/coin.wav' })
-    engine.assets.addAudioBuffer({ name: 'audio-buffer-tic', url: './assets/audio/tic.mp3' })
-    engine.assets.addJSON({ name: 'json-test', url: './assets/json/test.json' })
+  preload: async (engine) => {
+    console.log('preload')
+    engine.jsonTest = await engine.assets.addJSON({ url: './assets/json/test.json' })
+    engine.audioCoin = await engine.assets.addAudio({ url: './assets/audio/coin.wav' })
+    engine.imageAngryFace = await engine.assets.addImage({ url: './assets/images/angry-face.png' })
+    engine.audioBufferTic = await engine.assets.addAudioBuffer({ url: './assets/audio/tic.mp3' })
   },
   create: (engine) => {
+    console.log('create')
+
     // ------------------------------------------------------------------ assets
 
-    engine.imageAngryFace = engine.assets.getImage('image-angry-face')
-    engine.audioCoin = engine.assets.getAudio('audio-coin')
-    engine.trackTic = new Harmony.Track(engine.assets.getAudioBuffer('audio-buffer-tic'))
-
-    engine.trackTic = engine.audio.add({ buffer: engine.assets.getAudioBuffer('audio-buffer-tic') })
+    engine.trackTic = engine.audio.add({ buffer: engine.audioBufferTic })
 
     // -------------------------------------------------------------------- keys
 
@@ -212,7 +211,7 @@ window.audioCtx = new AudioContext({
   latencyHint: 'interactive'
 })
 
-window.onerror = function (msg, url, linenumber) {
-  alert('Error message: ' + msg + '\nURL: ' + url + '\nLine Number: ' + linenumber)
-  return true
-}
+// window.onerror = function (msg, url, linenumber) {
+//   alert('Error message: ' + msg + '\nURL: ' + url + '\nLine Number: ' + linenumber)
+//   return true
+// }

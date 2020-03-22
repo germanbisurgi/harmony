@@ -9,10 +9,6 @@ import PointerSystem from './pointer-system/pointer-system'
 import Renderable from './render-system/renderable'
 import RenderSystem from './render-system/render-system'
 import StateSystem from './state-system/state-system'
-import ImageAsset from './assets-system/image-asset'
-import AudioAsset from './assets-system/audio-asset'
-import AudioBufferAsset from './assets-system/audio-buffer-asset'
-import JSONAsset from './assets-system/json-asset'
 import State from './state-system/state'
 import Transform from './entity-system/transform'
 import EntitySystem from './entity-system/entity-system'
@@ -22,10 +18,6 @@ import Physycs from './physycs-system/physycs'
 import AudioSystem from './audio-system/audio-system'
 
 const Harmony = {
-  ImageAsset: ImageAsset,
-  AudioAsset: AudioAsset,
-  AudioBufferAsset: AudioBufferAsset,
-  JSONAsset: JSONAsset,
   AssetsSystem: AssetsSystem,
   AudioSystem: AudioSystem,
   Engine: Engine,

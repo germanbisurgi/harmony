@@ -1,91 +1,67 @@
-/* global Harmony */
-const AssetsSystem = function () {
-  this.loaded = false
-  this.errors = 0
-  this.success = 0
-  this.queue = []
-  this.cache = []
+/* global Image Audio */
+const AssetsSystem = function () {}
+
+AssetsSystem.prototype.addImage = function (config) {
+  return new Promise((resolve, reject) => {
+    const image = new Image()
+    image.onload = () => {
+      resolve(image)
+    }
+    image.onerror = (reason) => {
+      reject(reason)
+    }
+    image.src = config.url
+  })
 }
 
 AssetsSystem.prototype.addAudio = function (config) {
-  const asset = new Harmony.AudioAsset(config)
-  this.queue.push(asset)
+  return new Promise((resolve, reject) => {
+    const audio = new Audio()
+    audio.oncanplaythrough = () => {
+      resolve(audio)
+      audio.oncanplaythrough = null
+    }
+    audio.onerror = (reason) => {
+      reject(reason)
+    }
+    audio.src = config.url
+  })
 }
 
 AssetsSystem.prototype.addAudioBuffer = function (config) {
-  const asset = new Harmony.AudioBufferAsset(config)
-  this.queue.push(asset)
-}
-
-AssetsSystem.prototype.addImage = function (config) {
-  const asset = new Harmony.ImageAsset(config)
-  this.queue.push(asset)
+  return new Promise((resolve, reject) => {
+    const xhr = new window.XMLHttpRequest()
+    const AudioContext = new (window.AudioContext || window.webkitAudioContext)()
+    xhr.open('GET', config.url, true)
+    xhr.responseType = 'arraybuffer'
+    xhr.onload = () => {
+      AudioContext.decodeAudioData(xhr.response, (buffer) => {
+        resolve(buffer)
+      }, (reason) => {
+        reject(reason)
+      })
+    }
+    xhr.onerror = (reason) => {
+      reject(reason)
+    }
+    xhr.send()
+  })
 }
 
 AssetsSystem.prototype.addJSON = function (config) {
-  const asset = new Harmony.JSONAsset(config)
-  this.queue.push(asset)
-}
-
-AssetsSystem.prototype.get = function (name) {
-  for (let i = 0, len = this.cache.length; i < len; i++) {
-    if (this.cache[i].name === name) {
-      return this.cache[i]
-    }
-  }
-  return false
-}
-
-AssetsSystem.prototype.getAudio = function (name) {
-  return this.get(name).content
-}
-
-AssetsSystem.prototype.getAudioBuffer = function (name) {
-  return this.get(name).content
-}
-
-AssetsSystem.prototype.getImage = function (name) {
-  return this.get(name).content
-}
-
-AssetsSystem.prototype.getJSON = function (name) {
-  return this.get(name).content
-}
-
-AssetsSystem.prototype.hasCompleted = function () {
-  if (this.queue.length === this.success + this.errors) {
-    this.queue = []
-    this.loading = false
-    return true
-  } else {
-    return false
-  }
-}
-
-AssetsSystem.prototype.load = function () {
-  if (this.queue.length > 0) {
-    this.loading = true
-    for (let i = 0, len = this.queue.length; i < len; i++) {
-      this.queue[i].load()
-      this.queue[i].success = (asset) => {
-        this.cache.push(asset)
-        this.success++
-        this.hasCompleted()
-      }
-      this.queue[i].error = () => {
-        this.errors++
-        this.hasCompleted()
+  return new Promise((resolve, reject) => {
+    const xhr = new window.XMLHttpRequest()
+    xhr.open('GET', config.url, true)
+    xhr.onload = () => {
+      if (xhr.status === 200) {
+        resolve(JSON.parse(xhr.response))
       }
     }
-  }
-}
-
-AssetsSystem.prototype.progress = function () {
-  let progress = Math.floor((this.success + this.errors) / this.queue.length * 100)
-  if (isNaN(progress)) {
-    progress = 100
-  }
-  return progress
+    xhr.onerror = (reason) => {
+      reject(reason)
+    }
+    xhr.send()
+  })
 }
 
 export default AssetsSystem
