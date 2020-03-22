@@ -1,31 +1,29 @@
-/* eslint-disable no-undef */
-/* eslint-disable no-unused-vars */
+/* global Harmony */
 
 const my = {}
 
-const setupState = new Harmony.State('setup', {
-  preload: async (engine) => {
+const setupState = new Harmony.Scene('setup', {
+  create: async (engine) => {
+    // ------------------------------------------------------------------ assets
+
     my.jsonTest = await engine.assets.addJSON({ url: './assets/json/test.json' })
     my.audioCoin = await engine.assets.addAudio({ url: './assets/audio/coin.wav' })
     my.imageAngryFace = await engine.assets.addImage({ url: './assets/images/angry-face.png' })
     my.audioBufferTic = await engine.assets.addAudioBuffer({ url: './assets/audio/tic.mp3' })
-  },
-  create: (engine) => {
-    // ------------------------------------------------------------------ assets
 
     my.trackTic = engine.audio.add({ buffer: my.audioBufferTic })
 
     // -------------------------------------------------------------------- keys
 
-    my.keyC = engine.keys.add({ key: 'c' })
-    my.keyW = engine.keys.add({ key: 'w' })
     my.keyA = engine.keys.add({ key: 'a' })
-    my.keyS = engine.keys.add({ key: 's' })
+    my.keyC = engine.keys.add({ key: 'c' })
     my.keyD = engine.keys.add({ key: 'd' })
-    my.keyQ = engine.keys.add({ key: 'q' })
     my.keyE = engine.keys.add({ key: 'e' })
-    my.keyY = engine.keys.add({ key: 'y' })
+    my.keyW = engine.keys.add({ key: 'w' })
+    my.keyQ = engine.keys.add({ key: 'q' })
+    my.keyS = engine.keys.add({ key: 's' })
     my.keyX = engine.keys.add({ key: 'x' })
+    my.keyY = engine.keys.add({ key: 'y' })
 
     // ---------------------------------------------------------------- pointers
 
@@ -194,10 +192,10 @@ const setupState = new Harmony.State('setup', {
 
 const canvas = document.querySelector('#engine-canvas')
 const engine = new Harmony.Engine(canvas)
-engine.state.add(setupState)
-engine.state.switch('setup')
+engine.scene.add(setupState)
+engine.scene.switch('setup')
 
 window.onerror = function (msg, url, linenumber) {
-  alert('Error message: ' + msg + '\nURL: ' + url + '\nLine Number: ' + linenumber)
+  window.alert('Error message: ' + msg + '\nURL: ' + url + '\nLine Number: ' + linenumber)
   return true
 }

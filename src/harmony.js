@@ -8,8 +8,8 @@ import Pointer from './pointer-system/pointer'
 import PointerSystem from './pointer-system/pointer-system'
 import Renderable from './render-system/renderable'
 import RenderSystem from './render-system/render-system'
-import StateSystem from './state-system/state-system'
-import State from './state-system/state'
+import SceneSystem from './scene-system/scene-system'
+import Scene from './scene-system/scene'
 import Transform from './entity-system/transform'
 import EntitySystem from './entity-system/entity-system'
 import Track from './audio-system/track'
@@ -32,8 +32,8 @@ const Harmony = {
   PointerSystem: PointerSystem,
   Renderable: Renderable,
   RenderSystem: RenderSystem,
-  State: State,
-  StateSystem: StateSystem,
+  Scene: Scene,
+  SceneSystem: SceneSystem,
   Transform: Transform,
   Track: Track
 }

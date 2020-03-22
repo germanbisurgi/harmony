@@ -5,33 +5,30 @@ const Engine = function (canvas) {
   this.keys = new Harmony.KeySystem()
   this.loop = new Harmony.LoopSystem()
   this.pointers = new Harmony.PointerSystem(canvas)
-  this.state = new Harmony.StateSystem()
+  this.scene = new Harmony.SceneSystem()
   this.render = new Harmony.RenderSystem(canvas)
   this.entities = new Harmony.EntitySystem()
   this.physics = new Harmony.PhysicsSystem(canvas)
   this.audio = new Harmony.AudioSystem()
 
   this.loop.onStep = async () => {
-    this.state.update()
-    if (!this.state.current.preloaded) {
+    this.scene.update()
+
+    if (!this.scene.current.created) {
+      this.scene.current.created = true
       this.loop.pause()
-      this.state.current.preloaded = true
-      await this.state.current.preload(this)
+      await this.scene.current.create(this)
       this.loop.continue()
     }
-    if (!this.state.current.created) {
-      this.state.current.created = true
-      this.state.current.create(this)
-    }
-    if (this.state.current.created) {
+    if (this.scene.current.created) {
       this.keys.update(this.loop.delta, this.loop.frame)
       this.pointers.update(this.loop.delta, this.loop.frame)
       this.audio.update()
       this.physics.update()
-      this.state.current.update(this)
+      this.scene.current.update(this)
       this.render.draw()
       this.physics.drawDebugData()
-      this.state.current.draw(this)
+      this.scene.current.draw(this)
     }
   }
   this.loop.run()
