@@ -9,23 +9,13 @@ SceneSystem.prototype.add = function (scene) {
   return scene
 }
 
-SceneSystem.prototype.getByName = function (sceneName) {
-  let output = false
-  this.cache.forEach(function (scene) {
-    if (scene.name === sceneName) {
-      output = scene
-    }
-  })
-  return output
-}
-
-SceneSystem.prototype.switch = function (sceneName) {
-  this.requested = sceneName
+SceneSystem.prototype.switch = function (scene) {
+  this.requested = scene
 }
 
 SceneSystem.prototype.update = function () {
   if (this.requested) {
-    this.current = this.getByName(this.requested)
+    this.current = this.requested
     this.requested = null
   }
 }
