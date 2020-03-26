@@ -2,6 +2,10 @@ import Pointer from './pointer'
 
 const PointerSystem = function (canvas) {
   this.cache = []
+  this.delta = 0
+  this.now = 0
+  this.then = 0
+  this.frame = 0
   this.canvas = canvas
   this.enablePointers()
 }
@@ -75,23 +79,27 @@ PointerSystem.prototype.handlePointerUpAndCancel = function (event) {
   }
 }
 
-PointerSystem.prototype.update = function (delta, frame) {
-  this.cache.forEach(function (pointer) {
+PointerSystem.prototype.update = function () {
+  this.frame++
+  this.now = window.performance.now()
+  this.delta = this.now - this.then
+  this.then = this.now
+  this.cache.forEach((pointer) => {
     if (pointer.hold) {
-      pointer.holdTime += delta
+      pointer.holdTime += this.delta
       pointer.endFrame = 0
       if (pointer.startFrame === 0) {
-        pointer.startFrame = frame
+        pointer.startFrame = this.frame
       }
     } else {
       pointer.holdTime = 0
       pointer.startFrame = 0
       if (pointer.endFrame === 0) {
-        pointer.endFrame = frame
+        pointer.endFrame = this.frame
       }
     }
-    pointer.start = (pointer.startFrame === frame)
-    pointer.end = (pointer.endFrame === frame)
+    pointer.start = (pointer.startFrame === this.frame)
+    pointer.end = (pointer.endFrame === this.frame)
   })
 }
 

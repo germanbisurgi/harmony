@@ -21,8 +21,8 @@ const Engine = function (canvas) {
       this.loop.continue()
     }
     if (this.scene.current.created) {
-      this.keys.update(this.loop.delta, this.loop.frame)
-      this.pointers.update(this.loop.delta, this.loop.frame)
+      this.keys.update()
+      this.pointers.update()
       this.audio.update()
       this.physics.update()
       this.scene.current.update(this)

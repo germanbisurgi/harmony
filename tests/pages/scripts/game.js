@@ -24,6 +24,7 @@ const setupState = new Harmony.Scene({
     my.keyS = engine.keys.add({ key: 's' })
     my.keyX = engine.keys.add({ key: 'x' })
     my.keyY = engine.keys.add({ key: 'y' })
+    my.keySpace = engine.keys.add({ key: ' ' })
 
     // ---------------------------------------------------------------- pointers
 
@@ -77,6 +78,20 @@ const setupState = new Harmony.Scene({
   },
   update: (engine) => {
     // -------------------------------------------------------------------- keys
+
+    // console.log(my.keySpace)
+
+    if (my.keySpace.start) {
+      console.log('start')
+    }
+
+    if (my.keySpace.hold) {
+      console.log('hold')
+    }
+
+    if (my.keySpace.end) {
+      console.log('end')
+    }
 
     if (my.keyW.hold) {
       my.entityNormal.transform.y += -5
