@@ -10,7 +10,8 @@ import SpriteComponent from './render-system/sprite-component'
 import RenderSystem from './render-system/render-system'
 import SceneSystem from './scene-system/scene-system'
 import Scene from './scene-system/scene'
-import TransformComponent from './entity-system/transform-component'
+import TransformComponent from './transform-system/transform-component'
+import TransformSystem from './transform-system/transform-system'
 import EntitySystem from './entity-system/entity-system'
 import Track from './audio-system/track'
 import PhysicsSystem from './physics-system/physics-system'
@@ -35,6 +36,7 @@ const Harmony = {
   Scene: Scene,
   SceneSystem: SceneSystem,
   TransformComponent: TransformComponent,
+  TransformSystem: TransformSystem,
   Track: Track
 }
 
