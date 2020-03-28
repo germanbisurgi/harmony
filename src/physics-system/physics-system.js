@@ -45,10 +45,11 @@ PhysicsSystem.prototype.update = function () {
     const component = this.components[i]
     if (component.destroyed) {
       this.components.splice(i, 1)
+    } else {
+      const position = component.getPosition()
+      component.owner.transform.x = position.x
+      component.owner.transform.y = position.y
     }
-    const position = component.getPosition()
-    component.owner.transform.x = position.x
-    component.owner.transform.y = position.y
   }
 }
 
