@@ -18,7 +18,6 @@ const TransformComponent = function (params) {
 
 TransformComponent.prototype.destroy = function () {
   this.destroyed = true
-  console.log('destroy transform')
 }
 
 export default TransformComponent

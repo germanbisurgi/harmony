@@ -72,7 +72,6 @@ PhysicsComponent.prototype.setLinearVelocity = function (config) {
 }
 
 PhysicsComponent.prototype.destroy = function () {
-  console.log('destroy physics')
   this.fixtures.forEach((fixture) => {
     this.body.DestroyFixture(fixture)
   })

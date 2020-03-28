@@ -20,7 +20,6 @@ const SpriteComponent = function (params) {
 
 SpriteComponent.prototype.destroy = function () {
   this.destroyed = true
-  console.log('destroy sprite')
 }
 
 export default SpriteComponent
