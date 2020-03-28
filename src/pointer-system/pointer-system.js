@@ -1,4 +1,4 @@
-import Pointer from './pointer'
+/* global Harmony */
 
 const PointerSystem = function (canvas) {
   this.cache = []
@@ -11,7 +11,7 @@ const PointerSystem = function (canvas) {
 }
 
 PointerSystem.prototype.add = function () {
-  const pointer = new Pointer()
+  const pointer = new Harmony.Pointer()
   this.cache.unshift(pointer)
   return pointer
 }
@@ -23,6 +23,7 @@ PointerSystem.prototype.enablePointers = function () {
   this.canvas.addEventListener('pointerup', this.handlePointerUpAndCancel.bind(this), false)
   this.canvas.addEventListener('pointercancel', this.handlePointerUpAndCancel.bind(this), false)
   this.canvas.addEventListener('pointerleave', this.handlePointerUpAndCancel.bind(this), false)
+  this.canvas.addEventListener('contextmenu', this.handleContextMenu.bind(this), false)
 }
 
 PointerSystem.prototype.getPointerByID = function (id) {
@@ -51,6 +52,7 @@ PointerSystem.prototype.handlePointerDown = function (event) {
   if (pointer) {
     pointer.active = true
     pointer.id = event.pointerId
+    pointer.type = event.pointerType // 'mouse', 'pen', 'touch'
     pointer.hold = true
     pointer.startX = event.clientX - event.target.offsetLeft
     pointer.startY = event.clientY - event.target.offsetTop
@@ -63,7 +65,6 @@ PointerSystem.prototype.handlePointerMove = function (event) {
   event.preventDefault()
   const pointer = this.getPointerByID(event.pointerId) || this.getInactivePointer()
   if (pointer) {
-    pointer.active = true
     pointer.id = event.pointerId
     pointer.x = event.clientX - event.target.offsetLeft
     pointer.y = event.clientY - event.target.offsetTop
@@ -77,6 +78,10 @@ PointerSystem.prototype.handlePointerUpAndCancel = function (event) {
     pointer.active = false
     pointer.hold = false
   }
+}
+
+PointerSystem.prototype.handleContextMenu = function (event) {
+  event.preventDefault()
 }
 
 PointerSystem.prototype.update = function () {
@@ -101,6 +106,10 @@ PointerSystem.prototype.update = function () {
     pointer.start = (pointer.startFrame === this.frame)
     pointer.end = (pointer.endFrame === this.frame)
   })
+}
+
+PointerSystem.prototype.destroy = function () {
+  this.cache = []
 }
 
 export default PointerSystem

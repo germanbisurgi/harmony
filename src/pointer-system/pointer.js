@@ -7,6 +7,7 @@ const Pointer = function () {
   this.startFrame = 0
   this.endFrame = 0
   this.id = 0
+  this.type = null
   this.startX = 0
   this.startY = 0
   this.x = 0
