@@ -1,12 +1,14 @@
 /* global Harmony */
 
-const my = {}
+const global = {}
 
-my.destroy = function (engine) {
+global.destroy = function (engine) {
   engine.entities.destroy()
   engine.pointers.destroy()
   engine.keys.destroy()
 }
+
+const my = {}
 
 const Scene1 = new Harmony.Scene({
   create: async (engine) => {
@@ -50,25 +52,13 @@ const Scene1 = new Harmony.Scene({
     })
   },
   update: (engine) => {
-    if (my.keyT.start) {
-      console.log('start')
-    }
-
-    if (my.keyT.hold) {
-      console.log('hold')
-    }
-
-    if (my.keyT.end) {
-      console.log('end')
-    }
-
     if (my.key1.start) {
-      my.destroy(engine)
+      global.destroy(engine)
       engine.scene.switch(Scene1)
     }
 
     if (my.key2.start) {
-      my.destroy(engine)
+      global.destroy(engine)
       engine.scene.switch(Scene2)
     }
 
@@ -90,22 +80,22 @@ const Scene1 = new Harmony.Scene({
   }
 })
 
+const myother = {}
+
 const Scene2 = new Harmony.Scene({
   create: async (engine) => {
     console.log('scene2')
+    myother.key1 = engine.keys.add({ key: '1' })
+    myother.key2 = engine.keys.add({ key: '2' })
   },
   update: (engine) => {
-    console.log(
-      'key1', my.key1,
-      'key2', my.key2
-    )
-    if (my.key1.start) {
-      my.destroy(engine)
+    if (myother.key1.start) {
+      global.destroy(engine)
       engine.scene.switch(Scene1)
     }
 
-    if (my.key2.start) {
-      my.destroy(engine)
+    if (myother.key2.start) {
+      global.destroy(engine)
       engine.scene.switch(Scene2)
     }
   }
