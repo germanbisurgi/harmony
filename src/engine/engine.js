@@ -14,10 +14,9 @@ const Engine = function (canvas) {
 
   this.loop.onStep = async () => {
     this.scene.update()
-
     if (!this.scene.current.created) {
       this.loop.pause()
-      await this.scene.current.create(this)
+      await this.scene.current.create(this, this.scene.current.refs)
       this.scene.current.created = true
       this.loop.continue()
     }
@@ -27,10 +26,10 @@ const Engine = function (canvas) {
       this.audio.update()
       this.transform.update()
       this.physics.update()
-      this.scene.current.update(this)
+      this.scene.current.update(this, this.scene.current.refs)
       this.render.draw()
       this.physics.drawDebugData()
-      this.scene.current.draw(this)
+      this.scene.current.draw(this, this.scene.current.refs)
     }
   }
   this.loop.run()

@@ -8,93 +8,87 @@ global.destroy = function (engine) {
   engine.keys.destroy()
 }
 
-const my = {}
-
 const Scene1 = new Harmony.Scene({
-  create: async (engine) => {
-    console.log('scene1')
+  create: async (engine, refs) => {
+    refs.imageAngryFace = await engine.assets.addImage({ url: './assets/images/angry-face.png' })
+    refs.audioBufferTic = await engine.assets.addAudioBuffer({ url: './assets/audio/tic.mp3' })
 
-    my.imageAngryFace = await engine.assets.addImage({ url: './assets/images/angry-face.png' })
-    my.audioBufferTic = await engine.assets.addAudioBuffer({ url: './assets/audio/tic.mp3' })
+    refs.trackTic = engine.audio.add({ buffer: refs.audioBufferTic })
 
-    my.trackTic = engine.audio.add({ buffer: my.audioBufferTic })
+    refs.key1 = engine.keys.add({ key: '1' })
+    refs.key2 = engine.keys.add({ key: '2' })
 
-    my.key1 = engine.keys.add({ key: '1' })
-    my.key2 = engine.keys.add({ key: '2' })
-    my.keyT = engine.keys.add({ key: 't' })
+    refs.pointer1 = engine.pointers.add()
+    refs.pointer2 = engine.pointers.add()
 
-    my.pointer1 = engine.pointers.add()
-    my.pointer2 = engine.pointers.add()
+    refs.entity = engine.entities.add()
 
-    my.entity = engine.entities.add()
-
-    my.entity.addComponent(engine.transform.addTransformComponent({
+    refs.entity.addComponent(engine.transform.addTransformComponent({
       x: 50,
       y: 50,
       angle: 4,
       scale: 1
     }))
 
-    my.entity.addComponent(engine.render.addSpriteComponent({
-      image: my.imageAngryFace,
+    refs.entity.addComponent(engine.render.addSpriteComponent({
+      image: refs.imageAngryFace,
       width: 50,
       height: 50,
       anchorX: 0.5,
       anchorY: 0.5
     }))
 
-    my.entity.addComponent(engine.physics.addPhysicsComponent())
+    refs.entity.addComponent(engine.physics.addPhysicsComponent())
 
-    my.entity.physics.addCircle({
+    refs.entity.physics.addCircle({
       offsetX: 0,
       offsetY: 0,
       radius: 50
     })
+    console.table(refs)
   },
-  update: (engine) => {
-    if (my.key1.start) {
+  update: (engine, refs) => {
+    if (refs.key1.start) {
       global.destroy(engine)
       engine.scene.switch(Scene1)
     }
 
-    if (my.key2.start) {
+    if (refs.key2.start) {
       global.destroy(engine)
       engine.scene.switch(Scene2)
     }
 
-    if (my.pointer1.start) {
-      my.trackTic.play()
+    if (refs.pointer1.start) {
+      refs.trackTic.play()
     }
 
-    if (my.pointer1.hold) {
-      my.entity.physics.applyForce({
-        x: (my.pointer1.x - my.pointer1.startX) * 0.1,
-        y: (my.pointer1.y - my.pointer1.startY) * 0.1
+    if (refs.pointer1.hold) {
+      refs.entity.physics.applyForce({
+        x: (refs.pointer1.x - refs.pointer1.startX) * 0.1,
+        y: (refs.pointer1.y - refs.pointer1.startY) * 0.1
       })
     }
 
-    if (my.pointer1.start && my.pointer2.start) {
-      my.entity.physics.setPosition({ x: 100, y: 100 })
-      my.entity.physics.setLinearVelocity({ x: 0, y: 0 })
+    if (refs.pointer1.start && refs.pointer2.start) {
+      refs.entity.physics.setPosition({ x: 100, y: 100 })
+      refs.entity.physics.setLinearVelocity({ x: 0, y: 0 })
     }
   }
 })
 
-const myother = {}
-
 const Scene2 = new Harmony.Scene({
-  create: async (engine) => {
-    console.log('scene2')
-    myother.key1 = engine.keys.add({ key: '1' })
-    myother.key2 = engine.keys.add({ key: '2' })
+  create: async (engine, refs) => {
+    refs.key1 = engine.keys.add({ key: '1' })
+    refs.key2 = engine.keys.add({ key: '2' })
+    console.table(refs)
   },
-  update: (engine) => {
-    if (myother.key1.start) {
+  update: (engine, refs) => {
+    if (refs.key1.start) {
       global.destroy(engine)
       engine.scene.switch(Scene1)
     }
 
-    if (myother.key2.start) {
+    if (refs.key2.start) {
       global.destroy(engine)
       engine.scene.switch(Scene2)
     }
