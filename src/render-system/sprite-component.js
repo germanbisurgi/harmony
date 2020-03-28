@@ -1,6 +1,6 @@
 const SpriteComponent = function (params) {
   const config = Object.assign({
-    name: 'renderable',
+    name: 'sprite',
     image: null,
     width: 50,
     height: 50,
@@ -9,12 +9,18 @@ const SpriteComponent = function (params) {
   }, params)
 
   this.owner = null
+  this.destroyed = false
   this.name = config.name
   this.image = config.image
   this.width = config.width
   this.height = config.height
   this.anchorX = config.anchorX
   this.anchorY = config.anchorY
+}
+
+SpriteComponent.prototype.destroy = function () {
+  this.destroyed = true
+  console.log('destroy sprite')
 }
 
 export default SpriteComponent

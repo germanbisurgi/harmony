@@ -9,21 +9,23 @@ const Engine = function (canvas) {
   this.physics = new Harmony.PhysicsSystem(canvas)
   this.pointers = new Harmony.PointerSystem(canvas)
   this.render = new Harmony.RenderSystem(canvas)
+  this.transform = new Harmony.TransformSystem()
   this.scene = new Harmony.SceneSystem()
 
   this.loop.onStep = async () => {
     this.scene.update()
 
     if (!this.scene.current.created) {
-      this.scene.current.created = true
       this.loop.pause()
       await this.scene.current.create(this)
+      this.scene.current.created = true
       this.loop.continue()
     }
     if (this.scene.current.created) {
       this.keys.update()
       this.pointers.update()
       this.audio.update()
+      this.transform.update()
       this.physics.update()
       this.scene.current.update(this)
       this.render.draw()

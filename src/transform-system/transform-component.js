@@ -8,11 +8,17 @@ const TransformComponent = function (params) {
   }, params)
 
   this.owner = null
+  this.destroyed = false
   this.name = config.name
   this.x = config.x
   this.y = config.y
   this.angle = config.angle
   this.scale = config.scale
+}
+
+TransformComponent.prototype.destroy = function () {
+  this.destroyed = true
+  console.log('destroy transform')
 }
 
 export default TransformComponent

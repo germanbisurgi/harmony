@@ -42,8 +42,14 @@ RenderSystem.prototype.draw = function (entities) {
   //   -this.camera.position.y
   // )
 
-  this.components.forEach((component) => {
+  for (let i = this.components.length; i--;) {
+    const component = this.components[i]
+    if (component.destroyed) {
+      this.components.splice(i, 1)
+    }
+
     this.context.save()
+    // this.context.imageSmoothingEnabled = true
     this.context.translate(
       component.owner.transform.x + component.width * 0.5 * component.owner.transform.scale - component.width * component.anchorX * component.owner.transform.scale,
       component.owner.transform.y + component.height * 0.5 * component.owner.transform.scale - component.height * component.anchorY * component.owner.transform.scale
@@ -58,13 +64,14 @@ RenderSystem.prototype.draw = function (entities) {
       component.height // do not touch this
     )
     this.context.restore()
-  })
+  }
+
   this.context.restore()
 }
 
 RenderSystem.prototype.addSpriteComponent = function (config) {
   const spriteComponent = new Harmony.SpriteComponent(config)
-  this.components.push(spriteComponent)
+  this.components.unshift(spriteComponent)
   return spriteComponent
 }
 

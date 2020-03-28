@@ -22,10 +22,12 @@ const PhysicsComponent = function (params, system) {
   const config = Object.assign(defaults, params)
 
   this.owner = null
-  this.name = config.name
-  this.system = system
+  this.destroyed = false
   this.body = null
+  this.system = system
+  this.fixtures = []
   this.type = config.type
+  this.name = config.name
 
   const B2BodyDef = Box2D.Dynamics.b2BodyDef
   const B2Body = Box2D.Dynamics.b2Body
@@ -58,6 +60,7 @@ const PhysicsComponent = function (params, system) {
   }
 
   this.body = this.system.world.CreateBody(bodyDef)
+  this.body.active = true
 }
 
 PhysicsComponent.prototype.setLinearVelocity = function (config) {
@@ -66,6 +69,15 @@ PhysicsComponent.prototype.setLinearVelocity = function (config) {
     x: config.x / this.system.scale,
     y: config.y / this.system.scale
   })
+}
+
+PhysicsComponent.prototype.destroy = function () {
+  console.log('destroy physics')
+  this.fixtures.forEach((fixture) => {
+    this.body.DestroyFixture(fixture)
+  })
+  this.system.world.DestroyBody(this.body)
+  this.destroyed = true
 }
 
 PhysicsComponent.prototype.getPosition = function () {
@@ -77,11 +89,10 @@ PhysicsComponent.prototype.getPosition = function () {
 }
 
 PhysicsComponent.prototype.setPosition = function (config) {
-  const worldPosition = {
+  this.body.SetPosition({
     x: config.x / this.system.scale,
     y: config.y / this.system.scale
-  }
-  this.body.SetPosition(worldPosition)
+  })
 }
 
 PhysicsComponent.prototype.applyForce = function (config) {
@@ -120,6 +131,8 @@ PhysicsComponent.prototype.addCircle = function (params) {
     x: config.offsetX / this.system.scale || 0,
     y: config.offsetY / this.system.scale || 0
   }
-  return this.body.CreateFixture(fixtureDef)
+  const fixture = this.body.CreateFixture(fixtureDef)
+  this.fixtures.push(fixture)
+  return fixture
 }
 export default PhysicsComponent

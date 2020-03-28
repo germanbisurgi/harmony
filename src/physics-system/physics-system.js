@@ -41,11 +41,15 @@ PhysicsSystem.prototype.addPhysicsComponent = function (config) {
 PhysicsSystem.prototype.update = function () {
   this.world.Step(1 / this.fps, 8, 3)
   this.world.ClearForces()
-  this.components.forEach((component) => {
+  for (let i = this.components.length; i--;) {
+    const component = this.components[i]
+    if (component.destroyed) {
+      this.components.splice(i, 1)
+    }
     const position = component.getPosition()
     component.owner.transform.x = position.x
     component.owner.transform.y = position.y
-  })
+  }
 }
 
 export default PhysicsSystem
