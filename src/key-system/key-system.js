@@ -61,4 +61,8 @@ KeySystem.prototype.update = function () {
   }
 }
 
+KeySystem.prototype.destroy = function () {
+  this.cache = {}
+}
+
 export default KeySystem
