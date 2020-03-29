@@ -10,6 +10,15 @@ EntitySystem.prototype.add = function () {
   return entity
 }
 
+EntitySystem.prototype.update = function () {
+  for (let i = this.cache.length; i--;) {
+    const entity = this.cache[i]
+    if (entity.destroyed) {
+      this.cache.splice(i, 1)
+    }
+  }
+}
+
 EntitySystem.prototype.destroy = function () {
   for (let i = this.cache.length; i--;) {
     const entity = this.cache[i]
