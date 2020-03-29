@@ -1,60 +1,74 @@
 /* global Harmony */
 
-const global = {}
-
-global.destroy = function (engine) {
-  engine.entities.destroy()
-  engine.pointers.destroy()
-  engine.keys.destroy()
-}
-
 const Scene1 = new Harmony.Scene({
   create: async (engine, refs) => {
-    refs.imageAngryFace = await engine.assets.addImage({ url: './assets/images/angry-face.png' })
+    // ------------------------------------------------------------------ assets
+
+    refs.face = await engine.assets.addImage({ url: './assets/images/angry-face.png' })
     refs.audioBufferTic = await engine.assets.addAudioBuffer({ url: './assets/audio/tic.mp3' })
 
     refs.trackTic = engine.audio.add({ buffer: refs.audioBufferTic })
 
+    // -------------------------------------------------------------------- keys
+
     refs.key1 = engine.keys.add({ key: '1' })
     refs.key2 = engine.keys.add({ key: '2' })
+
+    // ---------------------------------------------------------------- pointers
 
     refs.pointer1 = engine.pointers.add()
     refs.pointer2 = engine.pointers.add()
 
-    refs.entity = engine.entities.add()
+    // ---------------------------------------------------------------- entities
 
-    refs.entity.addComponent(engine.transform.addTransformComponent({
-      x: 50,
-      y: 50,
-      angle: 4,
-      scale: 1
-    }))
+    refs.rows = 3
+    refs.cols = 3
+    refs.width = window.innerWidth / refs.cols
+    refs.height = window.innerHeight / refs.rows
+    refs.ratioW = refs.width / refs.height
+    refs.ratioH = refs.height / refs.width
+    refs.ratio = refs.ratioW < refs.ratioH ? refs.ratioW : refs.ratioH
+    refs.tileSize = 100 * refs.ratio
 
-    refs.entity.addComponent(engine.render.addSpriteComponent({
-      image: refs.imageAngryFace,
-      width: 50,
-      height: 50,
-      anchorX: 0.5,
-      anchorY: 0.5
-    }))
+    const grid = new Array(refs.cols)
+    for (let i = 0; i < grid.length; i++) {
+      grid[i] = new Array(refs.rows)
+    }
 
-    refs.entity.addComponent(engine.physics.addPhysicsComponent())
+    for (let col = 0; col < refs.cols; col++) {
+      for (let row = 0; row < refs.cols; row++) {
+        grid[row][col] = 'row: ' + row + ' col: ' + col
+        refs.entity = engine.entities.add()
+        refs.entity.addComponent(engine.render.addSpriteComponent({
+          image: refs.face,
+          width: refs.tileSize,
+          height: refs.tileSize,
+          anchorX: 0.5,
+          anchorY: 0.5
+        }))
 
-    refs.entity.physics.addCircle({
-      offsetX: 0,
-      offsetY: 0,
-      radius: 50
-    })
-    console.table(refs)
+        refs.entity.addComponent(engine.physics.addPhysicsComponent({
+          x: row * refs.width + refs.width * 0.5,
+          y: col * refs.height + refs.height * 0.5
+        }))
+
+        refs.entity.physics.addCircle({
+          radius: refs.tileSize * 0.5,
+          density: 10
+        })
+      }
+    }
+    // refs.entity = engine.entities.add({ x: 200, y: 200, angle: 4, scale: 1 })
+    // refs.entity.addComponent(engine.render.addSpriteComponent({ image: refs.face, width: 100, height: 100, anchorX: 0.5, anchorY: 0.5 }))
+    // refs.entity.addComponent(engine.physics.addPhysicsComponent({ x: 200, y: 200 }))
+    // refs.entity.physics.addCircle({ x: 0, y: 0, radius: 60 })
   },
   update: (engine, refs) => {
     if (refs.key1.start) {
-      global.destroy(engine)
       engine.scene.switch(Scene1)
     }
 
     if (refs.key2.start) {
-      global.destroy(engine)
       engine.scene.switch(Scene2)
     }
 
@@ -80,16 +94,13 @@ const Scene2 = new Harmony.Scene({
   create: async (engine, refs) => {
     refs.key1 = engine.keys.add({ key: '1' })
     refs.key2 = engine.keys.add({ key: '2' })
-    console.table(refs)
   },
   update: (engine, refs) => {
     if (refs.key1.start) {
-      global.destroy(engine)
       engine.scene.switch(Scene1)
     }
 
     if (refs.key2.start) {
-      global.destroy(engine)
       engine.scene.switch(Scene2)
     }
   }
