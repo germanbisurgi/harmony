@@ -49,6 +49,7 @@ PhysicsSystem.prototype.update = function () {
       const position = component.getPosition()
       component.owner.transform.x = position.x
       component.owner.transform.y = position.y
+      component.owner.transform.angle = component.getAngle()
     }
   }
 }

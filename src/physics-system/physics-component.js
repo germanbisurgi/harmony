@@ -87,6 +87,10 @@ PhysicsComponent.prototype.getPosition = function () {
   }
 }
 
+PhysicsComponent.prototype.getAngle = function () {
+  return this.body.GetAngle()
+}
+
 PhysicsComponent.prototype.setPosition = function (config) {
   this.body.SetPosition({
     x: config.x / this.system.scale,
@@ -98,14 +102,7 @@ PhysicsComponent.prototype.applyForce = function (config) {
   this.body.ApplyForce(config, this.body.GetWorldCenter())
 }
 
-PhysicsComponent.prototype.getFixtureDef = function (params) {
-  const defaults = {
-    density: 1,
-    friction: 0.5,
-    restitution: 0.3,
-    isSensor: false
-  }
-  const config = Object.assign(defaults, params)
+PhysicsComponent.prototype.getFixtureDef = function (config) {
   const B2FixtureDef = Box2D.Dynamics.b2FixtureDef
   const fixDef = new B2FixtureDef()
   fixDef.density = config.density
@@ -117,18 +114,22 @@ PhysicsComponent.prototype.getFixtureDef = function (params) {
 
 PhysicsComponent.prototype.addCircle = function (params) {
   const defaults = {
-    offsetX: 0,
-    offsetY: 0,
+    x: 0,
+    y: 0,
     radius: 25,
-    fixtureDefinition: this.getFixtureDef()
+    density: 1,
+    friction: 0.5,
+    restitution: 0.3,
+    isSensor: false
   }
   const config = Object.assign(defaults, params)
+  const fixtureDefinition = this.getFixtureDef(config)
   const B2CircleShape = Box2D.Collision.Shapes.b2CircleShape
-  const fixtureDef = config.fixtureDefinition
+  const fixtureDef = fixtureDefinition
   fixtureDef.shape = new B2CircleShape(config.radius / this.system.scale)
-  fixtureDef.shape.mp = {
-    x: config.offsetX / this.system.scale || 0,
-    y: config.offsetY / this.system.scale || 0
+  fixtureDef.shape.m_p = {
+    x: config.x / this.system.scale,
+    y: config.y / this.system.scale
   }
   const fixture = this.body.CreateFixture(fixtureDef)
   this.fixtures.push(fixture)
