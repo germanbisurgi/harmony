@@ -1,3 +1,5 @@
+import AudioSystem from './audio-system/audio-system'
+import AudioSourceComponent from './audio-system/audio-source-component'
 import AssetsSystem from './assets-system/assets-system'
 import Engine from './engine/engine'
 import Entity from './entity-system/entity'
@@ -13,14 +15,13 @@ import Scene from './scene-system/scene'
 import TransformComponent from './transform-system/transform-component'
 import TransformSystem from './transform-system/transform-system'
 import EntitySystem from './entity-system/entity-system'
-import Track from './audio-system/track'
 import PhysicsSystem from './physics-system/physics-system'
 import PhysicsComponent from './physics-system/physics-component'
-import AudioSystem from './audio-system/audio-system'
 
 const Harmony = {
-  AssetsSystem: AssetsSystem,
   AudioSystem: AudioSystem,
+  AudioSourceComponent: AudioSourceComponent,
+  AssetsSystem: AssetsSystem,
   Engine: Engine,
   Entity: Entity,
   EntitySystem: EntitySystem,
@@ -36,8 +37,7 @@ const Harmony = {
   Scene: Scene,
   SceneSystem: SceneSystem,
   TransformComponent: TransformComponent,
-  TransformSystem: TransformSystem,
-  Track: Track
+  TransformSystem: TransformSystem
 }
 
 export default Harmony
