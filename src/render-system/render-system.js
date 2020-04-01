@@ -48,22 +48,31 @@ RenderSystem.prototype.draw = function (entities) {
     if (component.destroyed) {
       this.components.splice(i, 1)
     } else {
-      this.context.save()
-      // this.context.imageSmoothingEnabled = true
-      this.context.translate(
-        component.owner.transform.x + component.width * 0.5 * component.owner.transform.scale - component.width * component.anchorX * component.owner.transform.scale,
-        component.owner.transform.y + component.height * 0.5 * component.owner.transform.scale - component.height * component.anchorY * component.owner.transform.scale
-      )
-      this.context.rotate(component.owner.transform.angle)
-      this.context.scale(component.owner.transform.scale, component.owner.transform.scale)
-      this.context.drawImage(
-        component.image,
-        component.width * -0.5, // do not touch this
-        component.height * -0.5, // do not touch this
-        component.width, // do not touch this
-        component.height // do not touch this
-      )
-      this.context.restore()
+      if (component.visible) {
+        this.context.save()
+        // this.context.imageSmoothingEnabled = true
+        this.context.translate(
+          component.owner.transform.x + component.width * 0.5 * component.owner.transform.scale - component.width * component.anchorX * component.owner.transform.scale,
+          component.owner.transform.y + component.height * 0.5 * component.owner.transform.scale - component.height * component.anchorY * component.owner.transform.scale
+        )
+        this.context.rotate(component.owner.transform.angle)
+        this.context.scale(
+          component.owner.transform.scale,
+          component.owner.transform.scale
+        )
+        this.context.drawImage(
+          component.image,
+          component.sourceX,
+          component.sourceY,
+          component.sourceWidth,
+          component.sourceHeight,
+          component.width * -0.5, // do not touch this
+          component.height * -0.5, // do not touch this
+          component.width, // do not touch this
+          component.height // do not touch this
+        )
+        this.context.restore()
+      }
     }
   }
 
@@ -71,9 +80,9 @@ RenderSystem.prototype.draw = function (entities) {
 }
 
 RenderSystem.prototype.addSpriteComponent = function (config) {
-  const spriteComponent = new Harmony.SpriteComponent(config)
-  this.components.unshift(spriteComponent)
-  return spriteComponent
+  const component = new Harmony.SpriteComponent(config)
+  this.components.unshift(component)
+  return component
 }
 
 RenderSystem.prototype.text = function (config) {
