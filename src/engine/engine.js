@@ -16,14 +16,16 @@ const Engine = function (canvas) {
 
   this.loop.onStep = async () => {
     if (this.scene.current) {
-      if (this.scene.current.mustCreate) {
+      if (this.scene.mustCreate) {
         // console.log('create')
         this.loop.pause()
+        this.scene.requestUpdate()
         await this.scene.current.create(this, this.scene.current.refs)
-        this.scene.current.requestUpdate()
         this.loop.continue()
       }
-      if (this.scene.current.mustUpdate) {
+      if (this.scene.mustUpdate) {
+        this.scene.requestDraw()
+        // console.log('entities', this.entities.cache.length)
         // console.log('update')
         this.keys.update()
         this.pointers.update()
@@ -32,23 +34,22 @@ const Engine = function (canvas) {
         this.physics.update()
         this.entities.update()
         this.scene.current.update(this, this.scene.current.refs)
-        this.scene.current.requestDraw()
       }
-      if (this.scene.current.mustDraw) {
+      if (this.scene.mustDraw) {
+        this.scene.requestUpdate()
         // console.log('draw')
         this.render.draw()
         // this.physics.drawDebugData()
         this.scene.current.draw(this, this.scene.current.refs)
-        this.scene.current.requestUpdate()
       }
     }
-    if (this.scene.requested !== this.scene.current) {
+    if (this.scene.mustSwitch) {
       // console.log('switch')
       this.entities.destroy()
       this.pointers.destroy()
       this.keys.destroy()
       this.scene.current = this.scene.requested
-      this.scene.current.requestCreate()
+      this.scene.requestCreate()
     }
   }
   this.loop.run()
