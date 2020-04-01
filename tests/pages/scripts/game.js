@@ -261,12 +261,11 @@ const Scene1 = new Harmony.Scene({
 
           // back
 
-          const backEntity = engine.entities.add()
-          backEntity.addComponent(engine.transform.addTransformComponent({
+          const backEntity = engine.entities.add({
             x: row * refs.width + refs.width * 0.5,
             y: col * refs.height + refs.height * 0.5,
             scale: 1.1
-          }))
+          })
           backEntity.addComponent(engine.render.addSpriteComponent({
             image: refs.question,
             width: refs.tileSize,
@@ -281,7 +280,6 @@ const Scene1 = new Harmony.Scene({
           frontEntity.flipped = false
           frontEntity.letter = refs.cards[cellIndex].letter
           frontEntity.type = refs.cards[cellIndex].type
-          frontEntity.addComponent(engine.transform.addTransformComponent())
           frontEntity.addComponent(engine.audio.addAudioSourceComponent({ clip: refs.cards[cellIndex].audio }))
           frontEntity.addComponent(engine.render.addSpriteComponent({
             image: refs.cards[cellIndex].image,
@@ -317,8 +315,6 @@ const Scene1 = new Harmony.Scene({
     // ---------------------------------------------------------- pointer entity
 
     refs.pointerColider = engine.entities.add({ tag: 'pointer' })
-
-    refs.pointerColider.addComponent(engine.transform.addTransformComponent())
 
     refs.pointerColider.addComponent(engine.physics.addPhysicsComponent({
       x: -999999,
