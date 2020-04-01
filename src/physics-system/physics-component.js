@@ -61,6 +61,7 @@ const PhysicsComponent = function (params, system) {
 
   this.body = this.system.world.CreateBody(bodyDef)
   this.body.active = true
+  this.body.component = this
 }
 
 PhysicsComponent.prototype.setLinearVelocity = function (config) {
@@ -135,4 +136,13 @@ PhysicsComponent.prototype.addCircle = function (params) {
   this.fixtures.push(fixture)
   return fixture
 }
+
+PhysicsComponent.prototype.onContactBegin = function (me, other) {}
+
+PhysicsComponent.prototype.onContactEnd = function (me, other) {}
+
+PhysicsComponent.prototype.onContactPreSolve = function (me, other) {}
+
+PhysicsComponent.prototype.onContactPostSolve = function (me, other) {}
+
 export default PhysicsComponent
