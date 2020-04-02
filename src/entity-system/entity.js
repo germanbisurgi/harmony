@@ -1,9 +1,6 @@
-/* global Harmony */
-
 const Entity = function (config) {
   this.destroyed = false
   this.components = []
-  this.addComponent(new Harmony.TransformComponent(config))
 }
 
 Entity.prototype.addComponent = function (component) {

@@ -2,6 +2,7 @@
 
 const EntitySystem = function () {
   this.cache = []
+  this.components = []
 }
 
 EntitySystem.prototype.add = function (config) {
