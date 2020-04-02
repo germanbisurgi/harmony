@@ -1,5 +1,52 @@
 /* global Harmony */
 
+const debug = (engine, refs) => {
+  engine.render.context.save()
+  engine.render.context.fillStyle = '#00ff00'
+  engine.render.context.font = '12px Arial'
+  engine.render.text({
+    text: 'fps: ' + Math.round(1000 / engine.loop.delta),
+    x: 200,
+    y: 200
+  })
+  engine.render.text({
+    text: 'entities: ' + engine.entities.cache.length,
+    x: 200,
+    y: 220
+  })
+  engine.render.text({
+    text: 'transform components: ' + engine.transform.components.length,
+    x: 200,
+    y: 240
+  })
+  engine.render.text({
+    text: 'sprite components: ' + engine.render.components.length,
+    x: 200,
+    y: 260
+  })
+  engine.render.text({
+    text: 'physics components: ' + engine.physics.components.length,
+    x: 200,
+    y: 280
+  })
+  engine.render.text({
+    text: 'audio components: ' + engine.audio.components.length,
+    x: 200,
+    y: 300
+  })
+  engine.render.text({
+    text: 'refs: ' + Object.keys(refs).length,
+    x: 200,
+    y: 320
+  })
+  engine.render.text({
+    text: 'keys: ' + Object.keys(engine.keys.cache).length,
+    x: 200,
+    y: 340
+  })
+  engine.render.context.restore()
+}
+
 const Scene1 = new Harmony.Scene({
   create: async (engine, refs) => {
     // ------------------------------------------------------------------ assets
@@ -59,62 +106,62 @@ const Scene1 = new Harmony.Scene({
     refs.imageYoghurt = await engine.assets.addImage({ url: './assets/images/things/yoghurt.jpg' })
     refs.imageZebra = await engine.assets.addImage({ url: './assets/images/things/zebra.jpg' })
 
-    refs.clipCorrect = await engine.audio.loadClip({ url: './assets/audio/correct.wav' })
-    refs.clipWin = await engine.audio.loadClip({ url: './assets/audio/win.wav' })
+    await engine.audio.loadClip({ name: 'correct', url: './assets/audio/correct.wav' })
+    await engine.audio.loadClip({ name: 'win', url: './assets/audio/win.wav' })
 
-    refs.clipA = await engine.audio.loadClip({ url: './assets/audio/alphabet/a.wav' })
-    refs.clipB = await engine.audio.loadClip({ url: './assets/audio/alphabet/b.wav' })
-    refs.clipC = await engine.audio.loadClip({ url: './assets/audio/alphabet/c.wav' })
-    refs.clipD = await engine.audio.loadClip({ url: './assets/audio/alphabet/d.wav' })
-    refs.clipE = await engine.audio.loadClip({ url: './assets/audio/alphabet/e.wav' })
-    refs.clipF = await engine.audio.loadClip({ url: './assets/audio/alphabet/f.wav' })
-    refs.clipG = await engine.audio.loadClip({ url: './assets/audio/alphabet/g.wav' })
-    refs.clipH = await engine.audio.loadClip({ url: './assets/audio/alphabet/h.wav' })
-    refs.clipI = await engine.audio.loadClip({ url: './assets/audio/alphabet/i.wav' })
-    refs.clipJ = await engine.audio.loadClip({ url: './assets/audio/alphabet/j.wav' })
-    refs.clipK = await engine.audio.loadClip({ url: './assets/audio/alphabet/k.wav' })
-    refs.clipL = await engine.audio.loadClip({ url: './assets/audio/alphabet/l.wav' })
-    refs.clipM = await engine.audio.loadClip({ url: './assets/audio/alphabet/m.wav' })
-    refs.clipN = await engine.audio.loadClip({ url: './assets/audio/alphabet/n.wav' })
-    refs.clipO = await engine.audio.loadClip({ url: './assets/audio/alphabet/o.wav' })
-    refs.clipP = await engine.audio.loadClip({ url: './assets/audio/alphabet/p.wav' })
-    refs.clipQ = await engine.audio.loadClip({ url: './assets/audio/alphabet/q.wav' })
-    refs.clipR = await engine.audio.loadClip({ url: './assets/audio/alphabet/r.wav' })
-    refs.clipS = await engine.audio.loadClip({ url: './assets/audio/alphabet/s.wav' })
-    refs.clipT = await engine.audio.loadClip({ url: './assets/audio/alphabet/t.wav' })
-    refs.clipU = await engine.audio.loadClip({ url: './assets/audio/alphabet/u.wav' })
-    refs.clipV = await engine.audio.loadClip({ url: './assets/audio/alphabet/v.wav' })
-    refs.clipW = await engine.audio.loadClip({ url: './assets/audio/alphabet/w.wav' })
-    refs.clipX = await engine.audio.loadClip({ url: './assets/audio/alphabet/x.wav' })
-    refs.clipY = await engine.audio.loadClip({ url: './assets/audio/alphabet/y.wav' })
-    refs.clipZ = await engine.audio.loadClip({ url: './assets/audio/alphabet/z.wav' })
+    await engine.audio.loadClip({ name: 'a', url: './assets/audio/alphabet/a.wav' })
+    await engine.audio.loadClip({ name: 'b', url: './assets/audio/alphabet/b.wav' })
+    await engine.audio.loadClip({ name: 'c', url: './assets/audio/alphabet/c.wav' })
+    await engine.audio.loadClip({ name: 'd', url: './assets/audio/alphabet/d.wav' })
+    await engine.audio.loadClip({ name: 'e', url: './assets/audio/alphabet/e.wav' })
+    await engine.audio.loadClip({ name: 'f', url: './assets/audio/alphabet/f.wav' })
+    await engine.audio.loadClip({ name: 'g', url: './assets/audio/alphabet/g.wav' })
+    await engine.audio.loadClip({ name: 'h', url: './assets/audio/alphabet/h.wav' })
+    await engine.audio.loadClip({ name: 'i', url: './assets/audio/alphabet/i.wav' })
+    await engine.audio.loadClip({ name: 'j', url: './assets/audio/alphabet/j.wav' })
+    await engine.audio.loadClip({ name: 'k', url: './assets/audio/alphabet/k.wav' })
+    await engine.audio.loadClip({ name: 'l', url: './assets/audio/alphabet/l.wav' })
+    await engine.audio.loadClip({ name: 'm', url: './assets/audio/alphabet/m.wav' })
+    await engine.audio.loadClip({ name: 'n', url: './assets/audio/alphabet/n.wav' })
+    await engine.audio.loadClip({ name: 'o', url: './assets/audio/alphabet/o.wav' })
+    await engine.audio.loadClip({ name: 'p', url: './assets/audio/alphabet/p.wav' })
+    await engine.audio.loadClip({ name: 'q', url: './assets/audio/alphabet/q.wav' })
+    await engine.audio.loadClip({ name: 'r', url: './assets/audio/alphabet/r.wav' })
+    await engine.audio.loadClip({ name: 's', url: './assets/audio/alphabet/s.wav' })
+    await engine.audio.loadClip({ name: 't', url: './assets/audio/alphabet/t.wav' })
+    await engine.audio.loadClip({ name: 'u', url: './assets/audio/alphabet/u.wav' })
+    await engine.audio.loadClip({ name: 'v', url: './assets/audio/alphabet/v.wav' })
+    await engine.audio.loadClip({ name: 'w', url: './assets/audio/alphabet/w.wav' })
+    await engine.audio.loadClip({ name: 'x', url: './assets/audio/alphabet/x.wav' })
+    await engine.audio.loadClip({ name: 'y', url: './assets/audio/alphabet/y.wav' })
+    await engine.audio.loadClip({ name: 'z', url: './assets/audio/alphabet/z.wav' })
 
-    refs.clipArancia = await engine.audio.loadClip({ url: './assets/audio/things/arancia.wav' })
-    refs.clipBrucco = await engine.audio.loadClip({ url: './assets/audio/things/brucco.wav' })
-    refs.clipCane = await engine.audio.loadClip({ url: './assets/audio/things/cane.wav' })
-    refs.clipDelfino = await engine.audio.loadClip({ url: './assets/audio/things/delfino.wav' })
-    refs.clipElefante = await engine.audio.loadClip({ url: './assets/audio/things/elefante.wav' })
-    refs.clipFiore = await engine.audio.loadClip({ url: './assets/audio/things/fiore.wav' })
-    refs.clipGufo = await engine.audio.loadClip({ url: './assets/audio/things/gufo.wav' })
-    refs.clipHotel = await engine.audio.loadClip({ url: './assets/audio/things/hotel.wav' })
-    refs.clipIsola = await engine.audio.loadClip({ url: './assets/audio/things/isola.wav' })
-    refs.clipJeep = await engine.audio.loadClip({ url: './assets/audio/things/jeep.wav' })
-    refs.clipKoala = await engine.audio.loadClip({ url: './assets/audio/things/koala.wav' })
-    refs.clipLeone = await engine.audio.loadClip({ url: './assets/audio/things/leone.wav' })
-    refs.clipMaiale = await engine.audio.loadClip({ url: './assets/audio/things/maiale.wav' })
-    refs.clipNave = await engine.audio.loadClip({ url: './assets/audio/things/nave.wav' })
-    refs.clipOrso = await engine.audio.loadClip({ url: './assets/audio/things/orso.wav' })
-    refs.clipPolpo = await engine.audio.loadClip({ url: './assets/audio/things/polpo.wav' })
-    refs.clipQuaderno = await engine.audio.loadClip({ url: './assets/audio/things/quaderno.wav' })
-    refs.clipRiccio = await engine.audio.loadClip({ url: './assets/audio/things/riccio.wav' })
-    refs.clipSerpente = await engine.audio.loadClip({ url: './assets/audio/things/serpente.wav' })
-    refs.clipTorre = await engine.audio.loadClip({ url: './assets/audio/things/torre.wav' })
-    refs.clipUccello = await engine.audio.loadClip({ url: './assets/audio/things/uccello.wav' })
-    refs.clipViolino = await engine.audio.loadClip({ url: './assets/audio/things/violino.wav' })
-    refs.clipWaffle = await engine.audio.loadClip({ url: './assets/audio/things/waffle.wav' })
-    refs.clipXilofono = await engine.audio.loadClip({ url: './assets/audio/things/xilofono.wav' })
-    refs.clipYoghurt = await engine.audio.loadClip({ url: './assets/audio/things/yoghurt.wav' })
-    refs.clipZebra = await engine.audio.loadClip({ url: './assets/audio/things/zebra.wav' })
+    await engine.audio.loadClip({ name: 'arancia', url: './assets/audio/things/arancia.wav' })
+    await engine.audio.loadClip({ name: 'brucco', url: './assets/audio/things/brucco.wav' })
+    await engine.audio.loadClip({ name: 'cane', url: './assets/audio/things/cane.wav' })
+    await engine.audio.loadClip({ name: 'delfino', url: './assets/audio/things/delfino.wav' })
+    await engine.audio.loadClip({ name: 'elefante', url: './assets/audio/things/elefante.wav' })
+    await engine.audio.loadClip({ name: 'fiore', url: './assets/audio/things/fiore.wav' })
+    await engine.audio.loadClip({ name: 'gufo', url: './assets/audio/things/gufo.wav' })
+    await engine.audio.loadClip({ name: 'hotel', url: './assets/audio/things/hotel.wav' })
+    await engine.audio.loadClip({ name: 'isola', url: './assets/audio/things/isola.wav' })
+    await engine.audio.loadClip({ name: 'jeep', url: './assets/audio/things/jeep.wav' })
+    await engine.audio.loadClip({ name: 'koala', url: './assets/audio/things/koala.wav' })
+    await engine.audio.loadClip({ name: 'leone', url: './assets/audio/things/leone.wav' })
+    await engine.audio.loadClip({ name: 'maiale', url: './assets/audio/things/maiale.wav' })
+    await engine.audio.loadClip({ name: 'nave', url: './assets/audio/things/nave.wav' })
+    await engine.audio.loadClip({ name: 'orso', url: './assets/audio/things/orso.wav' })
+    await engine.audio.loadClip({ name: 'polpo', url: './assets/audio/things/polpo.wav' })
+    await engine.audio.loadClip({ name: 'quaderno', url: './assets/audio/things/quaderno.wav' })
+    await engine.audio.loadClip({ name: 'riccio', url: './assets/audio/things/riccio.wav' })
+    await engine.audio.loadClip({ name: 'serpente', url: './assets/audio/things/serpente.wav' })
+    await engine.audio.loadClip({ name: 'torre', url: './assets/audio/things/torre.wav' })
+    await engine.audio.loadClip({ name: 'uccello', url: './assets/audio/things/uccello.wav' })
+    await engine.audio.loadClip({ name: 'violino', url: './assets/audio/things/violino.wav' })
+    await engine.audio.loadClip({ name: 'waffle', url: './assets/audio/things/waffle.wav' })
+    await engine.audio.loadClip({ name: 'xilofono', url: './assets/audio/things/xilofono.wav' })
+    await engine.audio.loadClip({ name: 'yoghurt', url: './assets/audio/things/yoghurt.wav' })
+    await engine.audio.loadClip({ name: 'zebra', url: './assets/audio/things/zebra.wav' })
 
     // -------------------------------------------------------------------- keys
 
@@ -130,61 +177,61 @@ const Scene1 = new Harmony.Scene({
     // -------------------------------------------------------------------- data
 
     const letters = {
-      a: { letter: 'a', type: 'letter', audio: refs.clipA, image: refs.imageA },
-      b: { letter: 'b', type: 'letter', audio: refs.clipB, image: refs.imageB },
-      c: { letter: 'c', type: 'letter', audio: refs.clipC, image: refs.imageC },
-      d: { letter: 'd', type: 'letter', audio: refs.clipD, image: refs.imageD },
-      e: { letter: 'e', type: 'letter', audio: refs.clipE, image: refs.imageE },
-      f: { letter: 'f', type: 'letter', audio: refs.clipF, image: refs.imageF },
-      g: { letter: 'g', type: 'letter', audio: refs.clipG, image: refs.imageG },
-      h: { letter: 'h', type: 'letter', audio: refs.clipH, image: refs.imageH },
-      i: { letter: 'i', type: 'letter', audio: refs.clipI, image: refs.imageI },
-      j: { letter: 'j', type: 'letter', audio: refs.clipJ, image: refs.imageJ },
-      k: { letter: 'k', type: 'letter', audio: refs.clipK, image: refs.imageK },
-      l: { letter: 'l', type: 'letter', audio: refs.clipL, image: refs.imageL },
-      m: { letter: 'm', type: 'letter', audio: refs.clipM, image: refs.imageM },
-      n: { letter: 'n', type: 'letter', audio: refs.clipN, image: refs.imageN },
-      o: { letter: 'o', type: 'letter', audio: refs.clipO, image: refs.imageO },
-      p: { letter: 'p', type: 'letter', audio: refs.clipP, image: refs.imageP },
-      q: { letter: 'q', type: 'letter', audio: refs.clipQ, image: refs.imageQ },
-      r: { letter: 'r', type: 'letter', audio: refs.clipR, image: refs.imageR },
-      s: { letter: 's', type: 'letter', audio: refs.clipS, image: refs.imageS },
-      t: { letter: 't', type: 'letter', audio: refs.clipT, image: refs.imageT },
-      u: { letter: 'u', type: 'letter', audio: refs.clipU, image: refs.imageU },
-      v: { letter: 'v', type: 'letter', audio: refs.clipV, image: refs.imageV },
-      w: { letter: 'w', type: 'letter', audio: refs.clipW, image: refs.imageW },
-      x: { letter: 'x', type: 'letter', audio: refs.clipX, image: refs.imageX },
-      y: { letter: 'y', type: 'letter', audio: refs.clipY, image: refs.imageY },
-      z: { letter: 'z', type: 'letter', audio: refs.clipZ, image: refs.imageZ }
+      a: { letter: 'a', type: 'letter', audio: 'a', image: refs.imageA },
+      b: { letter: 'b', type: 'letter', audio: 'b', image: refs.imageB },
+      c: { letter: 'c', type: 'letter', audio: 'c', image: refs.imageC },
+      d: { letter: 'd', type: 'letter', audio: 'd', image: refs.imageD },
+      e: { letter: 'e', type: 'letter', audio: 'e', image: refs.imageE },
+      f: { letter: 'f', type: 'letter', audio: 'f', image: refs.imageF },
+      g: { letter: 'g', type: 'letter', audio: 'g', image: refs.imageG },
+      h: { letter: 'h', type: 'letter', audio: 'h', image: refs.imageH },
+      i: { letter: 'i', type: 'letter', audio: 'i', image: refs.imageI },
+      j: { letter: 'j', type: 'letter', audio: 'j', image: refs.imageJ },
+      k: { letter: 'k', type: 'letter', audio: 'k', image: refs.imageK },
+      l: { letter: 'l', type: 'letter', audio: 'l', image: refs.imageL },
+      m: { letter: 'm', type: 'letter', audio: 'm', image: refs.imageM },
+      n: { letter: 'n', type: 'letter', audio: 'n', image: refs.imageN },
+      o: { letter: 'o', type: 'letter', audio: 'o', image: refs.imageO },
+      p: { letter: 'p', type: 'letter', audio: 'p', image: refs.imageP },
+      q: { letter: 'q', type: 'letter', audio: 'q', image: refs.imageQ },
+      r: { letter: 'r', type: 'letter', audio: 'r', image: refs.imageR },
+      s: { letter: 's', type: 'letter', audio: 's', image: refs.imageS },
+      t: { letter: 't', type: 'letter', audio: 't', image: refs.imageT },
+      u: { letter: 'u', type: 'letter', audio: 'u', image: refs.imageU },
+      v: { letter: 'v', type: 'letter', audio: 'v', image: refs.imageV },
+      w: { letter: 'w', type: 'letter', audio: 'w', image: refs.imageW },
+      x: { letter: 'x', type: 'letter', audio: 'x', image: refs.imageX },
+      y: { letter: 'y', type: 'letter', audio: 'y', image: refs.imageY },
+      z: { letter: 'z', type: 'letter', audio: 'z', image: refs.imageZ }
     }
 
     const animals = {
-      a: { letter: 'a', type: 'animal', audio: refs.clipArancia, image: refs.imageArancia },
-      b: { letter: 'b', type: 'animal', audio: refs.clipBrucco, image: refs.imageBrucco },
-      c: { letter: 'c', type: 'animal', audio: refs.clipCane, image: refs.imageCane },
-      d: { letter: 'd', type: 'animal', audio: refs.clipDelfino, image: refs.imageDelfino },
-      e: { letter: 'e', type: 'animal', audio: refs.clipElefante, image: refs.imageElefante },
-      f: { letter: 'f', type: 'animal', audio: refs.clipFiore, image: refs.imageFiore },
-      g: { letter: 'g', type: 'animal', audio: refs.clipGufo, image: refs.imageGufo },
-      h: { letter: 'h', type: 'animal', audio: refs.clipHotel, image: refs.imageHotel },
-      i: { letter: 'i', type: 'animal', audio: refs.clipIsola, image: refs.imageIsola },
-      j: { letter: 'j', type: 'animal', audio: refs.clipJeep, image: refs.imageJeep },
-      k: { letter: 'k', type: 'animal', audio: refs.clipKoala, image: refs.imageKoala },
-      l: { letter: 'l', type: 'animal', audio: refs.clipLeone, image: refs.imageLeone },
-      m: { letter: 'm', type: 'animal', audio: refs.clipMaiale, image: refs.imageMaiale },
-      n: { letter: 'n', type: 'animal', audio: refs.clipNave, image: refs.imageNave },
-      o: { letter: 'o', type: 'animal', audio: refs.clipOrso, image: refs.imageOrso },
-      p: { letter: 'p', type: 'animal', audio: refs.clipPolpo, image: refs.imagePolpo },
-      q: { letter: 'q', type: 'animal', audio: refs.clipQuaderno, image: refs.imageQuaderno },
-      r: { letter: 'r', type: 'animal', audio: refs.clipRiccio, image: refs.imageRiccio },
-      s: { letter: 's', type: 'animal', audio: refs.clipSerpente, image: refs.imageSerpente },
-      t: { letter: 't', type: 'animal', audio: refs.clipTorre, image: refs.imageTorre },
-      u: { letter: 'u', type: 'animal', audio: refs.clipUccello, image: refs.imageUccello },
-      v: { letter: 'v', type: 'animal', audio: refs.clipViolino, image: refs.imageViolino },
-      w: { letter: 'w', type: 'animal', audio: refs.clipWaffle, image: refs.imageWaffle },
-      x: { letter: 'x', type: 'animal', audio: refs.clipXilofono, image: refs.imageXilofono },
-      y: { letter: 'y', type: 'animal', audio: refs.clipYoghurt, image: refs.imageYoghurt },
-      z: { letter: 'z', type: 'animal', audio: refs.clipZebra, image: refs.imageZebra }
+      a: { letter: 'a', type: 'animal', audio: 'arancia', image: refs.imageArancia },
+      b: { letter: 'b', type: 'animal', audio: 'brucco', image: refs.imageBrucco },
+      c: { letter: 'c', type: 'animal', audio: 'cane', image: refs.imageCane },
+      d: { letter: 'd', type: 'animal', audio: 'delfino', image: refs.imageDelfino },
+      e: { letter: 'e', type: 'animal', audio: 'elefante', image: refs.imageElefante },
+      f: { letter: 'f', type: 'animal', audio: 'fiore', image: refs.imageFiore },
+      g: { letter: 'g', type: 'animal', audio: 'gufo', image: refs.imageGufo },
+      h: { letter: 'h', type: 'animal', audio: 'hotel', image: refs.imageHotel },
+      i: { letter: 'i', type: 'animal', audio: 'isola', image: refs.imageIsola },
+      j: { letter: 'j', type: 'animal', audio: 'jeep', image: refs.imageJeep },
+      k: { letter: 'k', type: 'animal', audio: 'koala', image: refs.imageKoala },
+      l: { letter: 'l', type: 'animal', audio: 'leone', image: refs.imageLeone },
+      m: { letter: 'm', type: 'animal', audio: 'maiale', image: refs.imageMaiale },
+      n: { letter: 'n', type: 'animal', audio: 'nave', image: refs.imageNave },
+      o: { letter: 'o', type: 'animal', audio: 'orso', image: refs.imageOrso },
+      p: { letter: 'p', type: 'animal', audio: 'polpo', image: refs.imagePolpo },
+      q: { letter: 'q', type: 'animal', audio: 'quaderno', image: refs.imageQuaderno },
+      r: { letter: 'r', type: 'animal', audio: 'riccio', image: refs.imageRiccio },
+      s: { letter: 's', type: 'animal', audio: 'serpente', image: refs.imageSerpente },
+      t: { letter: 't', type: 'animal', audio: 'torre', image: refs.imageTorre },
+      u: { letter: 'u', type: 'animal', audio: 'uccello', image: refs.imageUccello },
+      v: { letter: 'v', type: 'animal', audio: 'violino', image: refs.imageViolino },
+      w: { letter: 'w', type: 'animal', audio: 'waffle', image: refs.imageWaffle },
+      x: { letter: 'x', type: 'animal', audio: 'xilofono', image: refs.imageXilofono },
+      y: { letter: 'y', type: 'animal', audio: 'yoghurt', image: refs.imageYoghurt },
+      z: { letter: 'z', type: 'animal', audio: 'zebra', image: refs.imageZebra }
     }
 
     // ------------------------------------------------------------------- props
@@ -259,28 +306,28 @@ const Scene1 = new Harmony.Scene({
         for (let row = 0; row < refs.cols; row++) {
           refs.gridgrid[row][col] = 'row: ' + row + ' col: ' + col
 
-          // back
+          // -------------------------------------------------------------- back
 
-          const backEntity = engine.entities.add({
+          const backEntity = engine.entities.add()
+          backEntity.addComponent(engine.transform.addTransformComponent({
             x: row * refs.width + refs.width * 0.5,
             y: col * refs.height + refs.height * 0.5,
             scale: 1.1
-          })
+          }))
           backEntity.addComponent(engine.render.addSpriteComponent({
             image: refs.question,
             width: refs.tileSize,
             height: refs.tileSize
           }))
 
-          refs.cardEntities.push(backEntity)
-
-          // front
+          // ------------------------------------------------------------- front
 
           const frontEntity = engine.entities.add({ tag: 'card' })
+          frontEntity.addComponent(engine.transform.addTransformComponent())
           frontEntity.flipped = false
           frontEntity.letter = refs.cards[cellIndex].letter
           frontEntity.type = refs.cards[cellIndex].type
-          frontEntity.addComponent(engine.audio.addAudioSourceComponent({ clip: refs.cards[cellIndex].audio }))
+          frontEntity.addComponent(engine.audio.addAudioSourceComponent({ clipName: refs.cards[cellIndex].audio }))
           frontEntity.addComponent(engine.render.addSpriteComponent({
             image: refs.cards[cellIndex].image,
             width: refs.tileSize,
@@ -292,12 +339,12 @@ const Scene1 = new Harmony.Scene({
             y: col * refs.height + refs.height * 0.5,
             type: 'static'
           }))
-
           frontEntity.physics.addCircle({
             radius: refs.tileSize * 0.5,
             density: 10
           })
 
+          refs.cardEntities.push(backEntity)
           refs.cardEntities.push(frontEntity)
 
           cellIndex++
@@ -310,12 +357,13 @@ const Scene1 = new Harmony.Scene({
     // ----------------------------------------------------- audioManager entity
 
     refs.audioManager = engine.entities.add({ tag: 'audio-manager' })
+    refs.audioManager.addComponent(engine.transform.addTransformComponent())
     refs.audioManager.addComponent(engine.audio.addAudioSourceComponent({ clip: refs.clipCorrect }))
 
     // ---------------------------------------------------------- pointer entity
 
     refs.pointerColider = engine.entities.add({ tag: 'pointer' })
-
+    refs.pointerColider.addComponent(engine.transform.addTransformComponent())
     refs.pointerColider.addComponent(engine.physics.addPhysicsComponent({
       x: -999999,
       y: -999999
@@ -343,8 +391,6 @@ const Scene1 = new Harmony.Scene({
         }
 
         if (!card.flipped && refs.tempFlipped.length < 2) {
-          // todo rethink this fragile code
-          console.log(card)
           card.audio.play()
           card.sprite.visible = true
           card.flipped = !card.flipped
@@ -359,9 +405,7 @@ const Scene1 = new Harmony.Scene({
             refs.flipped.push(refs.tempFlipped[1])
             // refs.tempFlipped[0].transform.scale = 0.5
             // refs.tempFlipped[1].transform.scale = 0.5
-            refs.audioManager.audio.clip = refs.clipCorrect
-            refs.audioManager.audio.volume = 0.01
-            refs.audioManager.audio.play()
+            refs.audioManager.audio.play('correct')
             refs.isCorrect = true
           } else {
             refs.isCorrect = false
@@ -369,9 +413,7 @@ const Scene1 = new Harmony.Scene({
         }
         if (refs.flipped.length === (refs.rows * refs.cols)) {
           refs.interactionEnabled = false
-          refs.audioManager.audio.clip = refs.clipWin
-          refs.audioManager.audio.volume = 0.05
-          refs.audioManager.audio.play()
+          refs.audioManager.audio.play('win')
           setTimeout(() => {
             engine.scene.requestSwitch()
           }, 2000)
@@ -381,24 +423,17 @@ const Scene1 = new Harmony.Scene({
   },
   update: (engine, refs) => {
     if (refs.key1.start) {
-      refs.audioManager.audio.volume = 1
-      refs.audioManager.audio.clip = refs.clipA
-      refs.audioManager.audio.play()
+      refs.audioManager.audio.play('a')
       // engine.scene.switch(Scene1)
     }
 
     if (refs.key2.start) {
-      refs.audioManager.audio.clip = refs.clipCorrect
-      refs.audioManager.audio.volume = 0.01
-      refs.audioManager.audio.play()
+      refs.audioManager.audio.play('correct')
       // engine.scene.switch(Scene2)
     }
 
     if (refs.key3.start) {
-      refs.audioManager.audio.clip = refs.clipWin
-      refs.audioManager.audio.volume = 0.05
-      refs.audioManager.audio.play()
-      // engine.scene.switch(Scene2)
+      refs.audioManager.audio.play('win')
     }
 
     if (refs.pointer1.start) {
@@ -416,92 +451,33 @@ const Scene1 = new Harmony.Scene({
     }
   },
   draw: (engine, refs) => {
-    // engine.render.context.save()
-    // engine.render.context.fillStyle = '#00ff00'
-    // engine.render.context.font = '12px Arial'
-    // engine.render.text({
-    //   text: 'fps: ' + Math.round(1000 / engine.loop.delta),
-    //   x: 200,
-    //   y: 200
-    // })
-    // engine.render.text({
-    //   text: 'entities: ' + engine.entities.cache.length,
-    //   x: 200,
-    //   y: 220
-    // })
-    // engine.render.text({
-    //   text: 'transform components: ' + engine.transform.components.length,
-    //   x: 200,
-    //   y: 240
-    // })
-    // engine.render.text({
-    //   text: 'sprite components: ' + engine.render.components.length,
-    //   x: 200,
-    //   y: 260
-    // })
-    // engine.render.text({
-    //   text: 'physics components: ' + engine.physics.components.length,
-    //   x: 200,
-    //   y: 280
-    // })
-    // engine.render.text({
-    //   text: 'refs: ' + Object.keys(refs).length,
-    //   x: 200,
-    //   y: 300
-    // })
-    // engine.render.context.restore()
+    debug(engine, refs)
   }
 })
 
 const Scene2 = new Harmony.Scene({
   create: async (engine, refs) => {
+    await engine.audio.loadClip({ name: 'correct', url: './assets/audio/correct.wav' })
+    await engine.audio.loadClip({ name: 'win', url: './assets/audio/win.wav' })
+
     refs.key1 = engine.keys.add({ key: '1' })
     refs.key2 = engine.keys.add({ key: '2' })
+
+    refs.entity = engine.entities.add({ tag: 'audio-manager' })
+    refs.entity.addComponent(engine.transform.addTransformComponent())
+    refs.entity.addComponent(engine.audio.addAudioSourceComponent())
   },
   update: (engine, refs) => {
     if (refs.key1.start) {
-      engine.scene.switch(Scene1)
+      refs.entity.audio.play('win')
     }
 
     if (refs.key2.start) {
-      engine.scene.switch(Scene2)
+      refs.entity.audio.play('correct')
     }
   },
   draw: (engine, refs) => {
-    // engine.render.context.save()
-    // engine.render.context.fillStyle = '#00ff00'
-    // engine.render.context.font = '12px Arial'
-    // engine.render.text({
-    //   text: 'fps: ' + Math.round(1000 / engine.loop.delta),
-    //   x: 200,
-    //   y: 200
-    // })
-    // engine.render.text({
-    //   text: 'entities: ' + engine.entities.cache.length,
-    //   x: 200,
-    //   y: 220
-    // })
-    // engine.render.text({
-    //   text: 'transform components: ' + engine.transform.components.length,
-    //   x: 200,
-    //   y: 240
-    // })
-    // engine.render.text({
-    //   text: 'sprite components: ' + engine.render.components.length,
-    //   x: 200,
-    //   y: 260
-    // })
-    // engine.render.text({
-    //   text: 'physics components: ' + engine.physics.components.length,
-    //   x: 200,
-    //   y: 280
-    // })
-    // engine.render.text({
-    //   text: 'refs: ' + Object.keys(refs).length,
-    //   x: 200,
-    //   y: 300
-    // })
-    // engine.render.context.restore()
+    debug(engine, refs)
   }
 })
 
