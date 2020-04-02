@@ -3,17 +3,35 @@
 const AudioSystem = function () {
   const AudioContext = window.AudioContext || window.webkitAudioContext
   this.context = new AudioContext()
-  this.clips = []
+  this.components = []
+  this.clips = {}
+}
+
+AudioSystem.prototype.play = function (component) {
+  const clipName = component.clipName
+  const source = this.context.createBufferSource()
+  const gain = this.context.createGain()
+  source.buffer = this.clips[clipName]
+  source.loop = component.loop
+  source.connect(gain)
+  gain.connect(this.context.destination)
+  gain.gain.value = component.volume
+
+  // source.addEventListener('ended', () => {
+  //   console.log('ended')
+  // })
+
+  source.start()
 }
 
 AudioSystem.prototype.loadClip = async function (config) {
-  const clip = await this.loadAudioBuffer(config)
-  this.clips.push(clip)
-  return clip
+  this.clips[config.name] = await this.loadAudioBuffer(config)
 }
 
 AudioSystem.prototype.addAudioSourceComponent = function (config) {
-  return new Harmony.AudioSourceComponent(config, this)
+  const component = new Harmony.AudioSourceComponent(config, this)
+  this.components.push(component)
+  return component
 }
 
 AudioSystem.prototype.loadAudioBuffer = function (config) {
@@ -39,6 +57,17 @@ AudioSystem.prototype.loadAudioBuffer = function (config) {
 AudioSystem.prototype.update = function () {
   if (this.context.state === 'suspended') {
     this.context.resume()
+  }
+  for (let i = this.components.length; i--;) {
+    const component = this.components[i]
+    if (component.destroyed) {
+      this.components.splice(i, 1)
+    } else {
+      if (component.playing) {
+        this.play(component)
+        component.playing = false
+      }
+    }
   }
 }
 
