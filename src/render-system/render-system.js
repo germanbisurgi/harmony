@@ -1,4 +1,4 @@
-/* global Harmony */
+/* global Harmony Image */
 
 const RenderSystem = function (canvas) {
   this.canvas = canvas
@@ -6,6 +6,21 @@ const RenderSystem = function (canvas) {
   this.canvas.height = window.innerHeight
   this.canvas.width = window.innerWidth
   this.components = []
+  this.sprites = {}
+}
+
+RenderSystem.prototype.loadSprite = function (config) {
+  return new Promise((resolve, reject) => {
+    const image = new Image()
+    image.onload = () => {
+      this.sprites[config.name] = image
+      resolve(image)
+    }
+    image.onerror = (reason) => {
+      reject(reason)
+    }
+    image.src = config.url
+  })
 }
 
 RenderSystem.prototype.clear = function () {
@@ -45,12 +60,11 @@ RenderSystem.prototype.draw = function (entities) {
   for (let i = this.components.length; i--;) {
     const component = this.components[i]
 
-    if (component.destroyed) {
+    if (component.mustDestroy) {
       this.components.splice(i, 1)
     } else {
       if (component.visible) {
         this.context.save()
-        // this.context.imageSmoothingEnabled = true
         this.context.translate(
           component.owner.transform.x + component.width * 0.5 * component.owner.transform.scale - component.width * component.anchorX * component.owner.transform.scale,
           component.owner.transform.y + component.height * 0.5 * component.owner.transform.scale - component.height * component.anchorY * component.owner.transform.scale
@@ -60,8 +74,9 @@ RenderSystem.prototype.draw = function (entities) {
           component.owner.transform.scale,
           component.owner.transform.scale
         )
+
         this.context.drawImage(
-          component.image,
+          component.sprite,
           component.sourceX,
           component.sourceY,
           component.sourceWidth,
@@ -81,6 +96,10 @@ RenderSystem.prototype.draw = function (entities) {
 
 RenderSystem.prototype.addSpriteComponent = function (config) {
   const component = new Harmony.SpriteComponent(config)
+  if (component.sourceWidth === 0 || component.sourceHeight === 0) {
+    component.sourceWidth = this.sprites[component.spriteName].width
+    component.sourceHeight = this.sprites[component.spriteName].height
+  }
   this.components.unshift(component)
   return component
 }
