@@ -1,33 +1,35 @@
 const AudioSourceComponent = function (params) {
   const config = Object.assign({
-    playing: false,
+    clipRef: null,
+    mustPlay: false,
+    mustStop: false,
     clipName: 'none',
     volume: 1
   }, params)
 
-  this.playing = config.playing
+  this.clipRef = config.clipRef
+  this.mustPlay = config.mustPlay
+  this.mustStop = config.mustStop
   this.clipName = config.clipName
   this.volume = config.volume
-  this.destroyed = false
-  this.name = 'audio'
+  this.mustDestroy = false
 }
 
+AudioSourceComponent.prototype.name = 'audio'
+
 AudioSourceComponent.prototype.play = function (clipName) {
-  if (typeof clipName !== 'undefined' && this.clipName !== clipName) {
+  if (clipName) {
     this.clipName = clipName
   }
-
-  if (!this.playing) {
-    this.playing = true
-  }
+  this.mustPlay = true
 }
 
 AudioSourceComponent.prototype.stop = function () {
-  this.playing = false
+  this.mustStop = true
 }
 
 AudioSourceComponent.prototype.destroy = function () {
-  this.destroyed = true
+  this.mustDestroy = true
 }
 
 export default AudioSourceComponent

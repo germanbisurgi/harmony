@@ -3,29 +3,29 @@
 const AudioSystem = function () {
   const AudioContext = window.AudioContext || window.webkitAudioContext
   this.context = new AudioContext()
+  this.master = this.context.createGain()
   this.components = []
   this.clips = {}
+
+  this.master.connect(this.context.destination)
 }
 
 AudioSystem.prototype.play = function (component) {
-  const clipName = component.clipName
+  component.mustPlay = false
+  const clip = component.clipName
   const source = this.context.createBufferSource()
   const gain = this.context.createGain()
-  source.buffer = this.clips[clipName]
-  source.loop = component.loop
+  component.clipRef = source
+  source.buffer = this.clips[clip]
   source.connect(gain)
-  gain.connect(this.context.destination)
+  gain.connect(this.master)
   gain.gain.value = component.volume
-
-  // source.addEventListener('ended', () => {
-  //   console.log('ended')
-  // })
-
   source.start()
 }
 
-AudioSystem.prototype.loadClip = async function (config) {
-  this.clips[config.name] = await this.loadAudioBuffer(config)
+AudioSystem.prototype.stop = function (component) {
+  component.mustStop = false
+  component.clipRef.stop()
 }
 
 AudioSystem.prototype.addAudioSourceComponent = function (config) {
@@ -34,7 +34,7 @@ AudioSystem.prototype.addAudioSourceComponent = function (config) {
   return component
 }
 
-AudioSystem.prototype.loadAudioBuffer = function (config) {
+AudioSystem.prototype.loadClip = function (config) {
   return new Promise((resolve, reject) => {
     const xhr = new window.XMLHttpRequest()
     const AudioContext = new (window.AudioContext || window.webkitAudioContext)()
@@ -42,6 +42,7 @@ AudioSystem.prototype.loadAudioBuffer = function (config) {
     xhr.responseType = 'arraybuffer'
     xhr.onload = () => {
       AudioContext.decodeAudioData(xhr.response, (buffer) => {
+        this.clips[config.name] = buffer
         resolve(buffer)
       }, (reason) => {
         reject(reason)
@@ -60,13 +61,16 @@ AudioSystem.prototype.update = function () {
   }
   for (let i = this.components.length; i--;) {
     const component = this.components[i]
-    if (component.destroyed) {
+    if (component.mustDestroy) {
       this.components.splice(i, 1)
-    } else {
-      if (component.playing) {
-        this.play(component)
-        component.playing = false
-      }
+      continue
+    }
+    if (component.mustStop) {
+      this.stop(component)
+      continue
+    }
+    if (component.mustPlay) {
+      this.play(component)
     }
   }
 }
