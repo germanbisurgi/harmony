@@ -87,7 +87,7 @@ PhysicsSystem.prototype.update = function () {
   this.world.ClearForces()
   for (let i = this.components.length; i--;) {
     const component = this.components[i]
-    if (component.destroyed) {
+    if (component.mustDestroy) {
       this.components.splice(i, 1)
     } else {
       const position = component.getPosition()

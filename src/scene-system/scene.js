@@ -1,9 +1,9 @@
 const Scene = function (params) {
   this.refs = {}
   this.methods = Object.assign({
-    create: (engine) => {},
-    update: (engine) => {},
-    draw: (engine) => {}
+    create: () => {},
+    update: () => {},
+    draw: () => {}
   }, params)
 }
 

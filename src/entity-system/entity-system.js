@@ -14,7 +14,7 @@ EntitySystem.prototype.add = function (config) {
 EntitySystem.prototype.update = function () {
   for (let i = this.cache.length; i--;) {
     const entity = this.cache[i]
-    if (entity.destroyed) {
+    if (entity.mustDestroy) {
       this.cache.splice(i, 1)
     }
   }

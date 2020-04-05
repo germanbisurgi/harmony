@@ -1,6 +1,5 @@
 const TransformComponent = function (params) {
   const config = Object.assign({
-    name: 'transform',
     x: 0,
     y: 0,
     angle: 0,
@@ -8,16 +7,17 @@ const TransformComponent = function (params) {
   }, params)
 
   this.owner = null
-  this.destroyed = false
-  this.name = config.name
+  this.mustDestroy = false
   this.x = config.x
   this.y = config.y
   this.angle = config.angle
   this.scale = config.scale
 }
 
+TransformComponent.prototype.name = 'transform'
+
 TransformComponent.prototype.destroy = function () {
-  this.destroyed = true
+  this.mustDestroy = true
 }
 
 export default TransformComponent

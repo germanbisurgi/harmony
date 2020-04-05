@@ -2,7 +2,6 @@
 
 const PhysicsComponent = function (params, system) {
   const defaults = {
-    name: 'physics',
     x: 50,
     y: 50,
     type: 'dynamic',
@@ -22,12 +21,11 @@ const PhysicsComponent = function (params, system) {
   const config = Object.assign(defaults, params)
 
   this.owner = null
-  this.destroyed = false
+  this.mustDestroy = false
   this.body = null
   this.system = system
   this.fixtures = []
   this.type = config.type
-  this.name = config.name
 
   const B2BodyDef = Box2D.Dynamics.b2BodyDef
   const B2Body = Box2D.Dynamics.b2Body
@@ -64,6 +62,8 @@ const PhysicsComponent = function (params, system) {
   this.body.component = this
 }
 
+PhysicsComponent.prototype.name = 'physics'
+
 PhysicsComponent.prototype.setLinearVelocity = function (config) {
   this.body.SetAwake(true)
   this.body.SetLinearVelocity({
@@ -77,7 +77,7 @@ PhysicsComponent.prototype.destroy = function () {
     this.body.DestroyFixture(fixture)
   })
   this.system.world.DestroyBody(this.body)
-  this.destroyed = true
+  this.mustDestroy = true
 }
 
 PhysicsComponent.prototype.getPosition = function () {

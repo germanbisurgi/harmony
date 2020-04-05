@@ -5,15 +5,15 @@ const TransformSystem = function () {
 }
 
 TransformSystem.prototype.addTransformComponent = function (config) {
-  const transformComponent = new Harmony.TransformComponent(config)
-  this.components.push(transformComponent)
-  return transformComponent
+  const component = new Harmony.TransformComponent(config)
+  this.components.push(component)
+  return component
 }
 
 TransformSystem.prototype.update = function () {
   for (let i = this.components.length; i--;) {
     const component = this.components[i]
-    if (component.destroyed) {
+    if (component.mustDestroy) {
       this.components.splice(i, 1)
     }
   }

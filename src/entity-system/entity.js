@@ -1,6 +1,7 @@
-const Entity = function (config) {
-  this.destroyed = false
+const Entity = function (tag) {
+  this.mustDestroy = false
   this.components = []
+  this.tag = tag || 'none'
 }
 
 Entity.prototype.addComponent = function (component) {
@@ -13,7 +14,7 @@ Entity.prototype.destroy = function () {
   this.components.forEach((component) => {
     component.destroy()
   })
-  this.destroyed = true
+  this.mustDestroy = true
 }
 
 export default Entity
