@@ -51,64 +51,64 @@ const Scene1 = new Harmony.Scene({
   create: async (engine, refs) => {
     // ------------------------------------------------------------------ assets
 
-    refs.question = await engine.assets.addImage({ url: './assets/images/question.png' })
-    refs.imageA = await engine.assets.addImage({ url: './assets/images/alphabet/a.jpg' })
-    refs.imageB = await engine.assets.addImage({ url: './assets/images/alphabet/b.jpg' })
-    refs.imageC = await engine.assets.addImage({ url: './assets/images/alphabet/c.jpg' })
-    refs.imageD = await engine.assets.addImage({ url: './assets/images/alphabet/d.jpg' })
-    refs.imageE = await engine.assets.addImage({ url: './assets/images/alphabet/e.jpg' })
-    refs.imageF = await engine.assets.addImage({ url: './assets/images/alphabet/f.jpg' })
-    refs.imageG = await engine.assets.addImage({ url: './assets/images/alphabet/g.jpg' })
-    refs.imageH = await engine.assets.addImage({ url: './assets/images/alphabet/h.jpg' })
-    refs.imageI = await engine.assets.addImage({ url: './assets/images/alphabet/i.jpg' })
-    refs.imageJ = await engine.assets.addImage({ url: './assets/images/alphabet/j.jpg' })
-    refs.imageK = await engine.assets.addImage({ url: './assets/images/alphabet/k.jpg' })
-    refs.imageL = await engine.assets.addImage({ url: './assets/images/alphabet/l.jpg' })
-    refs.imageM = await engine.assets.addImage({ url: './assets/images/alphabet/m.jpg' })
-    refs.imageN = await engine.assets.addImage({ url: './assets/images/alphabet/n.jpg' })
-    refs.imageO = await engine.assets.addImage({ url: './assets/images/alphabet/o.jpg' })
-    refs.imageP = await engine.assets.addImage({ url: './assets/images/alphabet/p.jpg' })
-    refs.imageQ = await engine.assets.addImage({ url: './assets/images/alphabet/q.jpg' })
-    refs.imageR = await engine.assets.addImage({ url: './assets/images/alphabet/r.jpg' })
-    refs.imageS = await engine.assets.addImage({ url: './assets/images/alphabet/s.jpg' })
-    refs.imageT = await engine.assets.addImage({ url: './assets/images/alphabet/t.jpg' })
-    refs.imageU = await engine.assets.addImage({ url: './assets/images/alphabet/u.jpg' })
-    refs.imageV = await engine.assets.addImage({ url: './assets/images/alphabet/v.jpg' })
-    refs.imageW = await engine.assets.addImage({ url: './assets/images/alphabet/w.jpg' })
-    refs.imageX = await engine.assets.addImage({ url: './assets/images/alphabet/x.jpg' })
-    refs.imageY = await engine.assets.addImage({ url: './assets/images/alphabet/y.jpg' })
-    refs.imageZ = await engine.assets.addImage({ url: './assets/images/alphabet/z.jpg' })
+    document.querySelector('#loading').classList.remove('hidden')
 
-    refs.imageArancia = await engine.assets.addImage({ url: './assets/images/things/arancia.jpg' })
-    refs.imageBrucco = await engine.assets.addImage({ url: './assets/images/things/brucco.jpg' })
-    refs.imageCane = await engine.assets.addImage({ url: './assets/images/things/cane.jpg' })
-    refs.imageDelfino = await engine.assets.addImage({ url: './assets/images/things/delfino.jpg' })
-    refs.imageElefante = await engine.assets.addImage({ url: './assets/images/things/elefante.jpg' })
-    refs.imageFiore = await engine.assets.addImage({ url: './assets/images/things/fiore.jpg' })
-    refs.imageGufo = await engine.assets.addImage({ url: './assets/images/things/gufo.jpg' })
-    refs.imageHotel = await engine.assets.addImage({ url: './assets/images/things/hotel.jpg' })
-    refs.imageIsola = await engine.assets.addImage({ url: './assets/images/things/isola.jpg' })
-    refs.imageJeep = await engine.assets.addImage({ url: './assets/images/things/jeep.jpg' })
-    refs.imageKoala = await engine.assets.addImage({ url: './assets/images/things/koala.jpg' })
-    refs.imageLeone = await engine.assets.addImage({ url: './assets/images/things/leone.jpg' })
-    refs.imageMaiale = await engine.assets.addImage({ url: './assets/images/things/maiale.jpg' })
-    refs.imageNave = await engine.assets.addImage({ url: './assets/images/things/nave.jpg' })
-    refs.imageOrso = await engine.assets.addImage({ url: './assets/images/things/orso.jpg' })
-    refs.imagePolpo = await engine.assets.addImage({ url: './assets/images/things/polpo.jpg' })
-    refs.imageQuaderno = await engine.assets.addImage({ url: './assets/images/things/quaderno.jpg' })
-    refs.imageRiccio = await engine.assets.addImage({ url: './assets/images/things/riccio.jpg' })
-    refs.imageSerpente = await engine.assets.addImage({ url: './assets/images/things/serpente.jpg' })
-    refs.imageTorre = await engine.assets.addImage({ url: './assets/images/things/torre.jpg' })
-    refs.imageUccello = await engine.assets.addImage({ url: './assets/images/things/uccello.jpg' })
-    refs.imageViolino = await engine.assets.addImage({ url: './assets/images/things/violino.jpg' })
-    refs.imageWaffle = await engine.assets.addImage({ url: './assets/images/things/waffle.jpg' })
-    refs.imageXilofono = await engine.assets.addImage({ url: './assets/images/things/xilofono.jpg' })
-    refs.imageYoghurt = await engine.assets.addImage({ url: './assets/images/things/yoghurt.jpg' })
-    refs.imageZebra = await engine.assets.addImage({ url: './assets/images/things/zebra.jpg' })
+    await engine.render.loadSprite({ name: 'question', url: './assets/images/question.png' })
+    await engine.render.loadSprite({ name: 'a', url: './assets/images/alphabet/a.jpg' })
+    await engine.render.loadSprite({ name: 'b', url: './assets/images/alphabet/b.jpg' })
+    await engine.render.loadSprite({ name: 'c', url: './assets/images/alphabet/c.jpg' })
+    await engine.render.loadSprite({ name: 'd', url: './assets/images/alphabet/d.jpg' })
+    await engine.render.loadSprite({ name: 'e', url: './assets/images/alphabet/e.jpg' })
+    await engine.render.loadSprite({ name: 'f', url: './assets/images/alphabet/f.jpg' })
+    await engine.render.loadSprite({ name: 'g', url: './assets/images/alphabet/g.jpg' })
+    await engine.render.loadSprite({ name: 'h', url: './assets/images/alphabet/h.jpg' })
+    await engine.render.loadSprite({ name: 'i', url: './assets/images/alphabet/i.jpg' })
+    await engine.render.loadSprite({ name: 'j', url: './assets/images/alphabet/j.jpg' })
+    await engine.render.loadSprite({ name: 'k', url: './assets/images/alphabet/k.jpg' })
+    await engine.render.loadSprite({ name: 'l', url: './assets/images/alphabet/l.jpg' })
+    await engine.render.loadSprite({ name: 'm', url: './assets/images/alphabet/m.jpg' })
+    await engine.render.loadSprite({ name: 'n', url: './assets/images/alphabet/n.jpg' })
+    await engine.render.loadSprite({ name: 'o', url: './assets/images/alphabet/o.jpg' })
+    await engine.render.loadSprite({ name: 'p', url: './assets/images/alphabet/p.jpg' })
+    await engine.render.loadSprite({ name: 'q', url: './assets/images/alphabet/q.jpg' })
+    await engine.render.loadSprite({ name: 'r', url: './assets/images/alphabet/r.jpg' })
+    await engine.render.loadSprite({ name: 's', url: './assets/images/alphabet/s.jpg' })
+    await engine.render.loadSprite({ name: 't', url: './assets/images/alphabet/t.jpg' })
+    await engine.render.loadSprite({ name: 'u', url: './assets/images/alphabet/u.jpg' })
+    await engine.render.loadSprite({ name: 'v', url: './assets/images/alphabet/v.jpg' })
+    await engine.render.loadSprite({ name: 'w', url: './assets/images/alphabet/w.jpg' })
+    await engine.render.loadSprite({ name: 'x', url: './assets/images/alphabet/x.jpg' })
+    await engine.render.loadSprite({ name: 'y', url: './assets/images/alphabet/y.jpg' })
+    await engine.render.loadSprite({ name: 'z', url: './assets/images/alphabet/z.jpg' })
+    await engine.render.loadSprite({ name: 'arancia', url: './assets/images/things/arancia.jpg' })
+    await engine.render.loadSprite({ name: 'brucco', url: './assets/images/things/brucco.jpg' })
+    await engine.render.loadSprite({ name: 'cane', url: './assets/images/things/cane.jpg' })
+    await engine.render.loadSprite({ name: 'delfino', url: './assets/images/things/delfino.jpg' })
+    await engine.render.loadSprite({ name: 'elefante', url: './assets/images/things/elefante.jpg' })
+    await engine.render.loadSprite({ name: 'fiore', url: './assets/images/things/fiore.jpg' })
+    await engine.render.loadSprite({ name: 'gufo', url: './assets/images/things/gufo.jpg' })
+    await engine.render.loadSprite({ name: 'hotel', url: './assets/images/things/hotel.jpg' })
+    await engine.render.loadSprite({ name: 'isola', url: './assets/images/things/isola.jpg' })
+    await engine.render.loadSprite({ name: 'jeep', url: './assets/images/things/jeep.jpg' })
+    await engine.render.loadSprite({ name: 'koala', url: './assets/images/things/koala.jpg' })
+    await engine.render.loadSprite({ name: 'leone', url: './assets/images/things/leone.jpg' })
+    await engine.render.loadSprite({ name: 'maiale', url: './assets/images/things/maiale.jpg' })
+    await engine.render.loadSprite({ name: 'nave', url: './assets/images/things/nave.jpg' })
+    await engine.render.loadSprite({ name: 'orso', url: './assets/images/things/orso.jpg' })
+    await engine.render.loadSprite({ name: 'polpo', url: './assets/images/things/polpo.jpg' })
+    await engine.render.loadSprite({ name: 'quaderno', url: './assets/images/things/quaderno.jpg' })
+    await engine.render.loadSprite({ name: 'riccio', url: './assets/images/things/riccio.jpg' })
+    await engine.render.loadSprite({ name: 'serpente', url: './assets/images/things/serpente.jpg' })
+    await engine.render.loadSprite({ name: 'torre', url: './assets/images/things/torre.jpg' })
+    await engine.render.loadSprite({ name: 'uccello', url: './assets/images/things/uccello.jpg' })
+    await engine.render.loadSprite({ name: 'violino', url: './assets/images/things/violino.jpg' })
+    await engine.render.loadSprite({ name: 'waffle', url: './assets/images/things/waffle.jpg' })
+    await engine.render.loadSprite({ name: 'xilofono', url: './assets/images/things/xilofono.jpg' })
+    await engine.render.loadSprite({ name: 'yoghurt', url: './assets/images/things/yoghurt.jpg' })
+    await engine.render.loadSprite({ name: 'zebra', url: './assets/images/things/zebra.jpg' })
 
     await engine.audio.loadClip({ name: 'correct', url: './assets/audio/correct.wav' })
     await engine.audio.loadClip({ name: 'win', url: './assets/audio/win.wav' })
-
     await engine.audio.loadClip({ name: 'a', url: './assets/audio/alphabet/a.wav' })
     await engine.audio.loadClip({ name: 'b', url: './assets/audio/alphabet/b.wav' })
     await engine.audio.loadClip({ name: 'c', url: './assets/audio/alphabet/c.wav' })
@@ -135,7 +135,6 @@ const Scene1 = new Harmony.Scene({
     await engine.audio.loadClip({ name: 'x', url: './assets/audio/alphabet/x.wav' })
     await engine.audio.loadClip({ name: 'y', url: './assets/audio/alphabet/y.wav' })
     await engine.audio.loadClip({ name: 'z', url: './assets/audio/alphabet/z.wav' })
-
     await engine.audio.loadClip({ name: 'arancia', url: './assets/audio/things/arancia.wav' })
     await engine.audio.loadClip({ name: 'brucco', url: './assets/audio/things/brucco.wav' })
     await engine.audio.loadClip({ name: 'cane', url: './assets/audio/things/cane.wav' })
@@ -163,11 +162,7 @@ const Scene1 = new Harmony.Scene({
     await engine.audio.loadClip({ name: 'yoghurt', url: './assets/audio/things/yoghurt.wav' })
     await engine.audio.loadClip({ name: 'zebra', url: './assets/audio/things/zebra.wav' })
 
-    // -------------------------------------------------------------------- keys
-
-    refs.key1 = engine.keys.add({ key: '1' })
-    refs.key2 = engine.keys.add({ key: '2' })
-    refs.key3 = engine.keys.add({ key: '3' })
+    document.querySelector('#loading').classList.add('hidden')
 
     // ---------------------------------------------------------------- pointers
 
@@ -177,61 +172,61 @@ const Scene1 = new Harmony.Scene({
     // -------------------------------------------------------------------- data
 
     const letters = {
-      a: { letter: 'a', type: 'letter', audio: 'a', image: refs.imageA },
-      b: { letter: 'b', type: 'letter', audio: 'b', image: refs.imageB },
-      c: { letter: 'c', type: 'letter', audio: 'c', image: refs.imageC },
-      d: { letter: 'd', type: 'letter', audio: 'd', image: refs.imageD },
-      e: { letter: 'e', type: 'letter', audio: 'e', image: refs.imageE },
-      f: { letter: 'f', type: 'letter', audio: 'f', image: refs.imageF },
-      g: { letter: 'g', type: 'letter', audio: 'g', image: refs.imageG },
-      h: { letter: 'h', type: 'letter', audio: 'h', image: refs.imageH },
-      i: { letter: 'i', type: 'letter', audio: 'i', image: refs.imageI },
-      j: { letter: 'j', type: 'letter', audio: 'j', image: refs.imageJ },
-      k: { letter: 'k', type: 'letter', audio: 'k', image: refs.imageK },
-      l: { letter: 'l', type: 'letter', audio: 'l', image: refs.imageL },
-      m: { letter: 'm', type: 'letter', audio: 'm', image: refs.imageM },
-      n: { letter: 'n', type: 'letter', audio: 'n', image: refs.imageN },
-      o: { letter: 'o', type: 'letter', audio: 'o', image: refs.imageO },
-      p: { letter: 'p', type: 'letter', audio: 'p', image: refs.imageP },
-      q: { letter: 'q', type: 'letter', audio: 'q', image: refs.imageQ },
-      r: { letter: 'r', type: 'letter', audio: 'r', image: refs.imageR },
-      s: { letter: 's', type: 'letter', audio: 's', image: refs.imageS },
-      t: { letter: 't', type: 'letter', audio: 't', image: refs.imageT },
-      u: { letter: 'u', type: 'letter', audio: 'u', image: refs.imageU },
-      v: { letter: 'v', type: 'letter', audio: 'v', image: refs.imageV },
-      w: { letter: 'w', type: 'letter', audio: 'w', image: refs.imageW },
-      x: { letter: 'x', type: 'letter', audio: 'x', image: refs.imageX },
-      y: { letter: 'y', type: 'letter', audio: 'y', image: refs.imageY },
-      z: { letter: 'z', type: 'letter', audio: 'z', image: refs.imageZ }
+      a: { letter: 'a', type: 'letter', audio: 'a', image: 'a' },
+      b: { letter: 'b', type: 'letter', audio: 'b', image: 'b' },
+      c: { letter: 'c', type: 'letter', audio: 'c', image: 'c' },
+      d: { letter: 'd', type: 'letter', audio: 'd', image: 'd' },
+      e: { letter: 'e', type: 'letter', audio: 'e', image: 'e' },
+      f: { letter: 'f', type: 'letter', audio: 'f', image: 'f' },
+      g: { letter: 'g', type: 'letter', audio: 'g', image: 'g' },
+      h: { letter: 'h', type: 'letter', audio: 'h', image: 'h' },
+      i: { letter: 'i', type: 'letter', audio: 'i', image: 'i' },
+      j: { letter: 'j', type: 'letter', audio: 'j', image: 'j' },
+      k: { letter: 'k', type: 'letter', audio: 'k', image: 'k' },
+      l: { letter: 'l', type: 'letter', audio: 'l', image: 'l' },
+      m: { letter: 'm', type: 'letter', audio: 'm', image: 'm' },
+      n: { letter: 'n', type: 'letter', audio: 'n', image: 'n' },
+      o: { letter: 'o', type: 'letter', audio: 'o', image: 'o' },
+      p: { letter: 'p', type: 'letter', audio: 'p', image: 'p' },
+      q: { letter: 'q', type: 'letter', audio: 'q', image: 'q' },
+      r: { letter: 'r', type: 'letter', audio: 'r', image: 'r' },
+      s: { letter: 's', type: 'letter', audio: 's', image: 's' },
+      t: { letter: 't', type: 'letter', audio: 't', image: 't' },
+      u: { letter: 'u', type: 'letter', audio: 'u', image: 'u' },
+      v: { letter: 'v', type: 'letter', audio: 'v', image: 'v' },
+      w: { letter: 'w', type: 'letter', audio: 'w', image: 'w' },
+      x: { letter: 'x', type: 'letter', audio: 'x', image: 'x' },
+      y: { letter: 'y', type: 'letter', audio: 'y', image: 'y' },
+      z: { letter: 'z', type: 'letter', audio: 'z', image: 'z' }
     }
 
     const animals = {
-      a: { letter: 'a', type: 'animal', audio: 'arancia', image: refs.imageArancia },
-      b: { letter: 'b', type: 'animal', audio: 'brucco', image: refs.imageBrucco },
-      c: { letter: 'c', type: 'animal', audio: 'cane', image: refs.imageCane },
-      d: { letter: 'd', type: 'animal', audio: 'delfino', image: refs.imageDelfino },
-      e: { letter: 'e', type: 'animal', audio: 'elefante', image: refs.imageElefante },
-      f: { letter: 'f', type: 'animal', audio: 'fiore', image: refs.imageFiore },
-      g: { letter: 'g', type: 'animal', audio: 'gufo', image: refs.imageGufo },
-      h: { letter: 'h', type: 'animal', audio: 'hotel', image: refs.imageHotel },
-      i: { letter: 'i', type: 'animal', audio: 'isola', image: refs.imageIsola },
-      j: { letter: 'j', type: 'animal', audio: 'jeep', image: refs.imageJeep },
-      k: { letter: 'k', type: 'animal', audio: 'koala', image: refs.imageKoala },
-      l: { letter: 'l', type: 'animal', audio: 'leone', image: refs.imageLeone },
-      m: { letter: 'm', type: 'animal', audio: 'maiale', image: refs.imageMaiale },
-      n: { letter: 'n', type: 'animal', audio: 'nave', image: refs.imageNave },
-      o: { letter: 'o', type: 'animal', audio: 'orso', image: refs.imageOrso },
-      p: { letter: 'p', type: 'animal', audio: 'polpo', image: refs.imagePolpo },
-      q: { letter: 'q', type: 'animal', audio: 'quaderno', image: refs.imageQuaderno },
-      r: { letter: 'r', type: 'animal', audio: 'riccio', image: refs.imageRiccio },
-      s: { letter: 's', type: 'animal', audio: 'serpente', image: refs.imageSerpente },
-      t: { letter: 't', type: 'animal', audio: 'torre', image: refs.imageTorre },
-      u: { letter: 'u', type: 'animal', audio: 'uccello', image: refs.imageUccello },
-      v: { letter: 'v', type: 'animal', audio: 'violino', image: refs.imageViolino },
-      w: { letter: 'w', type: 'animal', audio: 'waffle', image: refs.imageWaffle },
-      x: { letter: 'x', type: 'animal', audio: 'xilofono', image: refs.imageXilofono },
-      y: { letter: 'y', type: 'animal', audio: 'yoghurt', image: refs.imageYoghurt },
-      z: { letter: 'z', type: 'animal', audio: 'zebra', image: refs.imageZebra }
+      a: { letter: 'a', type: 'animal', audio: 'arancia', image: 'arancia' },
+      b: { letter: 'b', type: 'animal', audio: 'brucco', image: 'brucco' },
+      c: { letter: 'c', type: 'animal', audio: 'cane', image: 'cane' },
+      d: { letter: 'd', type: 'animal', audio: 'delfino', image: 'delfino' },
+      e: { letter: 'e', type: 'animal', audio: 'elefante', image: 'elefante' },
+      f: { letter: 'f', type: 'animal', audio: 'fiore', image: 'fiore' },
+      g: { letter: 'g', type: 'animal', audio: 'gufo', image: 'gufo' },
+      h: { letter: 'h', type: 'animal', audio: 'hotel', image: 'hotel' },
+      i: { letter: 'i', type: 'animal', audio: 'isola', image: 'isola' },
+      j: { letter: 'j', type: 'animal', audio: 'jeep', image: 'jeep' },
+      k: { letter: 'k', type: 'animal', audio: 'koala', image: 'koala' },
+      l: { letter: 'l', type: 'animal', audio: 'leone', image: 'leone' },
+      m: { letter: 'm', type: 'animal', audio: 'maiale', image: 'maiale' },
+      n: { letter: 'n', type: 'animal', audio: 'nave', image: 'nave' },
+      o: { letter: 'o', type: 'animal', audio: 'orso', image: 'orso' },
+      p: { letter: 'p', type: 'animal', audio: 'polpo', image: 'polpo' },
+      q: { letter: 'q', type: 'animal', audio: 'quaderno', image: 'quaderno' },
+      r: { letter: 'r', type: 'animal', audio: 'riccio', image: 'riccio' },
+      s: { letter: 's', type: 'animal', audio: 'serpente', image: 'serpente' },
+      t: { letter: 't', type: 'animal', audio: 'torre', image: 'torre' },
+      u: { letter: 'u', type: 'animal', audio: 'uccello', image: 'uccello' },
+      v: { letter: 'v', type: 'animal', audio: 'violino', image: 'violino' },
+      w: { letter: 'w', type: 'animal', audio: 'waffle', image: 'waffle' },
+      x: { letter: 'x', type: 'animal', audio: 'xilofono', image: 'xilofono' },
+      y: { letter: 'y', type: 'animal', audio: 'yoghurt', image: 'yoghurt' },
+      z: { letter: 'z', type: 'animal', audio: 'zebra', image: 'zebra' }
     }
 
     // ------------------------------------------------------------------- props
@@ -297,6 +292,8 @@ const Scene1 = new Harmony.Scene({
         refs.cards.push(animals[letter])
       })
 
+      console.log(refs.cards)
+
       refs.cards = refs.shuffleArray(refs.cards)
 
       refs.gridgrid = refs.createGrid(refs.rows, refs.cols)
@@ -308,28 +305,28 @@ const Scene1 = new Harmony.Scene({
 
           // -------------------------------------------------------------- back
 
-          const backEntity = engine.entities.add()
+          const backEntity = engine.entities.add('question')
           backEntity.addComponent(engine.transform.addTransformComponent({
             x: row * refs.width + refs.width * 0.5,
             y: col * refs.height + refs.height * 0.5,
             scale: 1.1
           }))
           backEntity.addComponent(engine.render.addSpriteComponent({
-            image: refs.question,
+            sprite: engine.render.sprites.question,
             width: refs.tileSize,
             height: refs.tileSize
           }))
 
           // ------------------------------------------------------------- front
 
-          const frontEntity = engine.entities.add({ tag: 'card' })
+          const frontEntity = engine.entities.add('card')
           frontEntity.addComponent(engine.transform.addTransformComponent())
           frontEntity.flipped = false
           frontEntity.letter = refs.cards[cellIndex].letter
-          frontEntity.type = refs.cards[cellIndex].type
           frontEntity.addComponent(engine.audio.addAudioSourceComponent({ clipName: refs.cards[cellIndex].audio }))
           frontEntity.addComponent(engine.render.addSpriteComponent({
-            image: refs.cards[cellIndex].image,
+            // spriteName: refs.cards[cellIndex].image,
+            sprite: engine.render.sprites[refs.cards[cellIndex].image],
             width: refs.tileSize,
             height: refs.tileSize,
             visible: false
@@ -356,13 +353,13 @@ const Scene1 = new Harmony.Scene({
 
     // ----------------------------------------------------- audioManager entity
 
-    refs.audioManager = engine.entities.add({ tag: 'audio-manager' })
+    refs.audioManager = engine.entities.add('audio-manager')
     refs.audioManager.addComponent(engine.transform.addTransformComponent())
     refs.audioManager.addComponent(engine.audio.addAudioSourceComponent({ clip: refs.clipCorrect }))
 
     // ---------------------------------------------------------- pointer entity
 
-    refs.pointerColider = engine.entities.add({ tag: 'pointer' })
+    refs.pointerColider = engine.entities.add('pointer')
     refs.pointerColider.addComponent(engine.transform.addTransformComponent())
     refs.pointerColider.addComponent(engine.physics.addPhysicsComponent({
       x: -999999,
@@ -403,8 +400,6 @@ const Scene1 = new Harmony.Scene({
           if (refs.tempFlipped[0].letter === refs.tempFlipped[1].letter) {
             refs.flipped.push(refs.tempFlipped[0])
             refs.flipped.push(refs.tempFlipped[1])
-            // refs.tempFlipped[0].transform.scale = 0.5
-            // refs.tempFlipped[1].transform.scale = 0.5
             refs.audioManager.audio.play('correct')
             refs.isCorrect = true
           } else {
@@ -422,17 +417,17 @@ const Scene1 = new Harmony.Scene({
     }
   },
   update: (engine, refs) => {
-    if (refs.key1.start) {
+    if (engine.keys.keyStart('1')) {
       refs.audioManager.audio.play('a')
       // engine.scene.switch(Scene1)
     }
 
-    if (refs.key2.start) {
+    if (engine.keys.keyStart('2')) {
       refs.audioManager.audio.play('correct')
       // engine.scene.switch(Scene2)
     }
 
-    if (refs.key3.start) {
+    if (engine.keys.keyStart('3')) {
       refs.audioManager.audio.play('win')
     }
 
@@ -457,24 +452,49 @@ const Scene1 = new Harmony.Scene({
 
 const Scene2 = new Harmony.Scene({
   create: async (engine, refs) => {
+    document.querySelector('#loading').classList.remove('hidden')
+
+    await engine.render.loadSprite({ name: 'question', url: './assets/images/question.png' })
     await engine.audio.loadClip({ name: 'correct', url: './assets/audio/correct.wav' })
     await engine.audio.loadClip({ name: 'win', url: './assets/audio/win.wav' })
 
-    refs.key1 = engine.keys.add({ key: '1' })
-    refs.key2 = engine.keys.add({ key: '2' })
+    document.querySelector('#loading').classList.add('hidden')
 
-    refs.entity = engine.entities.add({ tag: 'audio-manager' })
+    refs.entity = engine.entities.add('something')
     refs.entity.addComponent(engine.transform.addTransformComponent())
+    refs.entity.addComponent(engine.physics.addPhysicsComponent())
     refs.entity.addComponent(engine.audio.addAudioSourceComponent())
-  },
-  update: (engine, refs) => {
-    if (refs.key1.start) {
-      refs.entity.audio.play('win')
-    }
+    refs.entity.addComponent(engine.render.addSpriteComponent({ sprite: engine.render.sprites.question, width: 50, height: 50 }))
+    refs.entity.addComponent(engine.scripts.addScriptComponent({
+      start: (e, r, owner) => {
+        console.log(owner)
+      },
+      update: () => {
+        console.log(engine.keys.cache)
+        if (engine.keys.keyStart('1')) {
+          console.log('start')
+          refs.entity.audio.play('win')
+        }
 
-    if (refs.key2.start) {
-      refs.entity.audio.play('correct')
-    }
+        if (engine.keys.keyHold('1')) {
+          console.log(engine.keys.keyHoldTime('1'))
+        }
+
+        if (engine.keys.keyEnd('1')) {
+          console.log('end')
+        }
+
+        if (engine.keys.keyStart('2')) {
+          refs.entity.audio.stop()
+          refs.entity.audio.play('win')
+        }
+
+        if (engine.keys.keyStart('3')) {
+          refs.entity.audio.stop()
+        }
+      }
+    }))
+    console.log(refs.entity)
   },
   draw: (engine, refs) => {
     debug(engine, refs)
