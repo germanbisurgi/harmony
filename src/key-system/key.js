@@ -1,10 +1,5 @@
-const Key = function (params) {
-  const config = Object.assign({
-    preventDefault: false
-  }, params)
-
-  this.key = config.key
-  this.preventDefault = config.preventDefault
+const Key = function (key) {
+  this.key = key
   this.start = false
   this.end = false
   this.hold = false

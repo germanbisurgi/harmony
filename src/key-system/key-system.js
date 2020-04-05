@@ -10,28 +10,43 @@ const KeySystem = function () {
   document.addEventListener('keyup', this.handleKeyUp.bind(this), false)
 }
 
-KeySystem.prototype.add = function (config) {
-  const key = new Harmony.Key(config)
-  this.cache[key.key] = key
-  return key
-}
-
 KeySystem.prototype.handleKeyDown = function (event) {
   if (typeof this.cache[event.key] !== 'undefined') {
     this.cache[event.key].hold = true
-    if (this.cache[event.key].preventDefault) {
-      event.preventDefault()
-    }
   }
 }
 
 KeySystem.prototype.handleKeyUp = function (event) {
   if (typeof this.cache[event.key] !== 'undefined') {
     this.cache[event.key].hold = false
-    if (this.cache[event.key].preventDefault) {
-      event.preventDefault()
-    }
   }
+}
+
+KeySystem.prototype.getOrSet = function (key) {
+  if (typeof this.cache[key] === 'undefined') {
+    this.cache[key] = new Harmony.Key(key)
+  }
+  return this.cache[key]
+}
+
+KeySystem.prototype.keyStart = function (key) {
+  this.getOrSet(key)
+  return this.cache[key].start
+}
+
+KeySystem.prototype.keyEnd = function (key) {
+  this.getOrSet(key)
+  return this.cache[key].end
+}
+
+KeySystem.prototype.keyHold = function (key) {
+  this.getOrSet(key)
+  return this.cache[key].hold
+}
+
+KeySystem.prototype.keyHoldTime = function (key) {
+  this.getOrSet(key)
+  return this.cache[key].holdTime
 }
 
 KeySystem.prototype.update = function () {
