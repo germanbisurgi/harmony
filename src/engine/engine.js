@@ -5,7 +5,6 @@ const Engine = function (canvas) {
   this.loop = new Harmony.LoopSystem()
   this.scene = new Harmony.SceneSystem()
   this.render = new Harmony.RenderSystem(canvas)
-  // systems
   this.audio = new Harmony.AudioSystem()
   this.assets = new Harmony.AssetsSystem()
   this.entities = new Harmony.EntitySystem()
@@ -13,6 +12,7 @@ const Engine = function (canvas) {
   this.physics = new Harmony.PhysicsSystem(canvas)
   this.pointers = new Harmony.PointerSystem(canvas)
   this.transform = new Harmony.TransformSystem()
+  this.scripts = new Harmony.ScriptSystem()
 
   this.loop.onStep = async () => {
     if (this.scene.current) {
@@ -25,7 +25,6 @@ const Engine = function (canvas) {
       }
       if (this.scene.mustUpdate) {
         this.scene.requestDraw()
-        // console.log('entities', this.entities.cache.length)
         // console.log('update')
         this.keys.update()
         this.pointers.update()
@@ -33,6 +32,7 @@ const Engine = function (canvas) {
         this.transform.update()
         this.physics.update()
         this.entities.update()
+        this.scripts.update(this, this.scene.current.refs)
         this.scene.current.update(this, this.scene.current.refs)
       }
       if (this.scene.mustDraw) {
