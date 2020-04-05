@@ -10,8 +10,10 @@ import Pointer from './pointer-system/pointer'
 import PointerSystem from './pointer-system/pointer-system'
 import SpriteComponent from './render-system/sprite-component'
 import RenderSystem from './render-system/render-system'
-import SceneSystem from './scene-system/scene-system'
 import Scene from './scene-system/scene'
+import SceneSystem from './scene-system/scene-system'
+import Script from './script-system/script'
+import ScriptSystem from './script-system/script-system'
 import TransformComponent from './transform-system/transform-component'
 import TransformSystem from './transform-system/transform-system'
 import EntitySystem from './entity-system/entity-system'
@@ -36,6 +38,8 @@ const Harmony = {
   RenderSystem: RenderSystem,
   Scene: Scene,
   SceneSystem: SceneSystem,
+  Script: Script,
+  ScriptSystem: ScriptSystem,
   TransformComponent: TransformComponent,
   TransformSystem: TransformSystem
 }
