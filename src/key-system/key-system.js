@@ -29,24 +29,8 @@ KeySystem.prototype.getOrSet = function (key) {
   return this.cache[key]
 }
 
-KeySystem.prototype.keyStart = function (key) {
-  this.getOrSet(key)
-  return this.cache[key].start
-}
-
-KeySystem.prototype.keyEnd = function (key) {
-  this.getOrSet(key)
-  return this.cache[key].end
-}
-
-KeySystem.prototype.keyHold = function (key) {
-  this.getOrSet(key)
-  return this.cache[key].hold
-}
-
-KeySystem.prototype.keyHoldTime = function (key) {
-  this.getOrSet(key)
-  return this.cache[key].holdTime
+KeySystem.prototype.get = function (key) {
+  return this.getOrSet(key)
 }
 
 KeySystem.prototype.update = function () {
@@ -58,21 +42,22 @@ KeySystem.prototype.update = function () {
     if (!Object.prototype.hasOwnProperty.call(this.cache, i)) {
       continue
     }
-    if (this.cache[i].hold) {
-      this.cache[i].holdTime += this.delta
-      this.cache[i].endFrame = 0
-      if (this.cache[i].startFrame === 0) {
-        this.cache[i].startFrame = this.frame
+    const key = this.cache[i]
+    if (key.hold) {
+      key.holdTime += this.delta
+      key.endFrame = 0
+      if (key.startFrame === 0) {
+        key.startFrame = this.frame
       }
     } else {
-      this.cache[i].holdTime = 0
-      this.cache[i].startFrame = 0
-      if (this.cache[i].endFrame === 0) {
-        this.cache[i].endFrame = this.frame
+      key.holdTime = 0
+      key.startFrame = 0
+      if (key.endFrame === 0) {
+        key.endFrame = this.frame
       }
     }
-    this.cache[i].start = (this.cache[i].startFrame === this.frame)
-    this.cache[i].end = (this.cache[i].endFrame === this.frame)
+    key.start = (key.startFrame === this.frame)
+    key.end = (key.endFrame === this.frame)
   }
 }
 

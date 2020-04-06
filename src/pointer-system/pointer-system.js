@@ -1,7 +1,7 @@
 /* global Harmony */
 
 const PointerSystem = function (canvas) {
-  this.cache = []
+  this.cache = {}
   this.delta = 0
   this.now = 0
   this.then = 0
@@ -10,10 +10,15 @@ const PointerSystem = function (canvas) {
   this.enablePointers()
 }
 
-PointerSystem.prototype.add = function () {
-  const pointer = new Harmony.Pointer()
-  this.cache.unshift(pointer)
-  return pointer
+PointerSystem.prototype.getOrSet = function (pointer) {
+  if (typeof this.cache[pointer] === 'undefined') {
+    this.cache[pointer] = new Harmony.Pointer(pointer)
+  }
+  return this.cache[pointer]
+}
+
+PointerSystem.prototype.get = function (pointer) {
+  return this.getOrSet(pointer)
 }
 
 PointerSystem.prototype.enablePointers = function () {
@@ -28,21 +33,27 @@ PointerSystem.prototype.enablePointers = function () {
 
 PointerSystem.prototype.getPointerByID = function (id) {
   let output = false
-  this.cache.forEach(function (pointer) {
-    if (pointer.id === id) {
-      output = pointer
+  for (const i in this.cache) {
+    if (Object.hasOwnProperty.call(this.cache, i)) {
+      const pointer = this.cache[i]
+      if (pointer.id === id) {
+        output = pointer
+      }
     }
-  })
+  }
   return output
 }
 
 PointerSystem.prototype.getInactivePointer = function () {
   let output = false
-  this.cache.forEach(function (pointer) {
-    if (pointer.active === false) {
-      output = pointer
+  for (const i in this.cache) {
+    if (Object.hasOwnProperty.call(this.cache, i)) {
+      const pointer = this.cache[i]
+      if (pointer.active === false) {
+        output = pointer
+      }
     }
-  })
+  }
   return output
 }
 
@@ -89,27 +100,30 @@ PointerSystem.prototype.update = function () {
   this.now = window.performance.now()
   this.delta = this.now - this.then
   this.then = this.now
-  this.cache.forEach((pointer) => {
-    if (pointer.hold) {
-      pointer.holdTime += this.delta
-      pointer.endFrame = 0
-      if (pointer.startFrame === 0) {
-        pointer.startFrame = this.frame
+  for (const i in this.cache) {
+    if (Object.hasOwnProperty.call(this.cache, i)) {
+      const pointer = this.cache[i]
+      if (pointer.hold) {
+        pointer.holdTime += this.delta
+        pointer.endFrame = 0
+        if (pointer.startFrame === 0) {
+          pointer.startFrame = this.frame
+        }
+      } else {
+        pointer.holdTime = 0
+        pointer.startFrame = 0
+        if (pointer.endFrame === 0) {
+          pointer.endFrame = this.frame
+        }
       }
-    } else {
-      pointer.holdTime = 0
-      pointer.startFrame = 0
-      if (pointer.endFrame === 0) {
-        pointer.endFrame = this.frame
-      }
+      pointer.start = (pointer.startFrame === this.frame)
+      pointer.end = (pointer.endFrame === this.frame)
     }
-    pointer.start = (pointer.startFrame === this.frame)
-    pointer.end = (pointer.endFrame === this.frame)
-  })
+  }
 }
 
 PointerSystem.prototype.destroy = function () {
-  this.cache = []
+  this.cache = {}
 }
 
 export default PointerSystem
