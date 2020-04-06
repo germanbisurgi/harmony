@@ -1,5 +1,4 @@
 const Scene = function (params) {
-  this.refs = {}
   this.methods = Object.assign({
     create: () => {},
     update: () => {},
@@ -7,16 +6,16 @@ const Scene = function (params) {
   }, params)
 }
 
-Scene.prototype.create = function (engine, refs) {
-  return this.methods.create(engine, refs)
+Scene.prototype.create = function (engine) {
+  return this.methods.create(engine)
 }
 
-Scene.prototype.update = function (engine, refs) {
-  return this.methods.update(engine, refs)
+Scene.prototype.update = function (engine) {
+  return this.methods.update(engine)
 }
 
-Scene.prototype.draw = function (engine, refs) {
-  return this.methods.draw(engine, refs)
+Scene.prototype.draw = function (engine) {
+  return this.methods.draw(engine)
 }
 
 export default Scene
