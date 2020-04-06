@@ -105,14 +105,14 @@ PointerSystem.prototype.update = function () {
       const pointer = this.cache[i]
       if (pointer.hold) {
         pointer.holdTime += this.delta
-        pointer.endFrame = 0
-        if (pointer.startFrame === 0) {
+        pointer.endFrame = -1
+        if (pointer.startFrame === -1) {
           pointer.startFrame = this.frame
         }
       } else {
         pointer.holdTime = 0
-        pointer.startFrame = 0
-        if (pointer.endFrame === 0) {
+        pointer.startFrame = -1
+        if (pointer.endFrame === -1) {
           pointer.endFrame = this.frame
         }
       }
