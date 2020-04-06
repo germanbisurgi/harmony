@@ -45,19 +45,20 @@ KeySystem.prototype.update = function () {
     const key = this.cache[i]
     if (key.hold) {
       key.holdTime += this.delta
-      key.endFrame = 0
-      if (key.startFrame === 0) {
+      key.endFrame = -1
+      if (key.startFrame === -1) {
         key.startFrame = this.frame
       }
     } else {
       key.holdTime = 0
-      key.startFrame = 0
-      if (key.endFrame === 0) {
+      key.startFrame = -1
+      if (key.endFrame === -1) {
         key.endFrame = this.frame
       }
     }
     key.start = (key.startFrame === this.frame)
     key.end = (key.endFrame === this.frame)
+    // console.log(key.endFrame, this.frame)
   }
 }
 
