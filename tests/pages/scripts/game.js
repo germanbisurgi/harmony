@@ -1,7 +1,8 @@
 /* global Harmony */
 
-const debug = (engine, refs) => {
+const debug = (engine) => {
   engine.render.context.save()
+
   engine.render.context.fillStyle = '#00ff00'
   engine.render.context.font = '12px Arial'
   engine.render.text({
@@ -35,20 +36,88 @@ const debug = (engine, refs) => {
     y: 300
   })
   engine.render.text({
-    text: 'refs: ' + Object.keys(refs).length,
+    text: 'keys: ' + Object.keys(engine.keys.cache).length,
     x: 200,
     y: 320
   })
   engine.render.text({
-    text: 'keys: ' + Object.keys(engine.keys.cache).length,
+    text: 'pointers: ' + Object.keys(engine.pointers.cache).length,
     x: 200,
     y: 340
   })
+
+  engine.render.context.save()
+  engine.render.context.strokeStyle = '#00ff00'
+  engine.render.context.lineWidth = '1'
+  engine.render.context.textAlign = 'center'
+
+  for (const i in engine.pointers.cache) {
+    if (Object.hasOwnProperty.call(engine.pointers.cache, i)) {
+      const pointer = engine.pointers.cache[i]
+      if (pointer.hold) {
+        engine.render.circle({
+          x: pointer.startX,
+          y: pointer.startY,
+          radius: 60
+        })
+
+        engine.render.circle({
+          x: pointer.x,
+          y: pointer.y,
+          radius: 30
+        })
+
+        engine.render.text({
+          text: 'type: ' + pointer.type,
+          x: pointer.startX,
+          y: pointer.startY - 130
+        })
+
+        engine.render.text({
+          text: 'id: ' + pointer.id,
+          x: pointer.startX,
+          y: pointer.startY - 115
+        })
+
+        engine.render.text({
+          text: 'startX: ' + pointer.startX + ', startY: ' + pointer.startY,
+          x: pointer.startX,
+          y: pointer.startY - 100
+        })
+
+        engine.render.text({
+          text: 'currentX: ' + pointer.x + ', currentY: ' + pointer.y,
+          x: pointer.startX,
+          y: pointer.startY - 85
+        })
+
+        engine.render.text({
+          text: 'offsetX: ' + (pointer.x - pointer.startX) + ', offsetY: ' + (pointer.y - pointer.startY),
+          x: pointer.startX,
+          y: pointer.startY - 70
+        })
+
+        engine.render.line({
+          ax: pointer.startX,
+          ay: pointer.startY,
+          bx: pointer.x,
+          by: pointer.y
+        })
+
+        engine.render.rect({
+          x: pointer.startX,
+          y: pointer.startY,
+          width: pointer.x - pointer.startX,
+          height: pointer.y - pointer.startY
+        })
+      }
+    }
+  }
   engine.render.context.restore()
 }
 
 const Scene1 = new Harmony.Scene({
-  create: async (engine, refs) => {
+  create: async (engine) => {
     // ------------------------------------------------------------------ assets
 
     document.querySelector('#loading').classList.remove('hidden')
@@ -164,11 +233,6 @@ const Scene1 = new Harmony.Scene({
 
     document.querySelector('#loading').classList.add('hidden')
 
-    // ---------------------------------------------------------------- pointers
-
-    refs.pointer1 = engine.pointers.add()
-    refs.pointer2 = engine.pointers.add()
-
     // -------------------------------------------------------------------- data
 
     const letters = {
@@ -231,50 +295,50 @@ const Scene1 = new Harmony.Scene({
 
     // ------------------------------------------------------------------- props
 
-    refs.rows = 4
-    refs.cols = 4
-    refs.width = window.innerWidth / refs.cols
-    refs.height = window.innerHeight / refs.rows
-    refs.ratioW = refs.width / refs.height
-    refs.ratioH = refs.height / refs.width
-    refs.ratio = refs.ratioW < refs.ratioH ? refs.ratioW : refs.ratioH
-    refs.tileSize = 150 * refs.ratio
-    refs.isCorrect = false
-    refs.flipped = []
-    refs.tempFlipped = []
-    refs.interactionEnabled = true
-    refs.randomLetters = []
-    refs.cards = []
-    refs.cardEntities = []
-    refs.grid = null
+    const rows = 2
+    const cols = 2
+    const width = window.innerWidth / cols
+    const height = window.innerHeight / rows
+    const ratioW = width / height
+    const ratioH = height / width
+    const ratio = ratioW < ratioH ? ratioW : ratioH
+    const tileSize = 150 * ratio
+    const flipped = []
+    let isCorrect = false
+    let tempFlipped = []
+    let interactionEnabled = true
+    let randomLetters = []
+    let cards = []
+    let grid = null
+    let answered = false
 
     // ----------------------------------------------------------------- methods
 
-    refs.createGrid = () => {
-      const grid = new Array(refs.cols)
+    const createGrid = () => {
+      const grid = new Array(cols)
       for (let i = 0; i < grid.length; i++) {
-        grid[i] = new Array(refs.rows)
+        grid[i] = new Array(rows)
       }
       return grid
     }
 
-    refs.getRandomInt = (min, max) => {
+    const getRandomInt = (min, max) => {
       min = Math.ceil(min)
       max = Math.floor(max)
       return Math.floor(Math.random() * (max - min + 1)) + min
     }
 
-    refs.getRandomLetters = (array, quantity) => {
+    const getRandomLetters = (array, quantity) => {
       const randomItems = []
       for (let i = quantity; i--;) {
-        const randomIndex = refs.getRandomInt(0, array.length - 1)
+        const randomIndex = getRandomInt(0, array.length - 1)
         randomItems.push(array[randomIndex])
         array.splice(randomIndex, 1)
       }
       return randomItems
     }
 
-    refs.shuffleArray = (array) => {
+    const shuffleArray = (array) => {
       for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1))
         const x = array[i]
@@ -284,37 +348,35 @@ const Scene1 = new Harmony.Scene({
       return array
     }
 
-    refs.start = () => {
-      refs.randomLetters = refs.getRandomLetters(Object.keys(letters), (refs.rows * refs.cols / 2))
+    const start = () => {
+      randomLetters = getRandomLetters(Object.keys(letters), (rows * cols / 2))
 
-      refs.randomLetters.forEach((letter) => {
-        refs.cards.push(letters[letter])
-        refs.cards.push(animals[letter])
+      randomLetters.forEach((letter) => {
+        cards.push(letters[letter])
+        cards.push(animals[letter])
       })
 
-      console.log(refs.cards)
+      cards = shuffleArray(cards)
 
-      refs.cards = refs.shuffleArray(refs.cards)
-
-      refs.gridgrid = refs.createGrid(refs.rows, refs.cols)
+      grid = createGrid(rows, cols)
 
       let cellIndex = 0
-      for (let col = 0; col < refs.cols; col++) {
-        for (let row = 0; row < refs.cols; row++) {
-          refs.gridgrid[row][col] = 'row: ' + row + ' col: ' + col
+      for (let col = 0; col < cols; col++) {
+        for (let row = 0; row < cols; row++) {
+          grid[row][col] = 'row: ' + row + ' col: ' + col
 
           // -------------------------------------------------------------- back
 
           const backEntity = engine.entities.add('question')
           backEntity.addComponent(engine.transform.addTransformComponent({
-            x: row * refs.width + refs.width * 0.5,
-            y: col * refs.height + refs.height * 0.5,
+            x: row * width + width * 0.5,
+            y: col * height + height * 0.5,
             scale: 1.1
           }))
           backEntity.addComponent(engine.render.addSpriteComponent({
-            sprite: engine.render.sprites.question,
-            width: refs.tileSize,
-            height: refs.tileSize
+            sprite: engine.render.get('question'),
+            width: tileSize,
+            height: tileSize
           }))
 
           // ------------------------------------------------------------- front
@@ -322,136 +384,129 @@ const Scene1 = new Harmony.Scene({
           const frontEntity = engine.entities.add('card')
           frontEntity.addComponent(engine.transform.addTransformComponent())
           frontEntity.flipped = false
-          frontEntity.letter = refs.cards[cellIndex].letter
-          frontEntity.addComponent(engine.audio.addAudioSourceComponent({ clipName: refs.cards[cellIndex].audio }))
+          frontEntity.letter = cards[cellIndex].letter
+          frontEntity.addComponent(engine.audio.addAudioSourceComponent({ clipName: cards[cellIndex].audio }))
           frontEntity.addComponent(engine.render.addSpriteComponent({
-            // spriteName: refs.cards[cellIndex].image,
-            sprite: engine.render.sprites[refs.cards[cellIndex].image],
-            width: refs.tileSize,
-            height: refs.tileSize,
+            sprite: engine.render.get(cards[cellIndex].image),
+            width: tileSize,
+            height: tileSize,
             visible: false
           }))
           frontEntity.addComponent(engine.physics.addPhysicsComponent({
-            x: row * refs.width + refs.width * 0.5,
-            y: col * refs.height + refs.height * 0.5,
+            x: row * width + width * 0.5,
+            y: col * height + height * 0.5,
             type: 'static'
           }))
           frontEntity.physics.addCircle({
-            radius: refs.tileSize * 0.5,
+            radius: tileSize * 0.5,
             density: 10
           })
-
-          refs.cardEntities.push(backEntity)
-          refs.cardEntities.push(frontEntity)
 
           cellIndex++
         }
       }
     }
 
-    refs.start()
+    start()
 
     // ----------------------------------------------------- audioManager entity
 
-    refs.audioManager = engine.entities.add('audio-manager')
-    refs.audioManager.addComponent(engine.transform.addTransformComponent())
-    refs.audioManager.addComponent(engine.audio.addAudioSourceComponent({ clip: refs.clipCorrect }))
+    const audioManager = engine.entities.add('audio-manager')
+    audioManager.addComponent(engine.transform.addTransformComponent())
+    audioManager.addComponent(engine.audio.addAudioSourceComponent())
+    audioManager.addComponent(engine.scripts.addScriptComponent({
+      update: () => {
+        if (engine.keys.get('1').start) {
+          audioManager.audio.play('a')
+        }
+
+        if (engine.keys.get('2').start) {
+          audioManager.audio.play('correct')
+        }
+
+        if (engine.keys.get('3').start) {
+          audioManager.audio.play('win')
+        }
+      }
+    }))
 
     // ---------------------------------------------------------- pointer entity
 
-    refs.pointerColider = engine.entities.add('pointer')
-    refs.pointerColider.addComponent(engine.transform.addTransformComponent())
-    refs.pointerColider.addComponent(engine.physics.addPhysicsComponent({
-      x: -999999,
-      y: -999999
-    }))
+    const pointerColider = engine.entities.add('pointer')
+    pointerColider.addComponent(engine.transform.addTransformComponent())
+    pointerColider.addComponent(engine.physics.addPhysicsComponent({ x: -999999, y: -999999 }))
+    pointerColider.physics.addCircle({ radius: 30, isSensor: true })
+    pointerColider.addComponent(engine.scripts.addScriptComponent({
+      start: () => {
+        pointerColider.physics.onContactBegin = function (pointer, card) {
+          if (interactionEnabled) {
+            if (answered && !isCorrect) {
+              tempFlipped.forEach((card) => {
+                card.sprite.visible = false
+                card.flipped = !card.flipped
+              })
+              tempFlipped = []
+              answered = false
+            }
 
-    refs.pointerColider.physics.addCircle({
-      radius: 30,
-      isSensor: true
-    })
+            if (answered && isCorrect) {
+              tempFlipped = []
+              answered = false
+            }
 
-    refs.pointerColider.physics.onContactBegin = function (pointer, card) {
-      if (refs.interactionEnabled) {
-        if (refs.answered && !refs.isCorrect) {
-          refs.tempFlipped.forEach((card) => {
-            card.sprite.visible = false
-            card.flipped = !card.flipped
-          })
-          refs.tempFlipped = []
-          refs.answered = false
-        }
-
-        if (refs.answered && refs.isCorrect) {
-          refs.tempFlipped = []
-          refs.answered = false
-        }
-
-        if (!card.flipped && refs.tempFlipped.length < 2) {
-          card.audio.play()
-          card.sprite.visible = true
-          card.flipped = !card.flipped
-          refs.tempFlipped.push(card)
-        }
-        // two cards
-        if (refs.tempFlipped.length === 2) {
-          refs.answered = true
-          // correct
-          if (refs.tempFlipped[0].letter === refs.tempFlipped[1].letter) {
-            refs.flipped.push(refs.tempFlipped[0])
-            refs.flipped.push(refs.tempFlipped[1])
-            refs.audioManager.audio.play('correct')
-            refs.isCorrect = true
-          } else {
-            refs.isCorrect = false
+            if (!card.flipped && tempFlipped.length < 2) {
+              card.audio.play()
+              card.sprite.visible = true
+              card.flipped = !card.flipped
+              tempFlipped.push(card)
+            }
+            // two cards
+            if (tempFlipped.length === 2) {
+              answered = true
+              // correct
+              if (tempFlipped[0].letter === tempFlipped[1].letter) {
+                flipped.push(tempFlipped[0])
+                flipped.push(tempFlipped[1])
+                audioManager.audio.play('correct')
+                isCorrect = true
+              } else {
+                isCorrect = false
+              }
+            }
+            if (flipped.length === (rows * cols)) {
+              interactionEnabled = false
+              audioManager.audio.play('win')
+              setTimeout(() => {
+                engine.scene.requestSwitch()
+              }, 2000)
+            }
           }
         }
-        if (refs.flipped.length === (refs.rows * refs.cols)) {
-          refs.interactionEnabled = false
-          refs.audioManager.audio.play('win')
-          setTimeout(() => {
-            engine.scene.requestSwitch()
-          }, 2000)
+      },
+      update: () => {
+        if (engine.pointers.get(0).start) {
+          pointerColider.physics.setPosition({
+            x: engine.pointers.get(0).x,
+            y: engine.pointers.get(0).y
+          })
+        }
+
+        if (engine.pointers.get(0).end) {
+          pointerColider.physics.setPosition({
+            x: -999999,
+            y: -999999
+          })
         }
       }
-    }
+    }))
   },
-  update: (engine, refs) => {
-    if (engine.keys.keyStart('1')) {
-      refs.audioManager.audio.play('a')
-      // engine.scene.switch(Scene1)
-    }
-
-    if (engine.keys.keyStart('2')) {
-      refs.audioManager.audio.play('correct')
-      // engine.scene.switch(Scene2)
-    }
-
-    if (engine.keys.keyStart('3')) {
-      refs.audioManager.audio.play('win')
-    }
-
-    if (refs.pointer1.start) {
-      refs.pointerColider.physics.setPosition({
-        x: refs.pointer1.x,
-        y: refs.pointer1.y
-      })
-    }
-
-    if (refs.pointer1.end) {
-      refs.pointerColider.physics.setPosition({
-        x: -999999,
-        y: -999999
-      })
-    }
-  },
-  draw: (engine, refs) => {
-    debug(engine, refs)
+  draw: (engine) => {
+    debug(engine)
   }
 })
 
 const Scene2 = new Harmony.Scene({
-  create: async (engine, refs) => {
+  create: async (engine) => {
     document.querySelector('#loading').classList.remove('hidden')
 
     await engine.render.loadSprite({ name: 'question', url: './assets/images/question.png' })
@@ -460,44 +515,35 @@ const Scene2 = new Harmony.Scene({
 
     document.querySelector('#loading').classList.add('hidden')
 
-    refs.entity = engine.entities.add('something')
-    refs.entity.addComponent(engine.transform.addTransformComponent())
-    refs.entity.addComponent(engine.physics.addPhysicsComponent())
-    refs.entity.addComponent(engine.audio.addAudioSourceComponent())
-    refs.entity.addComponent(engine.render.addSpriteComponent({ sprite: engine.render.sprites.question, width: 50, height: 50 }))
-    refs.entity.addComponent(engine.scripts.addScriptComponent({
-      start: (e, r, owner) => {
-        console.log(owner)
-      },
+    const entity = engine.entities.add('something')
+    entity.addComponent(engine.transform.addTransformComponent())
+    entity.addComponent(engine.physics.addPhysicsComponent())
+    entity.addComponent(engine.audio.addAudioSourceComponent())
+    entity.addComponent(engine.render.addSpriteComponent({ sprite: engine.render.get('question'), width: 50, height: 50 }))
+    entity.addComponent(engine.scripts.addScriptComponent({
       update: () => {
-        console.log(engine.keys.cache)
-        if (engine.keys.keyStart('1')) {
+        if (engine.keys.get('1').start) {
           console.log('start')
-          refs.entity.audio.play('win')
+          entity.audio.play('win')
         }
-
-        if (engine.keys.keyHold('1')) {
-          console.log(engine.keys.keyHoldTime('1'))
+        if (engine.keys.get('1').keyHold) {
+          console.log(engine.keys.get('1').keyHoldTime)
         }
-
-        if (engine.keys.keyEnd('1')) {
+        if (engine.keys.get('1').keyEnd) {
           console.log('end')
         }
-
-        if (engine.keys.keyStart('2')) {
-          refs.entity.audio.stop()
-          refs.entity.audio.play('win')
+        if (engine.keys.get('2').start) {
+          entity.audio.stop()
+          entity.audio.play('win')
         }
-
-        if (engine.keys.keyStart('3')) {
-          refs.entity.audio.stop()
+        if (engine.keys.get('3').start) {
+          entity.audio.stop()
         }
       }
     }))
-    console.log(refs.entity)
   },
-  draw: (engine, refs) => {
-    debug(engine, refs)
+  draw: (engine) => {
+    debug(engine)
   }
 })
 

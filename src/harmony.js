@@ -12,7 +12,7 @@ import SpriteComponent from './render-system/sprite-component'
 import RenderSystem from './render-system/render-system'
 import Scene from './scene-system/scene'
 import SceneSystem from './scene-system/scene-system'
-import Script from './script-system/script'
+import ScriptComponent from './script-system/script-component'
 import ScriptSystem from './script-system/script-system'
 import TransformComponent from './transform-system/transform-component'
 import TransformSystem from './transform-system/transform-system'
@@ -38,7 +38,7 @@ const Harmony = {
   RenderSystem: RenderSystem,
   Scene: Scene,
   SceneSystem: SceneSystem,
-  Script: Script,
+  ScriptComponent: ScriptComponent,
   ScriptSystem: ScriptSystem,
   TransformComponent: TransformComponent,
   TransformSystem: TransformSystem

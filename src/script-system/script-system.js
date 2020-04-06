@@ -5,12 +5,12 @@ const ScriptSystem = function () {
 }
 
 ScriptSystem.prototype.addScriptComponent = function (config) {
-  const component = new Harmony.Script(config)
+  const component = new Harmony.ScriptComponent(config)
   this.components.push(component)
   return component
 }
 
-ScriptSystem.prototype.update = function (engine, refs) {
+ScriptSystem.prototype.update = function (engine) {
   for (let i = this.components.length; i--;) {
     const component = this.components[i]
     if (component.mustDestroy) {
@@ -18,13 +18,11 @@ ScriptSystem.prototype.update = function (engine, refs) {
       continue
     }
     if (component.mustStart) {
-      component.mustStart = false
-      component.mustUpdate = true
-      component.start(engine, refs, component.owner)
+      component.start(engine)
       continue
     }
     if (component.mustUpdate) {
-      component.update(engine, refs, component.owner)
+      component.update(engine)
     }
   }
 }

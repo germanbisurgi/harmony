@@ -20,7 +20,7 @@ const Engine = function (canvas) {
         // console.log('create')
         this.loop.pause()
         this.scene.requestUpdate()
-        await this.scene.current.create(this, this.scene.current.refs)
+        await this.scene.current.create(this)
         this.loop.continue()
       }
       if (this.scene.mustUpdate) {
@@ -32,15 +32,15 @@ const Engine = function (canvas) {
         this.transform.update()
         this.physics.update()
         this.entities.update()
-        this.scripts.update(this, this.scene.current.refs)
-        this.scene.current.update(this, this.scene.current.refs)
+        this.scripts.update(this)
+        this.scene.current.update(this)
       }
       if (this.scene.mustDraw) {
         this.scene.requestUpdate()
         // console.log('draw')
         this.render.draw()
         // this.physics.drawDebugData()
-        this.scene.current.draw(this, this.scene.current.refs)
+        this.scene.current.draw(this)
       }
     }
     if (this.scene.mustSwitch) {
