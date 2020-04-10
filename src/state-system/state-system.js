@@ -18,11 +18,15 @@ StateSystem.prototype.update = function (engine) {
       continue
     }
     if (component.current && component.mustSwitch) {
-      component.states[component.current].exit(engine, component.owner)
+      if (component.states[component.current].exit) {
+        component.states[component.current].exit(engine, component.owner)
+      }
     }
     if (component.mustSwitch) {
       component.current = component.requested
-      component.states[component.current].enter(engine, component.owner)
+      if (component.states[component.current].enter) {
+        component.states[component.current].enter(engine, component.owner)
+      }
       component.mustSwitch = false
     }
     if (component.current) {
