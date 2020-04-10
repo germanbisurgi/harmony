@@ -116,6 +116,6 @@ const LoadScene = new Harmony.Scene({
     document.querySelector('#loading').classList.add('hidden')
   },
   update: (engine) => {
-    engine.scene.switch(StateScene)
+    engine.scene.switch(MemoryScene)
   }
 })

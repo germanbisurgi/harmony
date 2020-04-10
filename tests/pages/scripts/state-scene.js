@@ -4,12 +4,13 @@ const StateScene = new Harmony.Scene({
   create: async (engine) => {
     const entity = engine.entities.add('entity')
 
-    entity.addComponent(engine.transform.addTransformComponent())
+    entity.addComponent(engine.transform.addTransformComponent({
+      x: 50,
+      y: 50
+    }))
 
     entity.addComponent(engine.render.addSpriteComponent({
-      image: engine.render.get('question'),
-      width: 50,
-      height: 50
+      image: engine.render.get('question')
     }))
 
     entity.addComponent(engine.state.addStateComponent({
@@ -18,31 +19,21 @@ const StateScene = new Harmony.Scene({
         front: {
           enter: (engine, owner) => {
             owner.sprite.image = engine.render.get('a')
-            console.log('front enter')
           },
           update: (engine, owner) => {
-            console.log('front update')
             if (engine.pointers.get(0).start) {
               owner.state.switch('back')
             }
-          },
-          exit: () => {
-            console.log('front exit')
           }
         },
         back: {
           enter: (engine, owner) => {
-            console.log('back enter')
             owner.sprite.image = engine.render.get('question')
           },
           update: (engine, owner) => {
-            console.log('back update')
             if (engine.pointers.get(0).start) {
               owner.state.switch('front')
             }
-          },
-          exit: () => {
-            console.log('back exit')
           }
         }
       }

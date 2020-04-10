@@ -52,8 +52,6 @@ const MemoryScene = new Harmony.Scene({
     let cards = []
     let answered = false
 
-    console.log(randomLetters)
-
     randomLetters.forEach((letter) => {
       const letterObj = {
         letter: letter,
@@ -68,8 +66,6 @@ const MemoryScene = new Harmony.Scene({
       cards.push(letterObj)
       cards.push(thingObj)
     })
-
-    console.table(cards)
 
     cards = engine.helpers.shuffleArray(cards)
 
