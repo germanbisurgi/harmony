@@ -116,6 +116,6 @@ const Scene0 = new Harmony.Scene({
     document.querySelector('#loading').classList.add('hidden')
   },
   update: (engine) => {
-    engine.scene.switch(Scene2)
+    engine.scene.switch(Scene1)
   }
 })
