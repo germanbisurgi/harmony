@@ -3,6 +3,7 @@ import AudioSourceComponent from './audio-system/audio-source-component'
 import AssetsSystem from './assets-system/assets-system'
 import Engine from './engine/engine'
 import Entity from './entity-system/entity'
+import Helpers from './helpers/helpers'
 import Key from './key-system/key'
 import KeySystem from './key-system/key-system'
 import LoopSystem from './loop-system/loop-system'
@@ -27,6 +28,7 @@ const Harmony = {
   Engine: Engine,
   Entity: Entity,
   EntitySystem: EntitySystem,
+  Helpers: Helpers,
   Key: Key,
   KeySystem: KeySystem,
   LoopSystem: LoopSystem,

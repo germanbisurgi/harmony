@@ -12,6 +12,7 @@ const Engine = function (canvas) {
   this.pointers = new Harmony.PointerSystem(canvas)
   this.transform = new Harmony.TransformSystem()
   this.scripts = new Harmony.ScriptSystem()
+  this.helpers = new Harmony.Helpers()
 
   this.loop.onStep = async () => {
     if (this.scene.current) {
