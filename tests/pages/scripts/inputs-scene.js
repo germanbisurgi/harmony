@@ -1,6 +1,6 @@
 /* global Harmony debug */
 
-const Scene2 = new Harmony.Scene({
+const InputsScene = new Harmony.Scene({
   create: async (engine) => {
     document.querySelector('#loading').classList.remove('hidden')
 

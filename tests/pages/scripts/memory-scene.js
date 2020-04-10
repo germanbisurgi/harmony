@@ -1,6 +1,6 @@
 /* global Harmony debug */
 
-const Scene1 = new Harmony.Scene({
+const MemoryScene = new Harmony.Scene({
   create: async (engine) => {
     document.querySelector('#loading').classList.add('hidden')
 
@@ -87,7 +87,7 @@ const Scene1 = new Harmony.Scene({
           scale: 1.1
         }))
         backEntity.addComponent(engine.render.addSpriteComponent({
-          sprite: engine.render.get('question'),
+          image: engine.render.get('question'),
           width: tileSize,
           height: tileSize
         }))
@@ -100,7 +100,7 @@ const Scene1 = new Harmony.Scene({
         frontEntity.letter = cards[cellIndex].letter
         frontEntity.addComponent(engine.audio.addAudioSourceComponent({ clipName: cards[cellIndex].audio }))
         frontEntity.addComponent(engine.render.addSpriteComponent({
-          sprite: engine.render.get(cards[cellIndex].image),
+          image: engine.render.get(cards[cellIndex].image),
           width: tileSize,
           height: tileSize,
           visible: false
@@ -124,21 +124,6 @@ const Scene1 = new Harmony.Scene({
     const audioManager = engine.entities.add('audio-manager')
     audioManager.addComponent(engine.transform.addTransformComponent())
     audioManager.addComponent(engine.audio.addAudioSourceComponent())
-    audioManager.addComponent(engine.scripts.addScriptComponent({
-      update: () => {
-        if (engine.keys.get('1').start) {
-          audioManager.audio.play('a')
-        }
-
-        if (engine.keys.get('2').start) {
-          audioManager.audio.play('correct')
-        }
-
-        if (engine.keys.get('3').start) {
-          audioManager.audio.play('win')
-        }
-      }
-    }))
 
     // ---------------------------------------------------------- pointer entity
 
