@@ -79,6 +79,14 @@ RenderSystem.prototype.draw = function () {
           component.owner.transform.scale
         )
 
+        if (component.sourceWidth === 0) {
+          component.sourceWidth = component.image.width
+        }
+
+        if (component.sourceHeight === 0) {
+          component.sourceHeight = component.image.height
+        }
+
         this.context.drawImage(
           component.image,
           component.sourceX,

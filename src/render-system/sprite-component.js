@@ -19,8 +19,8 @@ const SpriteComponent = function (params) {
   this.height = config.height
   this.sourceX = config.sourceX
   this.sourceY = config.sourceY
-  this.sourceWidth = config.sourceWidth === 0 ? this.image.width : config.sourceWidth
-  this.sourceHeight = config.sourceHeight === 0 ? this.image.height : config.sourceHeight
+  this.sourceWidth = config.sourceWidth
+  this.sourceHeight = config.sourceHeight
   this.anchorX = config.anchorX
   this.anchorY = config.anchorY
   this.visible = config.visible
