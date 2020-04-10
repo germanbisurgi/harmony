@@ -1,6 +1,6 @@
 const SpriteComponent = function (params) {
   const config = Object.assign({
-    sprite: null,
+    image: null,
     width: 50,
     height: 50,
     sourceX: 0,
@@ -14,13 +14,13 @@ const SpriteComponent = function (params) {
 
   this.owner = null
   this.mustDestroy = false
-  this.sprite = config.sprite
+  this.image = config.image
   this.width = config.width
   this.height = config.height
   this.sourceX = config.sourceX
   this.sourceY = config.sourceY
-  this.sourceWidth = config.sourceWidth === 0 ? this.sprite.width : config.sourceWidth
-  this.sourceHeight = config.sourceHeight === 0 ? this.sprite.height : config.sourceHeight
+  this.sourceWidth = config.sourceWidth === 0 ? this.image.width : config.sourceWidth
+  this.sourceHeight = config.sourceHeight === 0 ? this.image.height : config.sourceHeight
   this.anchorX = config.anchorX
   this.anchorY = config.anchorY
   this.visible = config.visible

@@ -9,7 +9,7 @@ const RenderSystem = function (canvas) {
   this.cache = {}
 }
 
-RenderSystem.prototype.loadSprite = function (config) {
+RenderSystem.prototype.loadImage = function (config) {
   return new Promise((resolve, reject) => {
     const image = new Image()
     image.onload = () => {
@@ -27,8 +27,8 @@ RenderSystem.prototype.clear = function () {
   this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
 }
 
-RenderSystem.prototype.get = function (sprite) {
-  return this.cache[sprite]
+RenderSystem.prototype.get = function (image) {
+  return this.cache[image]
 }
 
 RenderSystem.prototype.draw = function () {
@@ -80,7 +80,7 @@ RenderSystem.prototype.draw = function () {
         )
 
         this.context.drawImage(
-          component.sprite,
+          component.image,
           component.sourceX,
           component.sourceY,
           component.sourceWidth,
@@ -100,10 +100,6 @@ RenderSystem.prototype.draw = function () {
 
 RenderSystem.prototype.addSpriteComponent = function (config) {
   const component = new Harmony.SpriteComponent(config)
-  if (component.sourceWidth === 0 || component.sourceHeight === 0) {
-    component.sourceWidth = this.cache[component.spriteName].width
-    component.sourceHeight = this.cache[component.spriteName].height
-  }
   this.components.unshift(component)
   return component
 }
