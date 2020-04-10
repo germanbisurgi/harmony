@@ -2,7 +2,7 @@
 
 const canvas = document.querySelector('#engine-canvas')
 const engine = new Harmony.Engine(canvas)
-engine.scene.switch(Scene0)
+engine.scene.switch(LoadScene)
 
 // window.onerror = function (msg, url, linenumber) {
 //   window.alert('Error message: ' + msg + '\nURL: ' + url + '\nLine Number: ' + linenumber)
