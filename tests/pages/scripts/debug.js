@@ -9,39 +9,44 @@ const debug = (engine) => {
     y: 200
   })
   engine.render.text({
-    text: 'entities: ' + engine.entities.cache.length,
+    text: 'keys: ' + Object.keys(engine.keys.cache).length,
     x: 200,
     y: 220
   })
   engine.render.text({
-    text: 'transform components: ' + engine.transform.components.length,
+    text: 'pointers: ' + Object.keys(engine.pointers.cache).length,
     x: 200,
     y: 240
   })
   engine.render.text({
-    text: 'sprite components: ' + engine.render.components.length,
+    text: 'entities: ' + engine.entities.cache.length,
     x: 200,
     y: 260
   })
   engine.render.text({
-    text: 'physics components: ' + engine.physics.components.length,
+    text: 'transform components: ' + engine.transform.components.length,
     x: 200,
     y: 280
   })
   engine.render.text({
-    text: 'audio components: ' + engine.audio.components.length,
+    text: 'sprite components: ' + engine.render.components.length,
     x: 200,
     y: 300
   })
   engine.render.text({
-    text: 'keys: ' + Object.keys(engine.keys.cache).length,
+    text: 'physics components: ' + engine.physics.components.length,
     x: 200,
     y: 320
   })
   engine.render.text({
-    text: 'pointers: ' + Object.keys(engine.pointers.cache).length,
+    text: 'audio components: ' + engine.audio.components.length,
     x: 200,
     y: 340
+  })
+  engine.render.text({
+    text: 'state components: ' + Object.keys(engine.state.components).length,
+    x: 200,
+    y: 360
   })
 
   engine.render.context.save()
@@ -113,4 +118,3 @@ const debug = (engine) => {
   }
   engine.render.context.restore()
 }
-

@@ -15,6 +15,8 @@ import Scene from './scene-system/scene'
 import SceneSystem from './scene-system/scene-system'
 import ScriptComponent from './script-system/script-component'
 import ScriptSystem from './script-system/script-system'
+import StateComponent from './state-system/state-component'
+import StateSystem from './state-system/state-system'
 import TransformComponent from './transform-system/transform-component'
 import TransformSystem from './transform-system/transform-system'
 import EntitySystem from './entity-system/entity-system'
@@ -42,6 +44,8 @@ const Harmony = {
   SceneSystem: SceneSystem,
   ScriptComponent: ScriptComponent,
   ScriptSystem: ScriptSystem,
+  StateComponent: StateComponent,
+  StateSystem: StateSystem,
   TransformComponent: TransformComponent,
   TransformSystem: TransformSystem
 }

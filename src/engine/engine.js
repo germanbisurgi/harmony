@@ -12,6 +12,7 @@ const Engine = function (canvas) {
   this.pointers = new Harmony.PointerSystem(canvas)
   this.transform = new Harmony.TransformSystem()
   this.scripts = new Harmony.ScriptSystem()
+  this.state = new Harmony.StateSystem()
   this.helpers = new Harmony.Helpers()
 
   this.loop.onStep = async () => {
@@ -31,6 +32,7 @@ const Engine = function (canvas) {
         this.physics.update()
         this.entities.update()
         this.scripts.update(this)
+        this.state.update(this)
         this.scene.current.update(this)
       }
       if (this.scene.mustDraw) {
