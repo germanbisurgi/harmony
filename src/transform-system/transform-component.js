@@ -1,7 +1,7 @@
 const TransformComponent = function (params) {
   const config = Object.assign({
-    x: 0,
-    y: 0,
+    x: 50,
+    y: 50,
     angle: 0,
     scale: 1
   }, params)
