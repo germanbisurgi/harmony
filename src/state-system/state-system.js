@@ -29,7 +29,7 @@ StateSystem.prototype.update = function (engine) {
       }
       component.mustSwitch = false
     }
-    if (component.current) {
+    if (component.current && component.states[component.current].update) {
       component.states[component.current].update(engine, component.owner)
     }
   }
