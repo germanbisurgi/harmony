@@ -1,6 +1,7 @@
 /* global Harmony */
 
 const KeySystem = function () {
+  this.enabled = true
   this.cache = {}
   this.delta = 0
   this.now = 0
@@ -34,31 +35,32 @@ KeySystem.prototype.get = function (key) {
 }
 
 KeySystem.prototype.update = function () {
-  this.frame++
-  this.now = window.performance.now()
-  this.delta = this.now - this.then
-  this.then = this.now
-  for (const i in this.cache) {
-    if (!Object.prototype.hasOwnProperty.call(this.cache, i)) {
-      continue
-    }
-    const key = this.cache[i]
-    if (key.hold) {
-      key.holdTime += this.delta
-      key.endFrame = -1
-      if (key.startFrame === -1) {
-        key.startFrame = this.frame
+  if (this.enabled) {
+    this.frame++
+    this.now = window.performance.now()
+    this.delta = this.now - this.then
+    this.then = this.now
+    for (const i in this.cache) {
+      if (!Object.prototype.hasOwnProperty.call(this.cache, i)) {
+        continue
       }
-    } else {
-      key.holdTime = 0
-      key.startFrame = -1
-      if (key.endFrame === -1) {
-        key.endFrame = this.frame
+      const key = this.cache[i]
+      if (key.hold) {
+        key.holdTime += this.delta
+        key.endFrame = -1
+        if (key.startFrame === -1) {
+          key.startFrame = this.frame
+        }
+      } else {
+        key.holdTime = 0
+        key.startFrame = -1
+        if (key.endFrame === -1) {
+          key.endFrame = this.frame
+        }
       }
+      key.start = (key.startFrame === this.frame)
+      key.end = (key.endFrame === this.frame)
     }
-    key.start = (key.startFrame === this.frame)
-    key.end = (key.endFrame === this.frame)
-    // console.log(key.endFrame, this.frame)
   }
 }
 
