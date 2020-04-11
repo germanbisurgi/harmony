@@ -4,20 +4,9 @@ const AudioScene = new Harmony.Scene({
   create: async (engine) => {
     const entity = engine.entities.add('entity')
 
-    entity.addComponent(engine.transform.addTransformComponent({
-      x: 50,
-      y: 50
-    }))
+    entity.addComponent(engine.transform.addTransformComponent())
 
-    entity.addComponent(engine.render.addSpriteComponent({
-      image: engine.assets.getImage('question')
-    }))
-
-    entity.addComponent(engine.audio.addAudioComponent({
-      buffer: engine.assets.getBuffer('win')
-    }))
-
-    console.log(entity.audio)
+    entity.addComponent(engine.audio.addAudioSourceComponent())
 
     entity.addComponent(engine.state.addStateComponent({
       current: 'play',
@@ -25,7 +14,7 @@ const AudioScene = new Harmony.Scene({
         play: {
           update: (engine, owner) => {
             if (engine.pointers.get(0).start) {
-              owner.audio.play()
+              owner.audio.play('win')
               owner.state.switch('stop')
             }
           }

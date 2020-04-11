@@ -35,6 +35,8 @@ const MemoryScene = new Harmony.Scene({
       z: { letterImage: 'z', letterAudio: 'z', thingImage: 'zebra', thingAudio: 'zebra' }
     }
 
+    engine.pointers.enabled = true
+
     const rows = 2
     const cols = 2
     const width = window.innerWidth / cols
@@ -43,14 +45,13 @@ const MemoryScene = new Harmony.Scene({
     const ratioH = height / width
     const ratio = ratioW < ratioH ? ratioW : ratioH
     const tileSize = 150 * ratio
-    const flipped = []
     const randomLetters = engine.helpers.getRandomItems(Object.keys(letters), (rows * cols / 2))
     const grid = engine.helpers.createGrid(rows, cols)
-    let isCorrect = false
-    let tempFlipped = []
-    let interactionEnabled = true
+
+    let match = false
+    let selected = []
     let cards = []
-    let answered = false
+    const flipped = []
 
     randomLetters.forEach((letter) => {
       const letterObj = {
@@ -77,11 +78,13 @@ const MemoryScene = new Harmony.Scene({
         // -------------------------------------------------------------- back
 
         const backEntity = engine.entities.add('question')
+
         backEntity.addComponent(engine.transform.addTransformComponent({
           x: row * width + width * 0.5,
           y: col * height + height * 0.5,
           scale: 1.1
         }))
+
         backEntity.addComponent(engine.render.addSpriteComponent({
           image: engine.render.get('question'),
           width: tileSize,
@@ -90,23 +93,33 @@ const MemoryScene = new Harmony.Scene({
 
         // ------------------------------------------------------------- front
 
-        const frontEntity = engine.entities.add('card')
-        frontEntity.addComponent(engine.transform.addTransformComponent())
-        frontEntity.flipped = false
-        frontEntity.letter = cards[cellIndex].letter
-        frontEntity.addComponent(engine.audio.addAudioSourceComponent({ clipName: cards[cellIndex].audio }))
-        frontEntity.addComponent(engine.render.addSpriteComponent({
-          image: engine.render.get(cards[cellIndex].image),
+        const card = engine.entities.add('card')
+        card.data = {}
+        card.data.flipped = false
+        card.data.letter = cards[cellIndex].letter
+        card.data.audio = cards[cellIndex].audio
+        card.data.image = cards[cellIndex].image
+
+        card.addComponent(engine.transform.addTransformComponent())
+
+        card.addComponent(engine.audio.addAudioSourceComponent({
+          clipName: card.data.audio
+        }))
+
+        card.addComponent(engine.render.addSpriteComponent({
+          image: engine.render.get(card.data.image),
           width: tileSize,
           height: tileSize,
           visible: false
         }))
-        frontEntity.addComponent(engine.physics.addPhysicsComponent({
+
+        card.addComponent(engine.physics.addPhysicsComponent({
           x: row * width + width * 0.5,
           y: col * height + height * 0.5,
           type: 'static'
         }))
-        frontEntity.physics.addCircle({
+
+        card.physics.addCircle({
           radius: tileSize * 0.5,
           density: 10
         })
@@ -123,70 +136,80 @@ const MemoryScene = new Harmony.Scene({
 
     // ---------------------------------------------------------- pointer entity
 
-    const pointerColider = engine.entities.add('pointer')
-    pointerColider.addComponent(engine.transform.addTransformComponent())
-    pointerColider.addComponent(engine.physics.addPhysicsComponent({ x: -999999, y: -999999 }))
-    pointerColider.physics.addCircle({ radius: 10, isSensor: true })
-    pointerColider.addComponent(engine.scripts.addScriptComponent({
-      start: () => {
-        pointerColider.physics.onContactBegin = function (pointer, card) {
-          if (interactionEnabled) {
-            if (answered && !isCorrect) {
-              tempFlipped.forEach((card) => {
-                card.sprite.visible = false
-                card.flipped = !card.flipped
-              })
-              tempFlipped = []
-              answered = false
-            }
+    const pointer = engine.entities.add('pointer')
 
-            if (answered && isCorrect) {
-              tempFlipped = []
-              answered = false
-            }
+    pointer.addComponent(engine.transform.addTransformComponent())
 
-            if (!card.flipped && tempFlipped.length < 2) {
-              card.audio.play()
-              card.sprite.visible = true
-              card.flipped = !card.flipped
-              tempFlipped.push(card)
-            }
-            // two cards
-            if (tempFlipped.length === 2) {
-              answered = true
-              // correct
-              if (tempFlipped[0].letter === tempFlipped[1].letter) {
-                flipped.push(tempFlipped[0])
-                flipped.push(tempFlipped[1])
-                audioManager.audio.play('correct')
-                isCorrect = true
-              } else {
-                isCorrect = false
+    pointer.addComponent(engine.physics.addPhysicsComponent({
+      x: -999999,
+      y: -999999
+    }))
+
+    pointer.physics.addCircle({
+      radius: 10,
+      isSensor: true
+    })
+
+    pointer.addComponent(engine.state.addStateComponent({
+      current: 'default',
+      states: {
+        default: {
+          enter: (engine, owner) => {
+            owner.physics.onContactBegin = function (pointer, card) {
+              if (engine.pointers.enabled) {
+                if (selected.length === 2 && !match) {
+                  selected.forEach((card) => {
+                    card.sprite.visible = false
+                    card.data.flipped = !card.data.flipped
+                  })
+                  selected = []
+                }
+
+                if (selected.length === 2 && match) {
+                  selected = []
+                }
+
+                if (!card.data.flipped && selected.length < 2) {
+                  card.audio.play()
+                  card.sprite.visible = true
+                  card.data.flipped = !card.data.flipped
+                  selected.push(card)
+                }
+
+                if (selected.length === 2) {
+                  if (selected[0].data.letter === selected[1].data.letter) {
+                    flipped.push(selected[0])
+                    flipped.push(selected[1])
+                    audioManager.audio.play('correct')
+                    match = true
+                  } else {
+                    match = false
+                  }
+                }
+                if (flipped.length === (rows * cols)) {
+                  engine.pointers.enabled = false
+                  audioManager.audio.play('win')
+                  setTimeout(() => {
+                    engine.scene.requestSwitch()
+                  }, 2000)
+                }
               }
             }
-            if (flipped.length === (rows * cols)) {
-              interactionEnabled = false
-              audioManager.audio.play('win')
-              setTimeout(() => {
-                engine.scene.requestSwitch()
-              }, 2000)
+          },
+          update: (engine, owner) => {
+            if (engine.pointers.get(0).start) {
+              owner.physics.setPosition({
+                x: engine.pointers.get(0).x,
+                y: engine.pointers.get(0).y
+              })
+            }
+            if (engine.pointers.get(0).end) {
+              owner.physics.setPosition({
+                x: -999999,
+                y: -999999
+              })
             }
           }
-        }
-      },
-      update: () => {
-        if (engine.pointers.get(0).start) {
-          pointerColider.physics.setPosition({
-            x: engine.pointers.get(0).x,
-            y: engine.pointers.get(0).y
-          })
-        }
-
-        if (engine.pointers.get(0).end) {
-          pointerColider.physics.setPosition({
-            x: -999999,
-            y: -999999
-          })
         }
       }
     }))

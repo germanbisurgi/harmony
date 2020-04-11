@@ -38,3 +38,13 @@ canvas {
   transform: translate(-50%, -50%);
   z-index: 2;
 }
+
+#ui {
+  position: absolute;
+  z-index: 3;
+}
+
+button {
+  padding: 5px;
+}
+
