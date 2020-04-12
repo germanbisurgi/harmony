@@ -37,8 +37,8 @@ const MemoryScene = new Harmony.Scene({
 
     engine.pointers.enabled = true
 
-    const rows = 2
-    const cols = 2
+    const rows = 4
+    const cols = 4
     const width = window.innerWidth / cols
     const height = window.innerHeight / rows
     const ratioW = width / height
@@ -215,6 +215,6 @@ const MemoryScene = new Harmony.Scene({
     }))
   },
   draw: (engine) => {
-    debug(engine)
+    // debug(engine)
   }
 })
