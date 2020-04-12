@@ -1,14 +1,7 @@
 const path = require('path')
 
-module.exports = {
+const common = {
   entry: './src/harmony.js',
-  output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'harmony.js',
-    libraryExport: 'default',
-    library: 'Harmony',
-    libraryTarget: 'umd'
-  },
   mode: 'production',
   devtool: 'inline-source-map',
   module: {
@@ -38,3 +31,28 @@ module.exports = {
     minimize: false
   }
 }
+
+const configA = Object.assign({}, common, {
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'harmony.js',
+    libraryExport: 'default',
+    library: 'Harmony',
+    libraryTarget: 'umd'
+  }
+})
+
+const configB = Object.assign({}, common, {
+  output: {
+    path: path.resolve(__dirname, 'docs/scripts'),
+    filename: 'harmony.js',
+    libraryExport: 'default',
+    library: 'Harmony',
+    libraryTarget: 'umd'
+  }
+})
+
+module.exports = [
+  configA,
+  configB
+]

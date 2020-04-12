@@ -38,7 +38,7 @@ const Engine = function (canvas) {
       if (this.scene.mustDraw) {
         this.scene.requestUpdate()
         this.render.draw()
-        this.physics.drawDebugData()
+        // this.physics.drawDebugData()
         this.scene.current.draw(this)
       }
     }
