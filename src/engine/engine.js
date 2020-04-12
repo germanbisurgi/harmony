@@ -1,7 +1,7 @@
 /* global Harmony */
 
 const Engine = function (canvas) {
-  // core
+  this.loader = new Harmony.Loader()
   this.loop = new Harmony.LoopSystem()
   this.scene = new Harmony.SceneSystem()
   this.render = new Harmony.RenderSystem(canvas)
@@ -17,11 +17,20 @@ const Engine = function (canvas) {
 
   this.loop.onStep = async () => {
     if (this.scene.current) {
+      if (this.scene.mustPreload) {
+        if (!this.loader.loading) {
+          this.scene.current.preload(this)
+        }
+        this.loader.update()
+        if (this.loader.complete) {
+          this.render.cache = this.loader.imagesCache
+          this.audio.cache = this.loader.audioCache
+          this.scene.requestCreate()
+        }
+      }
       if (this.scene.mustCreate) {
-        this.loop.pause()
         this.scene.requestUpdate()
-        await this.scene.current.create(this)
-        this.loop.continue()
+        this.scene.current.create(this)
       }
       if (this.scene.mustUpdate) {
         this.scene.requestDraw()
@@ -47,7 +56,7 @@ const Engine = function (canvas) {
       this.pointers.destroy()
       this.keys.destroy()
       this.scene.current = this.scene.requested
-      this.scene.requestCreate()
+      this.scene.requestPreload()
     }
   }
   this.loop.run()

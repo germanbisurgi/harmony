@@ -1,7 +1,7 @@
 /* global Harmony debug */
 
 const StateScene = new Harmony.Scene({
-  create: async (engine) => {
+  create: (engine) => {
     const entity = engine.entities.add('entity')
 
     entity.addComponent(engine.transform.addTransformComponent({

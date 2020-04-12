@@ -1,9 +1,14 @@
 const Scene = function (params) {
   this.methods = Object.assign({
+    preload: () => {},
     create: () => {},
     update: () => {},
     draw: () => {}
   }, params)
+}
+
+Scene.prototype.preload = function (engine) {
+  return this.methods.preload(engine)
 }
 
 Scene.prototype.create = function (engine) {

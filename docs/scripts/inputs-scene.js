@@ -1,7 +1,7 @@
 /* global Harmony debug */
 
 const InputsScene = new Harmony.Scene({
-  create: async (engine) => {
+  create: (engine) => {
     const entity = engine.entities.add('something')
     entity.addComponent(engine.transform.addTransformComponent())
 

@@ -4,10 +4,35 @@ const canvas = document.querySelector('#engine-canvas')
 const engine = new Harmony.Engine(canvas)
 engine.scene.switch(LoadScene)
 
-// window.onerror = function (msg, url, linenumber) {
-//   window.alert('Error message: ' + msg + '\nURL: ' + url + '\nLine Number: ' + linenumber)
-//   return true
-// }
+// --------------------------------------------------------------------- loading
+
+const percent = document.querySelector('#percent')
+const assets = document.querySelector('#assets')
+
+engine.loader.onStart = () => {
+  console.log('onstart')
+}
+
+engine.loader.onSuccess = (asset) => {
+  const p = document.createElement('p')
+  p.innerText = asset.url
+  assets.insertBefore(p, assets.firstChild)
+  console.log('onSuccess', asset)
+}
+
+engine.loader.onError = (asset) => {
+  console.log('onerror', asset)
+}
+
+engine.loader.onProgress = (progress) => {
+  percent.innerText = progress
+  console.log('onprogress', progress)
+}
+
+engine.loader.onComplete = () => {
+  document.querySelector('#loading').classList.add('hidden')
+  console.log('oncomplete')
+}
 
 // -------------------------------------------------------------------------- ui
 

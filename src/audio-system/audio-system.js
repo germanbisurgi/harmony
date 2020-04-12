@@ -5,7 +5,7 @@ const AudioSystem = function () {
   this.context = new AudioContext()
   this.master = this.context.createGain()
   this.components = []
-  this.clips = {}
+  this.cache = {}
 
   this.master.connect(this.context.destination)
 }
@@ -16,7 +16,7 @@ AudioSystem.prototype.play = function (component) {
   const source = this.context.createBufferSource()
   const gain = this.context.createGain()
   component.clipRef = source
-  source.buffer = this.clips[clip]
+  source.buffer = this.cache[clip]
   source.connect(gain)
   gain.connect(this.master)
   gain.gain.value = component.volume
@@ -42,7 +42,7 @@ AudioSystem.prototype.loadClip = function (config) {
     xhr.responseType = 'arraybuffer'
     xhr.onload = () => {
       AudioContext.decodeAudioData(xhr.response, (buffer) => {
-        this.clips[config.name] = buffer
+        this.cache[config.name] = buffer
         resolve(buffer)
       }, (reason) => {
         reject(reason)

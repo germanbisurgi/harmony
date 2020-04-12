@@ -1,9 +1,7 @@
 /* global Harmony debug */
 
 const MemoryScene = new Harmony.Scene({
-  create: async (engine) => {
-    document.querySelector('#loading').classList.add('hidden')
-
+  create: (engine) => {
     // -------------------------------------------------------------------- data
 
     const letters = {

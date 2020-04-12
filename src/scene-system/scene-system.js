@@ -1,6 +1,7 @@
 const SceneSystem = function () {
   this.current = null
   this.requested = null
+  this.mustPreload = false
   this.mustCreate = false
   this.mustUpdate = false
   this.mustDraw = false
@@ -12,7 +13,16 @@ SceneSystem.prototype.switch = function (scene) {
   this.requestSwitch()
 }
 
+SceneSystem.prototype.requestPreload = function () {
+  this.mustPreload = true
+  this.mustCreate = false
+  this.mustUpdate = false
+  this.mustDraw = false
+  this.mustSwitch = false
+}
+
 SceneSystem.prototype.requestCreate = function () {
+  this.mustPreload = false
   this.mustCreate = true
   this.mustUpdate = false
   this.mustDraw = false
@@ -20,6 +30,7 @@ SceneSystem.prototype.requestCreate = function () {
 }
 
 SceneSystem.prototype.requestUpdate = function () {
+  this.mustPreload = false
   this.mustCreate = false
   this.mustUpdate = true
   this.mustDraw = false
@@ -27,6 +38,7 @@ SceneSystem.prototype.requestUpdate = function () {
 }
 
 SceneSystem.prototype.requestDraw = function () {
+  this.mustPreload = false
   this.mustCreate = false
   this.mustUpdate = false
   this.mustDraw = true
@@ -34,6 +46,7 @@ SceneSystem.prototype.requestDraw = function () {
 }
 
 SceneSystem.prototype.requestSwitch = function () {
+  this.mustPreload = false
   this.mustCreate = false
   this.mustUpdate = false
   this.mustDraw = false
