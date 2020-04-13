@@ -1,5 +1,4 @@
 /* global Harmony */
-
 const AudioSystem = function () {
   const AudioContext = window.AudioContext || window.webkitAudioContext
   this.context = new AudioContext()
@@ -9,20 +8,20 @@ const AudioSystem = function () {
   this.master.connect(this.context.destination)
 }
 
-AudioSystem.prototype.play = function (component) {
+AudioSystem.prototype.play = function (entity, name) {
   const source = this.context.createBufferSource()
   const gain = this.context.createGain()
-  component.source = source
-  source.buffer = this.cache[component.audioName]
+  entity.components.audio.source = source
+  source.buffer = this.cache[name]
   source.connect(gain)
   gain.connect(this.master)
-  gain.gain.value = component.volume
+  gain.gain.value = entity.components.audio.volume
   source.start()
 }
 
-AudioSystem.prototype.stop = function (component) {
-  if (component.source) {
-    component.source.stop()
+AudioSystem.prototype.stop = function (entity) {
+  if (entity.components.audio.source) {
+    entity.components.audio.source.stop()
   }
 }
 
@@ -45,6 +44,7 @@ AudioSystem.prototype.update = function () {
 }
 
 AudioSystem.prototype.destroyComponent = function (entity) {
+  this.stop(entity)
   entity.components.audio.mustDestroy = true
 }
 

@@ -10,7 +10,7 @@ const AudioScene = new Harmony.Scene({
         play: {
           update: (engine, entity) => {
             if (engine.pointers.get(0).start) {
-              entity.components.audio.play('win')
+              engine.audio.play(entity, 'win')
               entity.components.state.switch('stop')
             }
           }
@@ -18,7 +18,7 @@ const AudioScene = new Harmony.Scene({
         stop: {
           update: (engine, entity) => {
             if (engine.pointers.get(0).start) {
-              entity.components.audio.stop()
+              engine.audio.stop(entity)
               entity.components.state.switch('play')
             }
           }
