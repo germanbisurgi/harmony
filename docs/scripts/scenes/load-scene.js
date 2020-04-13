@@ -112,6 +112,6 @@ const LoadScene = new Harmony.Scene({
     engine.loader.loadAudio({ name: 'zebra', url: './assets/audio/things/zebra.mp3' })
   },
   update: (engine) => {
-    engine.scene.switch(AudioScene)
+    engine.scene.switch(MemoryScene)
   }
 })
