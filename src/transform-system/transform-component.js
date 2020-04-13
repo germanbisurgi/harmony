@@ -14,7 +14,7 @@ const TransformComponent = function (params) {
   this.scale = config.scale
 }
 
-TransformComponent.prototype.name = 'transform'
+TransformComponent.prototype.componentName = 'transform'
 
 TransformComponent.prototype.destroy = function () {
   this.mustDestroy = true

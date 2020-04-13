@@ -26,7 +26,7 @@ const SpriteComponent = function (params) {
   this.visible = config.visible
 }
 
-SpriteComponent.prototype.name = 'sprite'
+SpriteComponent.prototype.componentName = 'sprite'
 
 SpriteComponent.prototype.destroy = function () {
   this.mustDestroy = true

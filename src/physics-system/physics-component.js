@@ -62,7 +62,7 @@ const PhysicsComponent = function (params, system) {
   this.body.component = this
 }
 
-PhysicsComponent.prototype.name = 'physics'
+PhysicsComponent.prototype.componentName = 'physics'
 
 PhysicsComponent.prototype.setLinearVelocity = function (config) {
   this.body.SetAwake(true)

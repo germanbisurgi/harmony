@@ -8,7 +8,7 @@ const ScriptComponent = function (params) {
   }, params)
 }
 
-ScriptComponent.prototype.name = 'script'
+ScriptComponent.prototype.componentName = 'script'
 
 ScriptComponent.prototype.start = function (engine) {
   this.mustStart = false
