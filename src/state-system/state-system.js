@@ -5,7 +5,7 @@ const StateSystem = function () {
 }
 
 StateSystem.prototype.addStateComponent = function (config) {
-  const component = new Harmony.StateComponent(config)
+  const component = new Harmony.StateComponent(config, this)
   this.components.push(component)
   return component
 }
@@ -33,6 +33,10 @@ StateSystem.prototype.update = function (engine) {
       component.states[component.current].update(engine, component.entity)
     }
   }
+}
+
+StateSystem.prototype.destroyComponent = function (entity) {
+  entity.components.state.mustDestroy = true
 }
 
 export default StateSystem

@@ -1,4 +1,5 @@
-const StateComponent = function (params) {
+const StateComponent = function (params, system) {
+  this.system = system
   this.entity = null
   this.mustDestroy = false
   this.mustSwitch = true
@@ -12,10 +13,6 @@ StateComponent.prototype.componentName = 'state'
 StateComponent.prototype.switch = function (state) {
   this.mustSwitch = true
   this.requested = state
-}
-
-StateComponent.prototype.destroy = function () {
-  this.mustDestroy = true
 }
 
 export default StateComponent

@@ -1,4 +1,5 @@
-const ScriptComponent = function (params) {
+const ScriptComponent = function (params, system) {
+  this.system = system
   this.mustDestroy = false
   this.mustStart = true
   this.mustUpdate = false
@@ -18,10 +19,6 @@ ScriptComponent.prototype.start = function (engine) {
 
 ScriptComponent.prototype.update = function (engine) {
   return this.methods.update(engine)
-}
-
-ScriptComponent.prototype.destroy = function () {
-  this.mustDestroy = true
 }
 
 export default ScriptComponent

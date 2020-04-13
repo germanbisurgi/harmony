@@ -44,4 +44,8 @@ AudioSystem.prototype.update = function () {
   }
 }
 
+AudioSystem.prototype.destroyComponent = function (entity) {
+  entity.components.audio.mustDestroy = true
+}
+
 export default AudioSystem

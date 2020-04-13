@@ -72,14 +72,6 @@ PhysicsComponent.prototype.setLinearVelocity = function (config) {
   })
 }
 
-PhysicsComponent.prototype.destroy = function () {
-  this.fixtures.forEach((fixture) => {
-    this.body.DestroyFixture(fixture)
-  })
-  this.system.world.DestroyBody(this.body)
-  this.mustDestroy = true
-}
-
 PhysicsComponent.prototype.getPosition = function () {
   const position = this.body.GetPosition()
   return {

@@ -24,8 +24,4 @@ AudioComponent.prototype.stop = function () {
   this.system.stop(this)
 }
 
-AudioComponent.prototype.destroy = function () {
-  this.system.stop(this)
-}
-
 export default AudioComponent

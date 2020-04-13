@@ -1,4 +1,5 @@
-const SpriteComponent = function (params) {
+const SpriteComponent = function (params, system) {
+  this.system = system
   const config = Object.assign({
     image: null,
     width: 50,
@@ -27,9 +28,5 @@ const SpriteComponent = function (params) {
 }
 
 SpriteComponent.prototype.componentName = 'sprite'
-
-SpriteComponent.prototype.destroy = function () {
-  this.mustDestroy = true
-}
 
 export default SpriteComponent

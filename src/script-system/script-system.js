@@ -5,7 +5,7 @@ const ScriptSystem = function () {
 }
 
 ScriptSystem.prototype.addScriptComponent = function (config) {
-  const component = new Harmony.ScriptComponent(config)
+  const component = new Harmony.ScriptComponent(config, this)
   this.components.push(component)
   return component
 }
@@ -25,6 +25,10 @@ ScriptSystem.prototype.update = function (engine) {
       component.update(engine)
     }
   }
+}
+
+ScriptSystem.prototype.destroyComponent = function (entity) {
+  entity.components.script.mustDestroy = true
 }
 
 export default ScriptSystem

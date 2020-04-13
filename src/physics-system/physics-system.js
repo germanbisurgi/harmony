@@ -98,4 +98,13 @@ PhysicsSystem.prototype.update = function () {
   }
 }
 
+PhysicsSystem.prototype.destroyComponent = function (entity) {
+  entity.components.physics.fixtures.forEach((fixture) => {
+    entity.components.physics.body.DestroyFixture(fixture)
+  })
+  entity.components.physics.system.world.DestroyBody(entity.components.physics.body)
+  entity.components.physics.mustDestroy = true
+  entity.components.physics.mustDestroy = true
+}
+
 export default PhysicsSystem

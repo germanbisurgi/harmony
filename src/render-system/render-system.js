@@ -107,7 +107,7 @@ RenderSystem.prototype.draw = function () {
 }
 
 RenderSystem.prototype.addSpriteComponent = function (config) {
-  const component = new Harmony.SpriteComponent(config)
+  const component = new Harmony.SpriteComponent(config, this)
   this.components.unshift(component)
   return component
 }
@@ -132,6 +132,10 @@ RenderSystem.prototype.line = function (config) {
 RenderSystem.prototype.rect = function (config) {
   this.context.rect(config.x, config.y, config.width, config.height)
   this.context.stroke()
+}
+
+RenderSystem.prototype.destroyComponent = function (entity) {
+  entity.components.sprite.mustDestroy = true
 }
 
 export default RenderSystem
