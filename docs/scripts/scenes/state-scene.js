@@ -16,22 +16,22 @@ const StateScene = new Harmony.Scene({
       current: 'front',
       states: {
         front: {
-          enter: (engine, owner) => {
-            owner.sprite.image = engine.render.get('a')
+          enter: (engine, entity) => {
+            entity.components.sprite.image = engine.render.get('a')
           },
-          update: (engine, owner) => {
+          update: (engine, entity) => {
             if (engine.pointers.get(0).start) {
-              owner.state.switch('back')
+              entity.components.state.switch('back')
             }
           }
         },
         back: {
-          enter: (engine, owner) => {
-            owner.sprite.image = engine.render.get('question')
+          enter: (engine, entity) => {
+            entity.components.sprite.image = engine.render.get('question')
           },
-          update: (engine, owner) => {
+          update: (engine, entity) => {
             if (engine.pointers.get(0).start) {
-              owner.state.switch('front')
+              entity.components.state.switch('front')
             }
           }
         }

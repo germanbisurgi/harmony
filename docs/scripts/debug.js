@@ -24,6 +24,11 @@ const debug = (engine) => {
     y: 260
   })
   engine.render.text({
+    text: 'script components: ' + engine.scripts.components.length,
+    x: 200,
+    y: 280
+  })
+  engine.render.text({
     text: 'sprite components: ' + engine.render.components.length,
     x: 200,
     y: 300

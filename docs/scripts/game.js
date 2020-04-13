@@ -34,6 +34,7 @@ const audio = document.querySelector('#audio')
 const state = document.querySelector('#state')
 const memory = document.querySelector('#memory')
 const inputs = document.querySelector('#inputs')
+const entity = document.querySelector('#entity')
 
 audio.addEventListener('click', function () {
   engine.scene.switch(AudioScene)
@@ -49,4 +50,8 @@ state.addEventListener('click', function () {
 
 inputs.addEventListener('click', function () {
   engine.scene.switch(InputsScene)
+})
+
+entity.addEventListener('click', function () {
+  engine.scene.switch(EntityScene)
 })

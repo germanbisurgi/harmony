@@ -35,8 +35,8 @@ const MemoryScene = new Harmony.Scene({
 
     engine.pointers.enabled = true
 
-    const rows = 4
-    const cols = 4
+    const rows = 2
+    const cols = 2
     const width = window.innerWidth / cols
     const height = window.innerHeight / rows
     const ratioW = width / height
@@ -115,7 +115,7 @@ const MemoryScene = new Harmony.Scene({
           type: 'static'
         }))
 
-        card.physics.addCircle({
+        card.components.physics.addCircle({
           radius: tileSize * 0.5,
           density: 10
         })
@@ -140,7 +140,7 @@ const MemoryScene = new Harmony.Scene({
       y: -999999
     }))
 
-    pointer.physics.addCircle({
+    pointer.components.physics.addCircle({
       radius: 10,
       isSensor: true
     })
@@ -149,12 +149,12 @@ const MemoryScene = new Harmony.Scene({
       current: 'default',
       states: {
         default: {
-          enter: (engine, owner) => {
-            owner.physics.onContactBegin = function (pointer, card) {
+          enter: (engine, entity) => {
+            entity.components.physics.onContactBegin = function (pointer, card) {
               if (engine.pointers.enabled) {
                 if (selected.length === 2 && !match) {
                   selected.forEach((card) => {
-                    card.sprite.visible = false
+                    card.components.sprite.visible = false
                     card.data.flipped = !card.data.flipped
                   })
                   selected = []
@@ -165,8 +165,8 @@ const MemoryScene = new Harmony.Scene({
                 }
 
                 if (!card.data.flipped && selected.length < 2) {
-                  card.audio.play(card.data.audio)
-                  card.sprite.visible = true
+                  card.components.audio.play(card.data.audio)
+                  card.components.sprite.visible = true
                   card.data.flipped = !card.data.flipped
                   selected.push(card)
                 }
@@ -175,7 +175,7 @@ const MemoryScene = new Harmony.Scene({
                   if (selected[0].data.letter === selected[1].data.letter) {
                     flipped.push(selected[0])
                     flipped.push(selected[1])
-                    audioManager.audio.play('correct')
+                    audioManager.components.audio.play('correct')
                     match = true
                   } else {
                     match = false
@@ -183,7 +183,7 @@ const MemoryScene = new Harmony.Scene({
                 }
                 if (flipped.length === (rows * cols)) {
                   engine.pointers.enabled = false
-                  audioManager.audio.play('win')
+                  audioManager.components.audio.play('win')
                   setTimeout(() => {
                     engine.scene.requestSwitch()
                   }, 2000)
@@ -191,15 +191,15 @@ const MemoryScene = new Harmony.Scene({
               }
             }
           },
-          update: (engine, owner) => {
+          update: (engine, entity) => {
             if (engine.pointers.get(0).start) {
-              owner.physics.setPosition({
+              entity.components.physics.setPosition({
                 x: engine.pointers.get(0).x,
                 y: engine.pointers.get(0).y
               })
             }
             if (engine.pointers.get(0).end) {
-              owner.physics.setPosition({
+              entity.components.physics.setPosition({
                 x: -999999,
                 y: -999999
               })
