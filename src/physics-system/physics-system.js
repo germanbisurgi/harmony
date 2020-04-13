@@ -91,9 +91,9 @@ PhysicsSystem.prototype.update = function () {
       this.components.splice(i, 1)
     } else {
       const position = component.getPosition()
-      component.entity.transform.x = position.x
-      component.entity.transform.y = position.y
-      component.entity.transform.angle = component.getAngle()
+      component.entity.x = position.x
+      component.entity.y = position.y
+      component.entity.angle = component.getAngle()
     }
   }
 }

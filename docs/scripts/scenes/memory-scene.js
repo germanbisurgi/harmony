@@ -76,14 +76,10 @@ const MemoryScene = new Harmony.Scene({
         // -------------------------------------------------------------- back
 
         const backEntity = engine.entities.add({
-          tags: ['question']
-        })
-
-        backEntity.addComponent(engine.transform.addTransformComponent({
           x: row * width + width * 0.5,
           y: col * height + height * 0.5,
           scale: 1.1
-        }))
+        })
 
         backEntity.addComponent(engine.render.addSpriteComponent({
           image: engine.render.get('question'),
@@ -101,8 +97,6 @@ const MemoryScene = new Harmony.Scene({
         card.data.letter = cards[cellIndex].letter
         card.data.audio = cards[cellIndex].audio
         card.data.image = cards[cellIndex].image
-
-        card.addComponent(engine.transform.addTransformComponent())
 
         card.addComponent(engine.audio.addAudioComponent({
           clipName: card.data.audio
@@ -132,10 +126,7 @@ const MemoryScene = new Harmony.Scene({
 
     // ----------------------------------------------------- audioManager entity
 
-    const audioManager = engine.entities.add({
-      tags: ['audio-manager']
-    })
-    audioManager.addComponent(engine.transform.addTransformComponent())
+    const audioManager = engine.entities.add()
     audioManager.addComponent(engine.audio.addAudioComponent())
 
     // ---------------------------------------------------------- pointer entity
@@ -143,8 +134,6 @@ const MemoryScene = new Harmony.Scene({
     const pointer = engine.entities.add({
       tags: ['pointer']
     })
-
-    pointer.addComponent(engine.transform.addTransformComponent())
 
     pointer.addComponent(engine.physics.addPhysicsComponent({
       x: -999999,

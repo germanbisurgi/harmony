@@ -5,7 +5,6 @@ const InputsScene = new Harmony.Scene({
     const entity = engine.entities.add({
       tags: ['something']
     })
-    entity.addComponent(engine.transform.addTransformComponent())
 
     entity.addComponent(engine.physics.addPhysicsComponent())
 

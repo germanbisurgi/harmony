@@ -3,13 +3,10 @@
 const StateScene = new Harmony.Scene({
   create: (engine) => {
     const entity = engine.entities.add({
-      tags: 'blup'
-    })
-
-    entity.addComponent(engine.transform.addTransformComponent({
+      tags: 'blup',
       x: 50,
       y: 50
-    }))
+    })
 
     entity.addComponent(engine.render.addSpriteComponent({
       image: engine.render.get('question')

@@ -17,8 +17,6 @@ import ScriptComponent from './script-system/script-component'
 import ScriptSystem from './script-system/script-system'
 import StateComponent from './state-system/state-component'
 import StateSystem from './state-system/state-system'
-import TransformComponent from './transform-system/transform-component'
-import TransformSystem from './transform-system/transform-system'
 import EntitySystem from './entity-system/entity-system'
 import PhysicsSystem from './physics-system/physics-system'
 import PhysicsComponent from './physics-system/physics-component'
@@ -45,9 +43,7 @@ const Harmony = {
   ScriptComponent: ScriptComponent,
   ScriptSystem: ScriptSystem,
   StateComponent: StateComponent,
-  StateSystem: StateSystem,
-  TransformComponent: TransformComponent,
-  TransformSystem: TransformSystem
+  StateSystem: StateSystem
 }
 
 export default Harmony
