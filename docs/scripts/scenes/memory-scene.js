@@ -176,7 +176,7 @@ const MemoryScene = new Harmony.Scene({
                 }
 
                 if (!card.data.flipped && selected.length < 2) {
-                  card.audio.play()
+                  card.audio.play(card.data.audio)
                   card.sprite.visible = true
                   card.data.flipped = !card.data.flipped
                   selected.push(card)
