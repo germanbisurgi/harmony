@@ -6,18 +6,18 @@ const InputsScene = new Harmony.Scene({
       tags: ['something']
     })
 
-    entity.addComponent(engine.physics.addPhysicsComponent())
+    engine.physics.addPhysicsComponent(entity)
 
-    entity.addComponent(engine.audio.addAudioComponent())
+    engine.audio.addAudioComponent(entity)
 
-    entity.addComponent(engine.render.addSpriteComponent({
+    engine.render.addSpriteComponent(entity, {
       image: engine.render.get('question'),
       width: 50,
       height: 50
-    }))
+    })
 
-    entity.addComponent(engine.scripts.addScriptComponent({
-      update: () => {
+    engine.scripts.addScriptComponent(entity, {
+      onUpdate: () => {
         if (engine.keys.get('1').start) {
           console.log('start')
         }
@@ -37,7 +37,7 @@ const InputsScene = new Harmony.Scene({
           console.log('end')
         }
       }
-    }))
+    })
   },
   draw: (engine) => {
     debug(engine)

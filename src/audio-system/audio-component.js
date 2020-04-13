@@ -8,6 +8,4 @@ const AudioComponent = function (params, system) {
   this.mustDestroy = false
 }
 
-AudioComponent.prototype.componentName = 'audio'
-
 export default AudioComponent

@@ -27,6 +27,4 @@ const SpriteComponent = function (params, system) {
   this.visible = config.visible
 }
 
-SpriteComponent.prototype.componentName = 'sprite'
-
 export default SpriteComponent

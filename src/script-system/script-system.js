@@ -3,12 +3,14 @@
 const ScriptSystem = function (engine) {
   this.engine = engine
   this.components = []
+  this.scriptComponentName = 'script'
 }
 
-ScriptSystem.prototype.addScriptComponent = function (config) {
+ScriptSystem.prototype.addScriptComponent = function (entity, config) {
   const component = new Harmony.ScriptComponent(config, this)
+  component.entity = entity
+  entity.components[this.scriptComponentName] = component
   this.components.push(component)
-  return component
 }
 
 ScriptSystem.prototype.update = function () {

@@ -20,10 +20,25 @@ EntitySystem.prototype.update = function () {
   }
 }
 
-EntitySystem.prototype.destroy = function () {
+EntitySystem.prototype.destroy = function (entity) {
+  for (const i in entity.components) {
+    if (Object.hasOwnProperty.call(entity.components, i)) {
+      const component = entity.components[i]
+      const system = component.system
+      system.destroyComponent(entity)
+    }
+  }
+  entity.mustDestroy = true
+}
+
+EntitySystem.prototype.hasTag = function (entity, tag) {
+  return entity.tags.includes(tag)
+}
+
+EntitySystem.prototype.destroyAll = function () {
   for (let i = this.cache.length; i--;) {
     const entity = this.cache[i]
-    entity.destroy()
+    this.destroy(entity)
   }
   this.cache = []
 }

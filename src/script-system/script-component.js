@@ -9,6 +9,4 @@ const ScriptComponent = function (params, system) {
   }, params)
 }
 
-ScriptComponent.prototype.componentName = 'script'
-
 export default ScriptComponent

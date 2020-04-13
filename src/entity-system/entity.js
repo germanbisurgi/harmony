@@ -15,25 +15,4 @@ const Entity = function (params) {
   this.scale = config.scale
 }
 
-Entity.prototype.addComponent = function (component) {
-  component.entity = this
-  this.components[component.componentName] = component
-}
-
-Entity.prototype.destroy = function () {
-  for (const i in this.components) {
-    if (Object.hasOwnProperty.call(this.components, i)) {
-      const component = this.components[i]
-      const system = component.system
-      const entity = this
-      system.destroyComponent(entity)
-    }
-  }
-  this.mustDestroy = true
-}
-
-Entity.prototype.hasTag = function (tag) {
-  return this.tags.includes(tag)
-}
-
 export default Entity

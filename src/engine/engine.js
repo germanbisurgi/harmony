@@ -50,7 +50,7 @@ const Engine = function (canvas) {
       }
     }
     if (this.scene.mustSwitch) {
-      this.entities.destroy()
+      this.entities.destroyAll()
       this.pointers.destroy()
       this.keys.destroy()
       this.scene.current = this.scene.requested

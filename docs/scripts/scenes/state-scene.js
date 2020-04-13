@@ -8,11 +8,11 @@ const StateScene = new Harmony.Scene({
       y: 50
     })
 
-    entity.addComponent(engine.render.addSpriteComponent({
+    engine.render.addSpriteComponent(entity, {
       image: engine.render.get('question')
-    }))
+    })
 
-    entity.addComponent(engine.state.addStateComponent({
+    engine.state.addStateComponent(entity, {
       current: 'front',
       states: {
         front: {
@@ -36,7 +36,7 @@ const StateScene = new Harmony.Scene({
           }
         }
       }
-    }))
+    })
   },
   draw: (engine) => {
     debug(engine)

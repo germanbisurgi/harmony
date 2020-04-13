@@ -7,6 +7,7 @@ const RenderSystem = function (canvas) {
   this.canvas.width = window.innerWidth
   this.components = []
   this.cache = {}
+  this.spriteComponentName = 'sprite'
 }
 
 RenderSystem.prototype.loadImage = function (config) {
@@ -63,6 +64,7 @@ RenderSystem.prototype.draw = function () {
 
   for (let i = this.components.length; i--;) {
     const component = this.components[i]
+    // console.log(component.entity)
 
     if (component.mustDestroy) {
       this.components.splice(i, 1)
@@ -106,10 +108,11 @@ RenderSystem.prototype.draw = function () {
   this.context.restore()
 }
 
-RenderSystem.prototype.addSpriteComponent = function (config) {
+RenderSystem.prototype.addSpriteComponent = function (entity, config) {
   const component = new Harmony.SpriteComponent(config, this)
+  component.entity = entity
+  entity.components[this.spriteComponentName] = component
   this.components.unshift(component)
-  return component
 }
 
 RenderSystem.prototype.text = function (config) {

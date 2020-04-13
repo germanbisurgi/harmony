@@ -12,6 +12,7 @@ const PhysicsSystem = function (canvas) {
   this.scale = 100
   this.context = canvas.getContext('2d')
   this.contacts = new B2ContactListener()
+  this.physicsComponentName = 'physics'
 
   // ------------------------------------------------------------------ contacts
 
@@ -76,10 +77,11 @@ PhysicsSystem.prototype.drawDebugData = function () {
   this.world.DrawDebugData()
 }
 
-PhysicsSystem.prototype.addPhysicsComponent = function (config) {
+PhysicsSystem.prototype.addPhysicsComponent = function (entity, config) {
   const component = new Harmony.PhysicsComponent(config, this)
+  component.entity = entity
+  entity.components[this.physicsComponentName] = component
   this.components.push(component)
-  return component
 }
 
 PhysicsSystem.prototype.update = function () {

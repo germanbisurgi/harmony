@@ -81,11 +81,11 @@ const MemoryScene = new Harmony.Scene({
           scale: 1.1
         })
 
-        backEntity.addComponent(engine.render.addSpriteComponent({
+        engine.render.addSpriteComponent(backEntity, {
           image: engine.render.get('question'),
           width: tileSize,
           height: tileSize
-        }))
+        })
 
         // ------------------------------------------------------------- front
 
@@ -98,22 +98,20 @@ const MemoryScene = new Harmony.Scene({
         card.data.audio = cards[cellIndex].audio
         card.data.image = cards[cellIndex].image
 
-        card.addComponent(engine.audio.addAudioComponent({
-          clipName: card.data.audio
-        }))
+        engine.audio.addAudioComponent(card)
 
-        card.addComponent(engine.render.addSpriteComponent({
+        engine.render.addSpriteComponent(card, {
           image: engine.render.get(card.data.image),
           width: tileSize,
           height: tileSize,
           visible: false
-        }))
+        })
 
-        card.addComponent(engine.physics.addPhysicsComponent({
+        engine.physics.addPhysicsComponent(card, {
           x: row * width + width * 0.5,
           y: col * height + height * 0.5,
           type: 'static'
-        }))
+        })
 
         card.components.physics.addCircle({
           radius: tileSize * 0.5,
@@ -127,7 +125,7 @@ const MemoryScene = new Harmony.Scene({
     // ----------------------------------------------------- audioManager entity
 
     const audioManager = engine.entities.add()
-    audioManager.addComponent(engine.audio.addAudioComponent())
+    engine.audio.addAudioComponent(audioManager)
 
     // ---------------------------------------------------------- pointer entity
 
@@ -135,17 +133,17 @@ const MemoryScene = new Harmony.Scene({
       tags: ['pointer']
     })
 
-    pointer.addComponent(engine.physics.addPhysicsComponent({
+    engine.physics.addPhysicsComponent(pointer, {
       x: -999999,
       y: -999999
-    }))
+    })
 
     pointer.components.physics.addCircle({
       radius: 10,
       isSensor: true
     })
 
-    pointer.addComponent(engine.state.addStateComponent({
+    engine.state.addStateComponent(pointer, {
       current: 'default',
       states: {
         default: {
@@ -207,9 +205,9 @@ const MemoryScene = new Harmony.Scene({
           }
         }
       }
-    }))
+    })
   },
   draw: (engine) => {
-    // debug(engine)
+    debug(engine)
   }
 })

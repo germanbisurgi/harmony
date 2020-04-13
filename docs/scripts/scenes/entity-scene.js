@@ -3,39 +3,40 @@
 const EntityScene = new Harmony.Scene({
   create: (engine) => {
     const entity = engine.entities.add({
+      tags: ['player', 'soldier'],
       x: 100,
       y: 100
     })
 
-    entity.addComponent(engine.audio.addAudioComponent())
+    console.log(engine.entities.hasTag(entity, 'player'))
+    console.log(engine.entities.hasTag(entity, 'soldier'))
+    console.log(engine.entities.hasTag(entity, 'enemy'))
 
-    entity.addComponent(engine.render.addSpriteComponent({
+    engine.audio.addAudioComponent(entity)
+
+    engine.render.addSpriteComponent(entity, {
       image: engine.render.get('question'),
       width: 50,
       height: 50
-    }))
+    })
 
-    entity.addComponent(engine.physics.addPhysicsComponent({
+    engine.physics.addPhysicsComponent(entity, {
       x: 100,
       y: 100,
       type: 'static'
-    }))
+    })
 
     entity.components.physics.addCircle({
       radius: 25,
       density: 10
     })
 
-    entity.addComponent(engine.scripts.addScriptComponent({
-      onStart: (engine, entity) => {
-        console.log('onStart')
-      },
-      onUpdate: (engine, entity) => {
-        console.log('onUpdate')
-      }
-    }))
+    engine.scripts.addScriptComponent(entity, {
+      onStart: (engine, entity) => {},
+      onUpdate: (engine, entity) => {}
+    })
 
-    entity.addComponent(engine.state.addStateComponent({
+    engine.state.addStateComponent(entity, {
       current: 'on',
       states: {
         on: {
@@ -49,13 +50,13 @@ const EntityScene = new Harmony.Scene({
           exit: (engine, entity) => {}
         }
       }
-    }))
+    })
 
-    console.table(entity)
+    console.table(entity.components)
   },
   update: (engine) => {
     if (engine.keys.get('d').start) {
-      engine.entities.cache[0].destroy()
+      engine.entities.destroy(engine.entities.cache[0])
     }
   },
   draw: (engine) => {

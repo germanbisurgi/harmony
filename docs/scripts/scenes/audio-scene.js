@@ -3,8 +3,10 @@
 const AudioScene = new Harmony.Scene({
   create: (engine) => {
     const entity = engine.entities.add()
-    entity.addComponent(engine.audio.addAudioComponent())
-    entity.addComponent(engine.state.addStateComponent({
+
+    engine.audio.addAudioComponent(entity)
+
+    engine.state.addStateComponent(entity, {
       current: 'play',
       states: {
         play: {
@@ -24,7 +26,7 @@ const AudioScene = new Harmony.Scene({
           }
         }
       }
-    }))
+    })
   },
   draw: (engine) => {
     debug(engine)

@@ -6,6 +6,7 @@ const AudioSystem = function () {
   this.components = []
   this.cache = {}
   this.master.connect(this.context.destination)
+  this.audioComponentName = 'audio'
 }
 
 AudioSystem.prototype.play = function (entity, name) {
@@ -25,10 +26,11 @@ AudioSystem.prototype.stop = function (entity) {
   }
 }
 
-AudioSystem.prototype.addAudioComponent = function (config) {
+AudioSystem.prototype.addAudioComponent = function (entity, config) {
   const component = new Harmony.AudioComponent(config, this)
+  component.entity = entity
+  entity.components[this.audioComponentName] = component
   this.components.push(component)
-  return component
 }
 
 AudioSystem.prototype.update = function () {

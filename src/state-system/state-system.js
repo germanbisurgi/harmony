@@ -2,12 +2,14 @@
 
 const StateSystem = function () {
   this.components = []
+  this.stateComponentName = 'state'
 }
 
-StateSystem.prototype.addStateComponent = function (config) {
+StateSystem.prototype.addStateComponent = function (entity, config) {
   const component = new Harmony.StateComponent(config, this)
+  component.entity = entity
+  entity.components[this.stateComponentName] = component
   this.components.push(component)
-  return component
 }
 
 StateSystem.prototype.update = function (engine) {
