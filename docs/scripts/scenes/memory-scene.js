@@ -208,6 +208,6 @@ const MemoryScene = new Harmony.Scene({
     })
   },
   draw: (engine) => {
-    debug(engine)
+    // debug(engine)
   }
 })
