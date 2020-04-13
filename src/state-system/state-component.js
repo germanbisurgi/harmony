@@ -7,7 +7,7 @@ const StateComponent = function (params) {
   this.states = params.states
 }
 
-StateComponent.prototype.name = 'state'
+StateComponent.prototype.componentName = 'state'
 
 StateComponent.prototype.switch = function (state) {
   this.mustSwitch = true

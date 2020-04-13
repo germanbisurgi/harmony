@@ -75,7 +75,9 @@ const MemoryScene = new Harmony.Scene({
 
         // -------------------------------------------------------------- back
 
-        const backEntity = engine.entities.add('question')
+        const backEntity = engine.entities.add({
+          tags: ['question']
+        })
 
         backEntity.addComponent(engine.transform.addTransformComponent({
           x: row * width + width * 0.5,
@@ -91,7 +93,9 @@ const MemoryScene = new Harmony.Scene({
 
         // ------------------------------------------------------------- front
 
-        const card = engine.entities.add('card')
+        const card = engine.entities.add({
+          tags: ['card']
+        })
         card.data = {}
         card.data.flipped = false
         card.data.letter = cards[cellIndex].letter
@@ -100,7 +104,7 @@ const MemoryScene = new Harmony.Scene({
 
         card.addComponent(engine.transform.addTransformComponent())
 
-        card.addComponent(engine.audio.addAudioSourceComponent({
+        card.addComponent(engine.audio.addAudioComponent({
           clipName: card.data.audio
         }))
 
@@ -128,13 +132,17 @@ const MemoryScene = new Harmony.Scene({
 
     // ----------------------------------------------------- audioManager entity
 
-    const audioManager = engine.entities.add('audio-manager')
+    const audioManager = engine.entities.add({
+      tags: ['audio-manager']
+    })
     audioManager.addComponent(engine.transform.addTransformComponent())
-    audioManager.addComponent(engine.audio.addAudioSourceComponent())
+    audioManager.addComponent(engine.audio.addAudioComponent())
 
     // ---------------------------------------------------------- pointer entity
 
-    const pointer = engine.entities.add('pointer')
+    const pointer = engine.entities.add({
+      tags: ['pointer']
+    })
 
     pointer.addComponent(engine.transform.addTransformComponent())
 

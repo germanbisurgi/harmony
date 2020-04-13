@@ -2,12 +2,14 @@
 
 const InputsScene = new Harmony.Scene({
   create: (engine) => {
-    const entity = engine.entities.add('something')
+    const entity = engine.entities.add({
+      tags: ['something']
+    })
     entity.addComponent(engine.transform.addTransformComponent())
 
     entity.addComponent(engine.physics.addPhysicsComponent())
 
-    entity.addComponent(engine.audio.addAudioSourceComponent())
+    entity.addComponent(engine.audio.addAudioComponent())
 
     entity.addComponent(engine.render.addSpriteComponent({
       image: engine.render.get('question'),

@@ -2,12 +2,9 @@
 
 const AudioScene = new Harmony.Scene({
   create: (engine) => {
-    const entity = engine.entities.add('entity')
-
+    const entity = engine.entities.add()
     entity.addComponent(engine.transform.addTransformComponent())
-
-    entity.addComponent(engine.audio.addAudioSourceComponent())
-
+    entity.addComponent(engine.audio.addAudioComponent())
     entity.addComponent(engine.state.addStateComponent({
       current: 'play',
       states: {

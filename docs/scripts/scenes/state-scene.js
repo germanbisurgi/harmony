@@ -2,7 +2,9 @@
 
 const StateScene = new Harmony.Scene({
   create: (engine) => {
-    const entity = engine.entities.add('entity')
+    const entity = engine.entities.add({
+      tags: 'blup'
+    })
 
     entity.addComponent(engine.transform.addTransformComponent({
       x: 50,
