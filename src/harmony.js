@@ -1,5 +1,5 @@
 import AudioSystem from './audio-system/audio-system'
-import AudioSourceComponent from './audio-system/audio-source-component'
+import AudioComponent from './audio-system/audio-component'
 import Loader from './loader/loader'
 import Engine from './engine/engine'
 import Entity from './entity-system/entity'
@@ -25,7 +25,7 @@ import PhysicsComponent from './physics-system/physics-component'
 
 const Harmony = {
   AudioSystem: AudioSystem,
-  AudioSourceComponent: AudioSourceComponent,
+  AudioComponent: AudioComponent,
   Loader: Loader,
   Engine: Engine,
   Entity: Entity,
