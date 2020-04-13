@@ -44,7 +44,7 @@ const configA = Object.assign({}, common, {
 
 const configB = Object.assign({}, common, {
   output: {
-    path: path.resolve(__dirname, 'docs/scripts'),
+    path: path.resolve(__dirname, 'docs/libs'),
     filename: 'harmony.js',
     libraryExport: 'default',
     library: 'Harmony',
