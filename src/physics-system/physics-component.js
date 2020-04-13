@@ -20,7 +20,7 @@ const PhysicsComponent = function (params, system) {
 
   const config = Object.assign(defaults, params)
 
-  this.owner = null
+  this.entity = null
   this.mustDestroy = false
   this.body = null
   this.system = system

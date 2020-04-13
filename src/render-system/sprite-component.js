@@ -12,7 +12,7 @@ const SpriteComponent = function (params) {
     visible: true
   }, params)
 
-  this.owner = null
+  this.entity = null
   this.mustDestroy = false
   this.image = config.image
   this.width = config.width

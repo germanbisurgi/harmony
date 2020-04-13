@@ -70,13 +70,13 @@ RenderSystem.prototype.draw = function () {
       if (component.visible) {
         this.context.save()
         this.context.translate(
-          component.owner.transform.x + component.width * 0.5 * component.owner.transform.scale - component.width * component.anchorX * component.owner.transform.scale,
-          component.owner.transform.y + component.height * 0.5 * component.owner.transform.scale - component.height * component.anchorY * component.owner.transform.scale
+          component.entity.transform.x + component.width * 0.5 * component.entity.transform.scale - component.width * component.anchorX * component.entity.transform.scale,
+          component.entity.transform.y + component.height * 0.5 * component.entity.transform.scale - component.height * component.anchorY * component.entity.transform.scale
         )
-        this.context.rotate(component.owner.transform.angle)
+        this.context.rotate(component.entity.transform.angle)
         this.context.scale(
-          component.owner.transform.scale,
-          component.owner.transform.scale
+          component.entity.transform.scale,
+          component.entity.transform.scale
         )
 
         if (component.sourceWidth === 0) {

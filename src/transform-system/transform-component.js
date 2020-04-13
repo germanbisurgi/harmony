@@ -6,7 +6,7 @@ const TransformComponent = function (params) {
     scale: 1
   }, params)
 
-  this.owner = null
+  this.entity = null
   this.mustDestroy = false
   this.x = config.x
   this.y = config.y

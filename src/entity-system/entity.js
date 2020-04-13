@@ -8,7 +8,7 @@ const Entity = function (params) {
 }
 
 Entity.prototype.addComponent = function (component) {
-  component.owner = this
+  component.entity = this
   this[component.componentName] = component
   this.components.push(component)
 }

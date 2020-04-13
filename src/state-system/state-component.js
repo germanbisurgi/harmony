@@ -1,5 +1,5 @@
 const StateComponent = function (params) {
-  this.owner = null
+  this.entity = null
   this.mustDestroy = false
   this.mustSwitch = true
   this.requested = params.current

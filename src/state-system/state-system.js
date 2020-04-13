@@ -19,18 +19,18 @@ StateSystem.prototype.update = function (engine) {
     }
     if (component.current && component.mustSwitch) {
       if (component.states[component.current].exit) {
-        component.states[component.current].exit(engine, component.owner)
+        component.states[component.current].exit(engine, component.entity)
       }
     }
     if (component.mustSwitch) {
       component.current = component.requested
       if (component.states[component.current].enter) {
-        component.states[component.current].enter(engine, component.owner)
+        component.states[component.current].enter(engine, component.entity)
       }
       component.mustSwitch = false
     }
     if (component.current && component.states[component.current].update) {
-      component.states[component.current].update(engine, component.owner)
+      component.states[component.current].update(engine, component.entity)
     }
   }
 }

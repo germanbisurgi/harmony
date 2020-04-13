@@ -20,8 +20,8 @@ const PhysicsSystem = function (canvas) {
   this.contacts.BeginContact = function (contact) {
     const componentA = contact.GetFixtureA().GetBody().component
     const componentB = contact.GetFixtureB().GetBody().component
-    const entityA = componentA.owner
-    const entityB = componentB.owner
+    const entityA = componentA.entity
+    const entityB = componentB.entity
     componentA.onContactBegin(entityA, entityB)
     componentB.onContactBegin(entityB, entityA)
   }
@@ -29,8 +29,8 @@ const PhysicsSystem = function (canvas) {
   this.contacts.EndContact = function (contact) {
     const componentA = contact.GetFixtureA().GetBody().component
     const componentB = contact.GetFixtureB().GetBody().component
-    const entityA = componentA.owner
-    const entityB = componentB.owner
+    const entityA = componentA.entity
+    const entityB = componentB.entity
     componentA.onContactEnd(entityA, entityB)
     componentB.onContactEnd(entityB, entityA)
   }
@@ -38,8 +38,8 @@ const PhysicsSystem = function (canvas) {
   this.contacts.PreSolve = function (contact) {
     const componentA = contact.GetFixtureA().GetBody().component
     const componentB = contact.GetFixtureB().GetBody().component
-    const entityA = componentA.owner
-    const entityB = componentB.owner
+    const entityA = componentA.entity
+    const entityB = componentB.entity
     componentA.onContactPreSolve(entityA, entityB)
     componentB.onContactPreSolve(entityB, entityA)
   }
@@ -47,8 +47,8 @@ const PhysicsSystem = function (canvas) {
   this.contacts.PostSolve = function (contact) {
     const componentA = contact.GetFixtureA().GetBody().component
     const componentB = contact.GetFixtureB().GetBody().component
-    const entityA = componentA.owner
-    const entityB = componentB.owner
+    const entityA = componentA.entity
+    const entityB = componentB.entity
     componentA.onContactPostSolve(entityA, entityB)
     componentB.onContactPostSolve(entityB, entityA)
   }
@@ -91,9 +91,9 @@ PhysicsSystem.prototype.update = function () {
       this.components.splice(i, 1)
     } else {
       const position = component.getPosition()
-      component.owner.transform.x = position.x
-      component.owner.transform.y = position.y
-      component.owner.transform.angle = component.getAngle()
+      component.entity.transform.x = position.x
+      component.entity.transform.y = position.y
+      component.entity.transform.angle = component.getAngle()
     }
   }
 }
