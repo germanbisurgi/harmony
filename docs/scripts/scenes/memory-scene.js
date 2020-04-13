@@ -165,7 +165,7 @@ const MemoryScene = new Harmony.Scene({
                 }
 
                 if (!card.data.flipped && selected.length < 2) {
-                  card.components.audio.play(card.data.audio)
+                  engine.audio.play(card, card.data.audio)
                   card.components.sprite.visible = true
                   card.data.flipped = !card.data.flipped
                   selected.push(card)
@@ -175,7 +175,7 @@ const MemoryScene = new Harmony.Scene({
                   if (selected[0].data.letter === selected[1].data.letter) {
                     flipped.push(selected[0])
                     flipped.push(selected[1])
-                    audioManager.components.audio.play('correct')
+                    engine.audio.play(audioManager, 'correct')
                     match = true
                   } else {
                     match = false
@@ -183,7 +183,7 @@ const MemoryScene = new Harmony.Scene({
                 }
                 if (flipped.length === (rows * cols)) {
                   engine.pointers.enabled = false
-                  audioManager.components.audio.play('win')
+                  engine.audio.play(audioManager, 'win')
                   setTimeout(() => {
                     engine.scene.requestSwitch()
                   }, 2000)

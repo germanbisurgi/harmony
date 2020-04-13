@@ -38,7 +38,7 @@ const Engine = function (canvas) {
         this.audio.update()
         this.physics.update()
         this.entities.update()
-        this.scripts.update(this)
+        this.scripts.update()
         this.state.update(this)
         this.scene.current.update(this)
       }

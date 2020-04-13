@@ -27,8 +27,12 @@ const EntityScene = new Harmony.Scene({
     })
 
     entity.addComponent(engine.scripts.addScriptComponent({
-      start: (engine, entity) => {},
-      update: (engine, entity) => {}
+      onStart: (engine, entity) => {
+        console.log('onStart')
+      },
+      onUpdate: (engine, entity) => {
+        console.log('onUpdate')
+      }
     }))
 
     entity.addComponent(engine.state.addStateComponent({

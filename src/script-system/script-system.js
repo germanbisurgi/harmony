@@ -1,6 +1,7 @@
 /* global Harmony */
 
-const ScriptSystem = function () {
+const ScriptSystem = function (engine) {
+  this.engine = engine
   this.components = []
 }
 
@@ -10,21 +11,32 @@ ScriptSystem.prototype.addScriptComponent = function (config) {
   return component
 }
 
-ScriptSystem.prototype.update = function (engine) {
+ScriptSystem.prototype.update = function () {
   for (let i = this.components.length; i--;) {
     const component = this.components[i]
+    const entity = component.entity
     if (component.mustDestroy) {
       this.components.splice(i, 1)
       continue
     }
     if (component.mustStart) {
-      component.start(engine)
+      this.onStart(entity)
       continue
     }
     if (component.mustUpdate) {
-      component.update(engine)
+      this.onUpdate(entity)
     }
   }
+}
+
+ScriptSystem.prototype.onStart = function (entity) {
+  entity.components.script.mustStart = false
+  entity.components.script.mustUpdate = true
+  return entity.components.script.methods.onStart(this.engine, entity)
+}
+
+ScriptSystem.prototype.onUpdate = function (entity) {
+  return entity.components.script.methods.onUpdate(this.engine, entity)
 }
 
 ScriptSystem.prototype.destroyComponent = function (entity) {
