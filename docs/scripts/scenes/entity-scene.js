@@ -22,11 +22,10 @@ const EntityScene = new Harmony.Scene({
 
     engine.physics.addPhysicsComponent(entity, {
       x: 100,
-      y: 100,
-      type: 'static'
+      y: 100
     })
 
-    entity.components.physics.addCircle({
+    engine.physics.addCircle(entity, {
       radius: 25,
       density: 10
     })
@@ -52,7 +51,7 @@ const EntityScene = new Harmony.Scene({
       }
     })
 
-    console.table(entity.components)
+    console.table(entity.components.physics)
   },
   update: (engine) => {
     if (engine.keys.get('d').start) {

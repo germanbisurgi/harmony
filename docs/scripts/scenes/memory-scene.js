@@ -113,7 +113,7 @@ const MemoryScene = new Harmony.Scene({
           type: 'static'
         })
 
-        card.components.physics.addCircle({
+        engine.physics.addCircle(card, {
           radius: tileSize * 0.5,
           density: 10
         })
@@ -138,7 +138,7 @@ const MemoryScene = new Harmony.Scene({
       y: -999999
     })
 
-    pointer.components.physics.addCircle({
+    engine.physics.addCircle(pointer, {
       radius: 10,
       isSensor: true
     })
@@ -148,7 +148,7 @@ const MemoryScene = new Harmony.Scene({
       states: {
         default: {
           enter: (engine, entity) => {
-            entity.components.physics.onContactBegin = function (pointer, card) {
+            engine.physics.onContactBegin(entity, function (card, pointer) {
               if (engine.pointers.enabled) {
                 if (selected.length === 2 && !match) {
                   selected.forEach((card) => {
@@ -187,17 +187,17 @@ const MemoryScene = new Harmony.Scene({
                   }, 2000)
                 }
               }
-            }
+            })
           },
           update: (engine, entity) => {
             if (engine.pointers.get(0).start) {
-              entity.components.physics.setPosition({
+              engine.physics.setPosition(entity, {
                 x: engine.pointers.get(0).x,
                 y: engine.pointers.get(0).y
               })
             }
             if (engine.pointers.get(0).end) {
-              entity.components.physics.setPosition({
+              engine.physics.setPosition(entity, {
                 x: -999999,
                 y: -999999
               })

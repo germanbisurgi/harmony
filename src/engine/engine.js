@@ -10,7 +10,7 @@ const Engine = function (canvas) {
   this.keys = new Harmony.KeySystem()
   this.physics = new Harmony.PhysicsSystem(canvas)
   this.pointers = new Harmony.PointerSystem(canvas)
-  this.scripts = new Harmony.ScriptSystem()
+  this.scripts = new Harmony.ScriptSystem(this)
   this.state = new Harmony.StateSystem()
   this.helpers = new Harmony.Helpers()
 
@@ -45,7 +45,7 @@ const Engine = function (canvas) {
       if (this.scene.mustDraw) {
         this.scene.requestUpdate()
         this.render.draw()
-        // this.physics.drawDebugData()
+        this.physics.drawDebugData()
         this.scene.current.draw(this)
       }
     }
