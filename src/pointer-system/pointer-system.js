@@ -109,12 +109,16 @@ PointerSystem.prototype.update = function () {
       if (Object.hasOwnProperty.call(this.cache, i)) {
         const pointer = this.cache[i]
         if (pointer.hold) {
+          pointer.offsetX = (pointer.x - pointer.startX)
+          pointer.offsetY = (pointer.y - pointer.startY)
           pointer.holdTime += this.delta
           pointer.endFrame = -1
           if (pointer.startFrame === -1) {
             pointer.startFrame = this.frame
           }
         } else {
+          pointer.offsetX = 0
+          pointer.offsetY = 0
           pointer.holdTime = 0
           pointer.startFrame = -1
           if (pointer.endFrame === -1) {

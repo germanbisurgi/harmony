@@ -10,6 +10,8 @@ const Pointer = function () {
   this.type = null
   this.startX = 0
   this.startY = 0
+  this.offsetX = 0
+  this.offsetY = 0
   this.x = 0
   this.y = 0
 }

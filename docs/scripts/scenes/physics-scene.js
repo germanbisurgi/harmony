@@ -19,16 +19,16 @@ const PhysicsScene = new Harmony.Scene({
         })
       },
       onUpdate: (engine, dynamic) => {
-        if (engine.keys.get('d').hold) {
+        if (engine.pointers.get('1').offsetX > 0) {
           engine.physics.applyForce(dynamic, { x: 5, y: 0 })
         }
-        if (engine.keys.get('a').hold) {
+        if (engine.pointers.get('1').offsetX < 0) {
           engine.physics.applyForce(dynamic, { x: -5, y: 0 })
         }
-        if (engine.keys.get('w').hold) {
+        if (engine.pointers.get('1').offsetY < 0) {
           engine.physics.applyForce(dynamic, { x: 0, y: -5 })
         }
-        if (engine.keys.get('s').hold) {
+        if (engine.pointers.get('1').offsetY > 0) {
           engine.physics.applyForce(dynamic, { x: 0, y: 5 })
         }
       }

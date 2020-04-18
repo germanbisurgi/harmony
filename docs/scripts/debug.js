@@ -95,7 +95,7 @@ const debug = (engine) => {
         })
 
         engine.render.text({
-          text: 'offsetX: ' + (pointer.x - pointer.startX) + ', offsetY: ' + (pointer.y - pointer.startY),
+          text: 'offsetX: ' + pointer.offsetX + ', offsetY: ' + (pointer.offsetY),
           x: pointer.startX,
           y: pointer.startY - 70
         })
