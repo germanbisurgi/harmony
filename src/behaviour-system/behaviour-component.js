@@ -1,4 +1,4 @@
-const ScriptComponent = function (params, system) {
+const BehaviourComponent = function (params, system) {
   this.system = system
   this.mustDestroy = false
   this.mustStart = true
@@ -9,4 +9,4 @@ const ScriptComponent = function (params, system) {
   }, params)
 }
 
-export default ScriptComponent
+export default BehaviourComponent

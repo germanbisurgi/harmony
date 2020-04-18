@@ -1,3 +1,4 @@
+* use instanceof instead of component names
 * find solution for defaults args
 * better Pointers (no get by id. avoid update?, configurable prevent default)
 * better Keys (params (delta given))

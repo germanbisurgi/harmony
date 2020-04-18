@@ -9,19 +9,13 @@ const PhysicsScene = new Harmony.Scene({
     const dynamic = engine.entities.add({ tags: ['dynamic'] })
     engine.physics.addPhysicsComponent(dynamic, { x: 100, y: 100, type: 'dynamic' })
     engine.physics.addCircle(dynamic, { radius: 25, density: 10 })
-    engine.scripts.addScriptComponent(dynamic, {
+    engine.behaviours.addBehaviourComponent(dynamic, {
       onStart: (engine, dynamic) => {
         engine.physics.onContactBegin(dynamic, function (other, me) {
           console.log('onContactBegin', other.tags, me.tags)
         })
         engine.physics.onContactEnd(dynamic, function (other, me) {
           console.log('onContactEnd', other.tags, me.tags)
-        })
-        engine.physics.onContactPreSolve(dynamic, function (other, me) {
-          console.log('onContactPreSolve', other.tags, me.tags)
-        })
-        engine.physics.onContactPostSolve(dynamic, function (other, me) {
-          console.log('onContactPostSolve', other.tags, me.tags)
         })
       },
       onUpdate: (engine, dynamic) => {

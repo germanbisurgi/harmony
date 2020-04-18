@@ -13,8 +13,8 @@ import SpriteComponent from './render-system/sprite-component'
 import RenderSystem from './render-system/render-system'
 import Scene from './scene-system/scene'
 import SceneSystem from './scene-system/scene-system'
-import ScriptComponent from './script-system/script-component'
-import ScriptSystem from './script-system/script-system'
+import BehaviourComponent from './behaviour-system/behaviour-component'
+import BehaviourSystem from './behaviour-system/behaviour-system'
 import StateComponent from './state-system/state-component'
 import StateSystem from './state-system/state-system'
 import EntitySystem from './entity-system/entity-system'
@@ -40,8 +40,8 @@ const Harmony = {
   RenderSystem: RenderSystem,
   Scene: Scene,
   SceneSystem: SceneSystem,
-  ScriptComponent: ScriptComponent,
-  ScriptSystem: ScriptSystem,
+  BehaviourComponent: BehaviourComponent,
+  BehaviourSystem: BehaviourSystem,
   StateComponent: StateComponent,
   StateSystem: StateSystem
 }

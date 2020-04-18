@@ -16,7 +16,7 @@ const InputsScene = new Harmony.Scene({
       height: 50
     })
 
-    engine.scripts.addScriptComponent(entity, {
+    engine.behaviours.addBehaviourComponent(entity, {
       onUpdate: () => {
         if (engine.keys.get('1').start) {
           console.log('start')

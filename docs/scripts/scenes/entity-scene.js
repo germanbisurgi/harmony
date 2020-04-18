@@ -30,7 +30,7 @@ const EntityScene = new Harmony.Scene({
       density: 10
     })
 
-    engine.scripts.addScriptComponent(entity, {
+    engine.behaviours.addBehaviourComponent(entity, {
       onStart: (engine, entity) => {},
       onUpdate: (engine, entity) => {}
     })

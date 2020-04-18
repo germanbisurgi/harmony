@@ -24,27 +24,27 @@ const debug = (engine) => {
     y: 260
   })
   engine.render.text({
-    text: 'script components: ' + engine.scripts.components.length,
+    text: 'component behaviours: ' + engine.behaviours.components.length,
     x: 200,
     y: 280
   })
   engine.render.text({
-    text: 'sprite components: ' + engine.render.components.length,
+    text: 'component sprite: ' + engine.render.components.length,
     x: 200,
     y: 300
   })
   engine.render.text({
-    text: 'physics components: ' + engine.physics.components.length,
+    text: 'component physics: ' + engine.physics.components.length,
     x: 200,
     y: 320
   })
   engine.render.text({
-    text: 'audio components: ' + engine.audio.components.length,
+    text: 'component audio: ' + engine.audio.components.length,
     x: 200,
     y: 340
   })
   engine.render.text({
-    text: 'state components: ' + Object.keys(engine.state.components).length,
+    text: 'component state: ' + Object.keys(engine.state.components).length,
     x: 200,
     y: 360
   })
