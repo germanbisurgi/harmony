@@ -9,10 +9,12 @@ const PhysicsScene = new Harmony.Scene({
     const dynamic = engine.entities.add({ tags: ['dynamic'] })
     engine.physics.addPhysicsComponent(dynamic, { x: 100, y: 100, type: 'dynamic' })
     engine.physics.addCircle(dynamic, { radius: 25, density: 10 })
+    engine.audio.addAudioComponent(dynamic)
     engine.behaviours.addBehaviourComponent(dynamic, {
       onStart: (engine, dynamic) => {
         engine.physics.onContactBegin(dynamic, function (other, me) {
           console.log('onContactBegin', other.tags, me.tags)
+          engine.audio.play(dynamic, 'collision')
         })
         engine.physics.onContactEnd(dynamic, function (other, me) {
           console.log('onContactEnd', other.tags, me.tags)

@@ -56,6 +56,7 @@ const LoadScene = new Harmony.Scene({
     engine.loader.loadImage({ name: 'yoghurt', url: './assets/images/things/yoghurt.jpg' })
     engine.loader.loadImage({ name: 'zebra', url: './assets/images/things/zebra.jpg' })
 
+    engine.loader.loadAudio({ name: 'collision', url: './assets/audio/collision.wav' })
     engine.loader.loadAudio({ name: 'correct', url: './assets/audio/correct.wav' })
     engine.loader.loadAudio({ name: 'win', url: './assets/audio/win.wav' })
     engine.loader.loadAudio({ name: 'a', url: './assets/audio/alphabet/a.mp3' })
