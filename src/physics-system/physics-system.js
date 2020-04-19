@@ -134,6 +134,35 @@ PhysicsSystem.prototype.getFixtureDef = function (config) {
   return fixDef
 }
 
+PhysicsSystem.prototype.addPolygon = function (entity, params) {
+  const defaults = {
+    vertices: [],
+    x: 0,
+    y: 0,
+    density: 1,
+    friction: 0.5,
+    restitution: 0.3,
+    isSensor: false
+  }
+  const config = Object.assign(defaults, params)
+  const fixtureDef = this.getFixtureDef(config)
+  const B2PolygonShape = Box2D.Collision.Shapes.b2PolygonShape
+  fixtureDef.shape = new B2PolygonShape()
+  for (let i = 0; i < config.vertices.length; i++) {
+    const vert = config.vertices[i]
+    vert.x /= this.scale
+    vert.y /= this.scale
+  }
+  fixtureDef.shape.SetAsArray(config.vertices, config.vertices.length)
+  for (let i = 0; i < fixtureDef.shape.m_vertices.length; i++) {
+    const vert = fixtureDef.shape.m_vertices[i]
+    vert.x += config.x / this.scale || 0
+    vert.y += config.y / this.scale || 0
+  }
+  const fixture = this.getComponent(entity).body.CreateFixture(fixtureDef)
+  this.getComponent(entity).fixtures.push(fixture)
+}
+
 PhysicsSystem.prototype.addRectangle = function (entity, params) {
   const defaults = {
     width: 0,
@@ -154,7 +183,7 @@ PhysicsSystem.prototype.addRectangle = function (entity, params) {
     config.width * 0.5 / this.scale,
     config.height * 0.5 / this.scale
   )
-  for (let i = 0; i < fixtureDef.shape.m_vertices; i++) {
+  for (let i = 0; i < fixtureDef.shape.m_vertices.length; i++) {
     const vert = fixtureDef.shape.m_vertices[i]
     vert.x += config.x / this.scale || 0
     vert.y += config.y / this.scale || 0

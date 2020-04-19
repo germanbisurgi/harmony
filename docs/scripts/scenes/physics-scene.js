@@ -15,8 +15,22 @@ const PhysicsScene = new Harmony.Scene({
     engine.physics.addCircle(kinematicCircle, { radius: 25, density: 10 })
 
     const dynamicRectangle = engine.entities.add({ tags: ['dynamicRectangle'] })
-    engine.physics.addPhysicsComponent(dynamicRectangle, { x: 300, y: 300, type: 'dynamic' })
+    engine.physics.addPhysicsComponent(dynamicRectangle, { x: 200, y: 200, type: 'dynamic' })
     engine.physics.addRectangle(dynamicRectangle, { width: 50, height: 50, density: 10 })
+
+    const dynamicPolygon = engine.entities.add({ tags: ['dynamicPolygon'] })
+    engine.physics.addPhysicsComponent(dynamicPolygon, { x: 50, y: 200, type: 'dynamic' })
+    engine.physics.addPolygon(dynamicPolygon, {
+      x: 0,
+      y: 0,
+      vertices: [
+        { x: 0, y: 0 },
+        { x: 50, y: 0 },
+        { x: 100, y: 25 },
+        { x: 50, y: 50 },
+        { x: 0, y: 50 }
+      ]
+    })
 
     const dynamicCircle = engine.entities.add({ tags: ['dynamicCircle'] })
     engine.physics.addPhysicsComponent(dynamicCircle, { x: 100, y: 100, type: 'dynamic' })
@@ -27,9 +41,6 @@ const PhysicsScene = new Harmony.Scene({
         engine.physics.onContactBegin(dynamicCircle, function (other, me) {
           console.log('onContactBegin', other.tags, me.tags)
           engine.audio.play(dynamicCircle, 'collision')
-        })
-        engine.physics.onContactEnd(dynamicCircle, function (other, me) {
-          console.log('onContactEnd', other.tags, me.tags)
         })
       },
       onUpdate: (engine, dynamicCircle) => {
