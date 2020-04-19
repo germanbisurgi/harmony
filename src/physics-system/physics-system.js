@@ -157,6 +157,30 @@ PhysicsSystem.prototype.addCircle = function (entity, params) {
   this.getComponent(entity).fixtures.push(fixture)
 }
 
+PhysicsSystem.prototype.addEdge = function (entity, params) {
+  const defaults = {
+    ax: 0,
+    ay: 0,
+    bx: 0,
+    by: 0,
+    density: 1,
+    friction: 0.5,
+    restitution: 0.3,
+    isSensor: false
+  }
+  const config = Object.assign(defaults, params)
+  const fixtureDef = this.getFixtureDef(config)
+  const B2PolygonShape = Box2D.Collision.Shapes.b2PolygonShape
+  fixtureDef.shape = new B2PolygonShape()
+  config.ax /= this.scale
+  config.ay /= this.scale
+  config.bx /= this.scale
+  config.by /= this.scale
+  fixtureDef.shape.SetAsEdge({ x: config.ax, y: config.ay }, { x: config.bx, y: config.by })
+  const fixture = this.getComponent(entity).body.CreateFixture(fixtureDef)
+  this.getComponent(entity).fixtures.push(fixture)
+}
+
 PhysicsSystem.prototype.createBody = function (params) {
   const defaults = {
     x: 50,
