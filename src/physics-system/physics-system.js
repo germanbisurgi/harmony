@@ -6,11 +6,11 @@ const PhysicsSystem = function (canvas) {
   const B2DebugDraw = Box2D.Dynamics.b2DebugDraw
   const B2ContactListener = Box2D.Dynamics.b2ContactListener
 
-  this.world = new B2World(new B2Vec2(0, 0), true)
   this.fps = 60
-  this.components = []
   this.scale = 100
+  this.components = []
   this.context = canvas.getContext('2d')
+  this.world = new B2World(new B2Vec2(0, 0), true)
   this.contacts = new B2ContactListener()
   this.physicsComponentName = 'physics'
 
@@ -132,6 +132,38 @@ PhysicsSystem.prototype.getFixtureDef = function (config) {
   fixDef.restitution = config.restitution
   fixDef.isSensor = config.isSensor
   return fixDef
+}
+
+PhysicsSystem.prototype.addRectangle = function (entity, params) {
+  const defaults = {
+    width: 0,
+    height: 0,
+    x: 0,
+    y: 0,
+    density: 1,
+    friction: 0.5,
+    restitution: 0.3,
+    isSensor: false
+  }
+  const config = Object.assign(defaults, params)
+  const fixtureDef = this.getFixtureDef(config)
+
+  const B2PolygonShape = Box2D.Collision.Shapes.b2PolygonShape
+  fixtureDef.shape = new B2PolygonShape()
+  fixtureDef.shape.SetAsBox(
+    config.width * 0.5 / this.scale,
+    config.height * 0.5 / this.scale
+  )
+  for (let i = 0; i < fixtureDef.shape.m_vertices; i++) {
+    const vert = fixtureDef.shape.m_vertices[i]
+    vert.x += config.x / this.scale || 0
+    vert.y += config.y / this.scale || 0
+  }
+  fixtureDef.shape.m_centroid.x += config.x / this.scale || 0
+  fixtureDef.shape.m_centroid.y += config.y / this.scale || 0
+
+  const fixture = this.getComponent(entity).body.CreateFixture(fixtureDef)
+  this.getComponent(entity).fixtures.push(fixture)
 }
 
 PhysicsSystem.prototype.addCircle = function (entity, params) {
