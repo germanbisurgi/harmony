@@ -141,7 +141,7 @@ PhysicsSystem.prototype.addPolygon = function (entity, params) {
     y: 0,
     density: 1,
     friction: 0.5,
-    restitution: 0.3,
+    restitution: 0.5,
     isSensor: false
   }
   const config = Object.assign(defaults, params)
@@ -171,7 +171,7 @@ PhysicsSystem.prototype.addRectangle = function (entity, params) {
     y: 0,
     density: 1,
     friction: 0.5,
-    restitution: 0.3,
+    restitution: 0.5,
     isSensor: false
   }
   const config = Object.assign(defaults, params)
@@ -202,7 +202,7 @@ PhysicsSystem.prototype.addCircle = function (entity, params) {
     radius: 25,
     density: 1,
     friction: 0.5,
-    restitution: 0.3,
+    restitution: 0.5,
     isSensor: false
   }
   const config = Object.assign(defaults, params)
@@ -226,7 +226,7 @@ PhysicsSystem.prototype.addEdge = function (entity, params) {
     by: 0,
     density: 1,
     friction: 0.5,
-    restitution: 0.3,
+    restitution: 0.5,
     isSensor: false
   }
   const config = Object.assign(defaults, params)
@@ -337,6 +337,14 @@ PhysicsSystem.prototype.setPosition = function (entity, config) {
     x: config.x / this.scale,
     y: config.y / this.scale
   })
+}
+
+PhysicsSystem.prototype.getLinearVelocity = function (entity) {
+  const velocity = this.getComponent(entity).body.GetLinearVelocity()
+  return {
+    x: velocity.x * this.scale,
+    y: velocity.y * this.scale
+  }
 }
 
 PhysicsSystem.prototype.setLinearVelocity = function (entity, config) {

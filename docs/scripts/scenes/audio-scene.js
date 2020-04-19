@@ -55,14 +55,5 @@ const AudioScene = new Harmony.Scene({
   },
   draw: (engine) => {
     debug(engine)
-    engine.render.context.save()
-    engine.render.context.strokeStyle = '#00ff00'
-    engine.render.context.lineWidth = '1'
-    engine.render.circle({
-      x: engine.audio.listener.x,
-      y: engine.audio.listener.y,
-      radius: engine.audio.threshold
-    })
-    engine.render.context.restore()
   }
 })

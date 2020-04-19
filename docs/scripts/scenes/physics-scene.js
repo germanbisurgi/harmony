@@ -10,16 +10,25 @@ const PhysicsScene = new Harmony.Scene({
     engine.physics.addEdge(staticEdge, { ax: 0, ay: window.innerHeight - 20, bx: 0, by: 0 })
 
     const kinematicCircle = engine.entities.add({ tags: ['kinematicCircle'] })
-    engine.physics.addPhysicsComponent(kinematicCircle, { x: 200, y: 100, type: 'kinematic' })
+    engine.physics.addPhysicsComponent(kinematicCircle, { x: window.innerWidth * 0.5, y: window.innerHeight * 0.5, type: 'kinematic' })
     engine.physics.addCircle(kinematicCircle, { radius: 25, density: 10 })
     engine.physics.addCircle(kinematicCircle, { radius: 25, density: 10 })
 
     const dynamicRectangle = engine.entities.add({ tags: ['dynamicRectangle'] })
     engine.physics.addPhysicsComponent(dynamicRectangle, { x: 200, y: 200, type: 'dynamic' })
     engine.physics.addRectangle(dynamicRectangle, { width: 50, height: 50, density: 10 })
+    engine.audio.addAudioComponent(dynamicRectangle)
+    engine.behaviours.addBehaviourComponent(dynamicRectangle, {
+      onStart: (engine, dynamicRectangle) => {
+        engine.physics.onContactBegin(dynamicRectangle, function (other, me) {
+          engine.audio.play(dynamicRectangle, 'collision')
+        })
+      }
+    })
 
     const dynamicPolygon = engine.entities.add({ tags: ['dynamicPolygon'] })
     engine.physics.addPhysicsComponent(dynamicPolygon, { x: 50, y: 200, type: 'dynamic' })
+    engine.audio.addAudioComponent(dynamicPolygon)
     engine.physics.addPolygon(dynamicPolygon, {
       x: 0,
       y: 0,
@@ -31,6 +40,13 @@ const PhysicsScene = new Harmony.Scene({
         { x: 0, y: 50 }
       ]
     })
+    engine.behaviours.addBehaviourComponent(dynamicPolygon, {
+      onStart: (engine, dynamicPolygon) => {
+        engine.physics.onContactBegin(dynamicPolygon, function (other, me) {
+          engine.audio.play(dynamicPolygon, 'collision')
+        })
+      }
+    })
 
     const dynamicCircle = engine.entities.add({ tags: ['dynamicCircle'] })
     engine.physics.addPhysicsComponent(dynamicCircle, { x: 100, y: 100, type: 'dynamic' })
@@ -39,7 +55,6 @@ const PhysicsScene = new Harmony.Scene({
     engine.behaviours.addBehaviourComponent(dynamicCircle, {
       onStart: (engine, dynamicCircle) => {
         engine.physics.onContactBegin(dynamicCircle, function (other, me) {
-          console.log('onContactBegin', other.tags, me.tags)
           engine.audio.play(dynamicCircle, 'collision')
         })
       },

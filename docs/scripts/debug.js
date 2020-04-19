@@ -54,6 +54,14 @@ const debug = (engine) => {
   engine.render.context.lineWidth = '1'
   engine.render.context.textAlign = 'center'
 
+  engine.render.context.strokeStyle = '#00ff00'
+  engine.render.context.lineWidth = '1'
+  engine.render.circle({
+    x: engine.audio.listener.x,
+    y: engine.audio.listener.y,
+    radius: engine.audio.threshold
+  })
+
   for (const i in engine.pointers.cache) {
     if (Object.hasOwnProperty.call(engine.pointers.cache, i)) {
       const pointer = engine.pointers.cache[i]
