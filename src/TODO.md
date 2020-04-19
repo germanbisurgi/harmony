@@ -1,12 +1,11 @@
+* render graphics
+* if component method exist vs default function
+* default config in systems
+* get component method in systems
 * use instanceof instead of component names
-* find solution for defaults args
-* better Pointers (no get by id. avoid update?, configurable prevent default)
-* better Keys (params (delta given))
-* event emitter
-* scalable loaders system 
-* camera
+* rename config in params
+* Pointers lookup 1 - 10
+* render camera
 * animation system
-* docs
-* tests
-* ci
-* scalable configurable systems
+* docsify
+* ci tests

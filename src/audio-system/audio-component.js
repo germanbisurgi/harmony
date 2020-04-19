@@ -1,10 +1,7 @@
-const AudioComponent = function (params, system) {
-  const config = Object.assign({
-    volume: 1
-  }, params)
+const AudioComponent = function (system) {
   this.system = system
   this.source = null
-  this.volume = config.volume
+  this.gain = null
   this.mustDestroy = false
 }
 

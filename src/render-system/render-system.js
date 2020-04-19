@@ -108,7 +108,19 @@ RenderSystem.prototype.draw = function () {
   this.context.restore()
 }
 
-RenderSystem.prototype.addSpriteComponent = function (entity, config) {
+RenderSystem.prototype.addSpriteComponent = function (entity, params) {
+  const config = Object.assign({
+    image: null,
+    width: 50,
+    height: 50,
+    sourceX: 0,
+    sourceY: 0,
+    sourceWidth: 0,
+    sourceHeight: 0,
+    anchorX: 0.5,
+    anchorY: 0.5,
+    visible: true
+  }, params)
   const component = new Harmony.SpriteComponent(config, this)
   component.entity = entity
   entity.components[this.spriteComponentName] = component

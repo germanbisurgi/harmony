@@ -1,12 +1,10 @@
-const BehaviourComponent = function (params, system) {
+const BehaviourComponent = function (config, system) {
   this.system = system
   this.mustDestroy = false
   this.mustStart = true
   this.mustUpdate = false
-  this.methods = Object.assign({
-    onStart: () => {},
-    onUpdate: () => {}
-  }, params)
+  this.onStart = config.onStart
+  this.onUpdate = config.onUpdate
 }
 
 export default BehaviourComponent

@@ -1,4 +1,4 @@
-/* global Harmony LoadScene AudioScene MemoryScene StateScene InputsScene PhysicsScene EntityScene */
+/* global Harmony BehavioursScene RenderScene LoadScene AudioScene MemoryScene StateScene InputsScene PhysicsScene EntityScene */
 
 const canvas = document.querySelector('#engine-canvas')
 const engine = new Harmony.Engine(canvas)
@@ -36,6 +36,8 @@ const memory = document.querySelector('#memory')
 const inputs = document.querySelector('#inputs')
 const physics = document.querySelector('#physics')
 const entity = document.querySelector('#entity')
+const render = document.querySelector('#render')
+const behaviours = document.querySelector('#behaviours')
 
 audio.addEventListener('click', function () {
   engine.scene.switch(AudioScene)
@@ -59,4 +61,12 @@ physics.addEventListener('click', function () {
 
 entity.addEventListener('click', function () {
   engine.scene.switch(EntityScene)
+})
+
+render.addEventListener('click', function () {
+  engine.scene.switch(RenderScene)
+})
+
+behaviours.addEventListener('click', function () {
+  engine.scene.switch(BehavioursScene)
 })

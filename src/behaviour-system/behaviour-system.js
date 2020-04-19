@@ -6,7 +6,11 @@ const BehaviourSystem = function (engine) {
   this.behaviourComponentName = 'behaviour'
 }
 
-BehaviourSystem.prototype.addBehaviourComponent = function (entity, config) {
+BehaviourSystem.prototype.addBehaviourComponent = function (entity, params) {
+  const config = Object.assign({
+    onStart: () => {},
+    onUpdate: () => {}
+  }, params)
   const component = new Harmony.BehaviourComponent(config, this)
   component.entity = entity
   entity.components[this.behaviourComponentName] = component
@@ -34,11 +38,11 @@ BehaviourSystem.prototype.update = function () {
 BehaviourSystem.prototype.onStart = function (entity) {
   entity.components[this.behaviourComponentName].mustStart = false
   entity.components[this.behaviourComponentName].mustUpdate = true
-  return entity.components[this.behaviourComponentName].methods.onStart(this.engine, entity)
+  return entity.components[this.behaviourComponentName].onStart(this.engine, entity)
 }
 
 BehaviourSystem.prototype.onUpdate = function (entity) {
-  return entity.components[this.behaviourComponentName].methods.onUpdate(this.engine, entity)
+  return entity.components[this.behaviourComponentName].onUpdate(this.engine, entity)
 }
 
 BehaviourSystem.prototype.destroyComponent = function (entity) {
